@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 
+import GlobalStyle from './theme/GlobalStyle';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/home/Home';
 import Search from './pages/search/Search';
@@ -16,7 +18,8 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <Navbar />
+          <GlobalStyle />
+          <NavBar />
           <main>
             <Switch>
               <Route exact path="/" component={Home} />
