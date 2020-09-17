@@ -9,20 +9,25 @@ import List from './pages/list/List';
 import Random from './pages/random/Random';
 import Login from './pages/login/Login';
 
+import NavBar from './NavBar';
+
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/search" component={Search} />
-            <Route exact path="/:user/list" component={List} />
-            <Route exact path="/random" component={Random} />
-            <Route exact path="/login" component={Login} />
-          </Switch>
-        </div>
-      </Router>
+      <div>
+        <Router>
+          <Navbar />
+          <main>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/search" component={Search} />
+              <Route exact path="/:user/list" component={List} />
+              <Route exact path="/random" component={Random} />
+              <Route exact path="/login" component={Login} />
+            </Switch>
+          </main>
+        </Router>
+      </div>
     );
   }
 }
