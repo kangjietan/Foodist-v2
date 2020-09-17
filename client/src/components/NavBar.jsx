@@ -40,6 +40,12 @@ const NavigationLink = styled.div`
     min-width: 2rem;
     margin: 0 1.5rem;
   }
+
+  @media only screen and (max-width: 400px) {
+    ${NavigationLink} svg {
+      margin: 0;
+    }
+  }
 `;
 
 // .link-text
