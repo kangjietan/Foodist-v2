@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import axios from 'axios';
+
 import styled from 'styled-components';
 
 // .container
@@ -246,6 +248,8 @@ class Login extends Component {
       signUpPassword: '',
       signUpPassword2: '',
       rightPanelActive: false,
+      signInErrors: [],
+      signUpErrors: [],
     };
 
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -261,6 +265,59 @@ class Login extends Component {
 
   handleFormSubmission(event) {
     event.preventDefault();
+
+    const { name } = event.target;
+    const { signInErrors, signUpErrors } = this.state;
+
+    if (name === 'signUpForm') {
+      if (signUpErrors) {
+        this.setState({ signUpErrors: [] }, this.createUserAccount);
+      } else {
+        this.createUserAccount();
+      }
+    } else if (name === 'signInForm') {
+      if (signInErrors) {
+        this.setState({ signInErrors: [] }, this.userLogin);
+      } else {
+        this.userLogin();
+      }
+    }
+  }
+
+  createUserAccount() {
+    const {
+      signUpUsername: username,
+      signUpPassword: password,
+      signUpPassword2: password2
+    } = this.state;
+
+    let errorList = [];
+
+    let alphanumeric = "[A-Za-z0-9]+";
+
+    if (!username || !password || !password2) {
+      errorList.push({ msg: "All fields must be filled out" });
+    }
+
+    if (!username.match(alphanumeric)) {
+      errorList.push({ msg: "Username can contain only numbers and the alphabet" })
+    }
+
+    if (password !== password2) {
+      errorList.push({ msg: "Passwords do not match" });
+    }
+
+    if (password.length < 6) {
+      errorList.push({ msg: "Password should be at least 6 characters long" });
+    }
+
+    if (errorList.length > 0) {
+      this.setState({ signUpErrors: errorList });
+    }
+  }
+
+  userLogin() {
+
   }
 
   enableRightPanelActive() {
@@ -278,14 +335,21 @@ class Login extends Component {
       signUpUsername,
       signUpPassword,
       signUpPassword2,
-      rightPanelActive
+      rightPanelActive,
+      signInErrors,
+      signUpErrors,
     } = this.state;
+
+    let displaySignUpErrors = signUpErrors.map((error) => <div>{error.msg}</div>)
 
     return (
       <FormBodyWrapper>
         <Container>
           <SignUpContainer style={rightPanelActive ? { transform: "translateX(100%)", opacity: "1", zIndex: "5" } : {}}>
             <SignUpForm onSubmit={this.handleFormSubmission} name="signUpForm">
+              <div>
+                {displaySignUpErrors ? displaySignUpErrors : null}
+              </div>
               <h1>Create Account</h1>
               <input
                 type="name"
@@ -324,7 +388,7 @@ class Login extends Component {
             </SignUpForm>
           </SignUpContainer>
           <SignInContainer style={rightPanelActive ? { transform: "translateX(100%)" } : {}}>
-            <SignInForm onSubmit={this.handleFormSubmission}>
+            <SignInForm onSubmit={this.handleFormSubmission} name="signInForm">
               <h1>Sign in</h1>
               <input
                 type="name"
