@@ -289,7 +289,7 @@ class Login extends Component {
               <h1>Create Account</h1>
               <input
                 type="name"
-                name="username"
+                name="registerUsername"
                 placeholder="Enter username"
                 maxLength="15"
                 required="required"
@@ -298,7 +298,7 @@ class Login extends Component {
               />
               <input
                 type="password"
-                name="password"
+                name="registerPassword"
                 placeholder="Enter password"
                 minLength="6"
                 maxLength="20"
@@ -308,7 +308,7 @@ class Login extends Component {
               />
               <input
                 type="password"
-                name="password2"
+                name="registerPassword2"
                 placeholder="Confirm password"
                 minLength="4"
                 maxLength="20"
