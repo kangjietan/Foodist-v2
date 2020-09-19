@@ -280,10 +280,99 @@ class Login extends Component {
       registerPassword2,
       rightPanelActive
     } = this.state;
-    
+
     return (
       <FormBodyWrapper>
-        Login
+        <Container>
+          <SignUpContainer style={rightPanelActive ? { transform: "translateX(100%)", opacity: "1", zIndex: "5" } : {}}>
+            <SignUpForm onSubmit={this.handleFormSubmission}>
+              <h1>Create Account</h1>
+              <input
+                type="name"
+                name="username"
+                placeholder="Enter username"
+                maxLength="15"
+                required="required"
+                value={registerUsername}
+                onChange={this.handleFormChange}
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                minLength="6"
+                maxLength="20"
+                required="required"
+                value={registerPassword}
+                onChange={this.handleFormChange}
+              />
+              <input
+                type="password"
+                name="password2"
+                placeholder="Confirm password"
+                minLength="4"
+                maxLength="20"
+                required="required"
+                value={registerPassword2}
+                onChange={this.handleFormChange}
+              />
+              <ButtonGroup>
+                <Button>Sign Up</Button>
+                <span>Or</span>
+                <MobileSignInButton type="button" onClick={this.disableRightPanelActive}>Sign In</MobileSignInButton>
+              </ButtonGroup>
+            </SignUpForm>
+          </SignUpContainer>
+          <SignInContainer style={rightPanelActive ? { transform: "translateX(100%)" } : {}}>
+            <SignInForm onSubmit={this.handleFormSubmission}>
+              <h1>Sign in</h1>
+              <input
+                type="name"
+                name="loginUsername"
+                placeholder="Enter username"
+                maxLength="15"
+                required="required"
+                value={loginUsername}
+                onChange={this.handleFormChange}
+              />
+              <input
+                type="password"
+                name="loginPassword"
+                placeholder="Enter password"
+                minLength="6"
+                maxLength="20"
+                required="required"
+                value={loginPassword}
+                onChange={this.handleFormChange}
+              />
+              <ButtonGroup>
+                <Button>Sign In</Button>
+                <span>Or</span>
+                <MobileSignUpButton type="button" onClick={this.disableRightPanelActive}>Sign Up</MobileSignUpButton>
+              </ButtonGroup>
+            </SignInForm>
+          </SignInContainer>
+          <OverlayContainer style={rightPanelActive ? { transform: "translateX(-100%)" } : {}}>
+            <Overlay style={rightPanelActive ? { transform: "translateX(50%)" } : {}}>
+              <OverlayLeft style={rightPanelActive ? { transform: "translateX(0)" } : {}}>
+                <OverlayContent>
+                  <h1>Welcome Back!</h1>
+                  <p>
+                    To keep connected with us please login with your personal info
+                </p>
+                </OverlayContent>
+                <GhostButton onClick={this.disableRightPanelActive}>Sign In</GhostButton>
+              </OverlayLeft>
+              <OverlayRight style={rightPanelActive ? { transform: "translateX(20%)" } : {}}>
+                <OverlayContent>
+                  <h1>Hello, Friend!</h1>
+                  <p>Enter your personal details and start your journey with us</p>
+                </OverlayContent>
+                <GhostButton onClick={this.enableRightPanelActive}>Sign Up</GhostButton>
+              </OverlayRight>
+            </Overlay>
+          </OverlayContainer>
+        </Container>
       </FormBodyWrapper>
     );
   }
