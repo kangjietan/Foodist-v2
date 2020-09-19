@@ -240,11 +240,11 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      loginUsername: '',
-      loginPassword: '',
-      registerUsername: '',
-      registerPassword: '',
-      registerPassword2: '',
+      signInUsername: '',
+      signInPassword: '',
+      signUpUsername: '',
+      signUpPassword: '',
+      signUpPassword2: '',
       rightPanelActive: false,
     };
 
@@ -273,11 +273,11 @@ class Login extends Component {
 
   render() {
     const {
-      loginUsername,
-      loginPassword,
-      registerUsername,
-      registerPassword,
-      registerPassword2,
+      signInUsername,
+      signInPassword,
+      signUpUsername,
+      signUpPassword,
+      signUpPassword2,
       rightPanelActive
     } = this.state;
 
@@ -285,35 +285,35 @@ class Login extends Component {
       <FormBodyWrapper>
         <Container>
           <SignUpContainer style={rightPanelActive ? { transform: "translateX(100%)", opacity: "1", zIndex: "5" } : {}}>
-            <SignUpForm onSubmit={this.handleFormSubmission}>
+            <SignUpForm onSubmit={this.handleFormSubmission} name="signUpForm">
               <h1>Create Account</h1>
               <input
                 type="name"
-                name="registerUsername"
+                name="signUpUsername"
                 placeholder="Enter username"
                 maxLength="15"
                 required="required"
-                value={registerUsername}
+                value={signUpUsername}
                 onChange={this.handleFormChange}
               />
               <input
                 type="password"
-                name="registerPassword"
+                name="signUpPassword"
                 placeholder="Enter password"
                 minLength="6"
                 maxLength="20"
                 required="required"
-                value={registerPassword}
+                value={signUpPassword}
                 onChange={this.handleFormChange}
               />
               <input
                 type="password"
-                name="registerPassword2"
+                name="signUpPassword2"
                 placeholder="Confirm password"
                 minLength="4"
                 maxLength="20"
                 required="required"
-                value={registerPassword2}
+                value={signUpPassword2}
                 onChange={this.handleFormChange}
               />
               <ButtonGroup>
@@ -328,21 +328,21 @@ class Login extends Component {
               <h1>Sign in</h1>
               <input
                 type="name"
-                name="loginUsername"
+                name="signInUsername"
                 placeholder="Enter username"
                 maxLength="15"
                 required="required"
-                value={loginUsername}
+                value={signInUsername}
                 onChange={this.handleFormChange}
               />
               <input
                 type="password"
-                name="loginPassword"
+                name="signInPassword"
                 placeholder="Enter password"
                 minLength="6"
                 maxLength="20"
                 required="required"
-                value={loginPassword}
+                value={signInPassword}
                 onChange={this.handleFormChange}
               />
               <ButtonGroup>
