@@ -319,9 +319,8 @@ class Login extends Component {
       this.setState({ signUpErrors: errorList });
     }
 
-    axios.post('/user/signup', qs.stringify({ username, password, password2 }))
+    axios.post('/user/register', qs.stringify({ username, password, password2 }))
       .then((response) => {
-        console.log(response);
         if (response.data.errors) {
           this.setState({ signUpErrors: response.data.errors });
         } else {
@@ -338,7 +337,22 @@ class Login extends Component {
   }
 
   userLogin() {
+    const { signInUsername: username, signInPassword: password } = this.state;
 
+    let errorList = [];
+
+    if (!username || !password) {
+      errorList.push({ msg: "All fields must be filled out" });
+      this.setState({ signInErrors: errorList });
+    }
+
+    axios.post("/user/login", qs.stringify({ username, password }))
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   enableRightPanelActive() {
