@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import axios from 'axios';
 
+import qs from 'qs';
+
 import styled from 'styled-components';
 
 import DismissableError from '../../errors/DismissableError';
@@ -316,6 +318,23 @@ class Login extends Component {
     if (errorList.length > 0) {
       this.setState({ signUpErrors: errorList });
     }
+
+    axios.post('/user/signup', qs.stringify({ username, password, password2 }))
+      .then((response) => {
+        console.log(response);
+        if (response.data.errors) {
+          this.setState({ signUpErrors: response.data.errors });
+        } else {
+          if (response.data.success) {
+            this.setState({ rightPanelActive: false }, () => {
+              this.setState({ signInErrors: [{ msg: "You have succesfully registered!" }] });
+            });
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   userLogin() {
@@ -350,7 +369,7 @@ class Login extends Component {
         <Container>
           <SignUpContainer style={rightPanelActive ? { transform: "translateX(100%)", opacity: "1", zIndex: "5" } : {}}>
             <SignUpForm onSubmit={this.handleFormSubmission} name="signUpForm">
-              <div style={{width: "125%"}}>
+              <div style={{ width: "125%" }}>
                 {displaySignUpErrors ? displaySignUpErrors : null}
               </div>
               <h1>Create Account</h1>
@@ -392,7 +411,7 @@ class Login extends Component {
           </SignUpContainer>
           <SignInContainer style={rightPanelActive ? { transform: "translateX(100%)" } : {}}>
             <SignInForm onSubmit={this.handleFormSubmission} name="signInForm">
-              <div style={{width: "125%"}}>
+              <div style={{ width: "125%" }}>
                 {displaySignInErrors ? displaySignInErrors : null}
               </div>
               <h1>Sign in</h1>
