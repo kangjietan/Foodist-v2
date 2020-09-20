@@ -2,6 +2,8 @@ const User = require("../models/User");
 
 const bcrypt = require("bcryptjs");
 
+const passport = require("passport");
+
 module.exports = {
   user: {
     register: (req, res) => {
