@@ -356,10 +356,10 @@ class Login extends Component {
 
     axios.post("/user/login", qs.stringify({ username, password }))
       .then((response) => {
-        console.log(response);
         if (response.data.success) {
-          this.props.setUserIsLoggedIn(true);
-          this.setState({ loggedIn: true });
+          this.setState({ loggedIn: true }, () => {
+            this.props.setUserIsLoggedIn(true);
+          });
         }
       })
       .catch((error) => {
@@ -498,7 +498,8 @@ class Login extends Component {
 
 Login.propTypes = {
   userLoggedIn: PropTypes.bool.isRequired,
-}
+  setUserIsLoggedIn: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   userLoggedIn: state.user.userLoggedIn,
