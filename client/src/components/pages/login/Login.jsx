@@ -6,10 +6,11 @@ import qs from 'qs';
 
 import styled from 'styled-components';
 
+import { Redirect } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-
 import { setUserIsLoggedIn } from '../../../actions/userActions';
 
 import DismissableError from '../../errors/DismissableError';
@@ -260,6 +261,7 @@ class Login extends Component {
       rightPanelActive: false,
       signInErrors: [],
       signUpErrors: [],
+      loggedIn: false,
     };
 
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -355,6 +357,9 @@ class Login extends Component {
     axios.post("/user/login", qs.stringify({ username, password }))
       .then((response) => {
         console.log(response);
+        if (response.data.success) {
+          this.setState({ loggedIn: true });
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -379,10 +384,13 @@ class Login extends Component {
       rightPanelActive,
       signInErrors,
       signUpErrors,
+      loggedIn,
     } = this.state;
 
     let displaySignUpErrors = signUpErrors.map((error) => <DismissableError error={error} />)
     let displaySignInErrors = signInErrors.map((error) => <DismissableError error={error} />)
+
+    if (loggedIn) return <Redirect to="/" />
 
     return (
       <FormBodyWrapper>
