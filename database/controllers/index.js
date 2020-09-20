@@ -101,7 +101,7 @@ module.exports = {
     },
     logout: (req, res) => {
       req.logout();
-      res.json({ msg: "Signed out" });
+      res.json({ success: { msg: "Signed out" } });
     },
     isAuthenticated: (req, res) => {
       res.json({ success: { msg: "Authenticated" } });
