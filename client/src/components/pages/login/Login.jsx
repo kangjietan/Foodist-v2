@@ -391,7 +391,7 @@ class Login extends Component {
     let displaySignUpErrors = signUpErrors.map((error) => <DismissableError error={error} />)
     let displaySignInErrors = signInErrors.map((error) => <DismissableError error={error} />)
 
-    if (loggedIn) return <Redirect to="/" />
+    if (loggedIn || this.props.userLoggedIn) return <Redirect to="/" />
 
     return (
       <FormBodyWrapper>
@@ -501,7 +501,7 @@ Login.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  userLoggedIn: state.userLoggedIn,
+  userLoggedIn: state.user.userLoggedIn,
 });
 
 const mapDispatchToProps = { setUserIsLoggedIn };
