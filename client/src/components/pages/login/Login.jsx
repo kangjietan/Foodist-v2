@@ -358,6 +358,7 @@ class Login extends Component {
       .then((response) => {
         console.log(response);
         if (response.data.success) {
+          this.props.setUserIsLoggedIn(true);
           this.setState({ loggedIn: true });
         }
       })
