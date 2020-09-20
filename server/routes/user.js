@@ -6,7 +6,9 @@ const controller = require("../../database/controllers/index");
 
 const { ensureAuthenticated } = require("../../config/auth");
 
-router.post('/signup', controller.user.register);
+router.post('/register', controller.user.register);
+
+router.post('/login', controller.user.login);
 
 router.get("/list", (req, res) => {
   res.redirect("/");
