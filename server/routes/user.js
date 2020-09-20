@@ -10,6 +10,8 @@ router.post('/register', controller.user.register);
 
 router.post('/login', controller.user.login);
 
+router.get('/logout', controller.user.logout);
+
 router.get("/authenticated", ensureAuthenticated, controller.user.isAuthenticated);
 
 router.get("/list", (req, res) => {
