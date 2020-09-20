@@ -2,6 +2,13 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
+
+import axios from 'axios';
+
+import { connect } from 'react-redux';
+import { setUserIsLoggedIn } from '../actions/userActions';
+
 import { Link } from 'react-router-dom';
 
 // Component variables
@@ -134,7 +141,7 @@ const NavigationBar = styled.nav`
 
 const LinkStyle = { width: "100%", textDecoration: "none" };
 
-function NavBar() {
+function NavBar(props) {
   return (
     <NavigationBar>
       <NavigationBarNav>
@@ -280,31 +287,61 @@ function NavBar() {
         </NavigationItem>
         <NavigationItem>
           <Link to="/login">
-            <NavigationLink>
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fad"
-                data-icon="sign-in-alt"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className="">
-                <g className="fa-group">
-                  <path
-                    fill="currentColor"
-                    d="M512 160v192a96 96 0 0 1-96 96h-84a12 12 0 0 1-12-12v-40a12 12 0 0 1 12-12h84a32 32 0 0 0 32-32V160a32 32 0 0 0-32-32h-84a12 12 0 0 1-12-12V76a12 12 0 0 1 12-12h84a96 96 0 0 1 96 96z"
-                    className="fa-secondary">
-                  </path>
-                  <path
-                    fill="currentColor"
-                    d="M369 273L201 441c-15 15-41 4.5-41-17v-96H24a23.94 23.94 0 0 1-24-24v-96a23.94 23.94 0 0 1 24-24h136V88c0-21.5 26-32 41-17l168 168a24.2 24.2 0 0 1 0 34z"
-                    className="fa-primary">
-                  </path>
-                </g>
-              </svg>
-              <LinkText>Login</LinkText>
-            </NavigationLink>
+            {
+              props.userLoggedIn
+                ?
+                <NavigationLink>
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fad"
+                    data-icon="sign-out-alt"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    className="">
+                    <g className="fa-group">
+                      <path
+                        fill="currentColor"
+                        d="M64 160v192a32 32 0 0 0 32 32h84a12 12 0 0 1 12 12v40a12 12 0 0 1-12 12H96a96 96 0 0 1-96-96V160a96 96 0 0 1 96-96h84a12 12 0 0 1 12 12v40a12 12 0 0 1-12 12H96a32 32 0 0 0-32 32z"
+                        className="fa-secondary">
+                      </path>
+                      <path
+                        fill="currentColor"
+                        d="M288 424v-96H152a23.94 23.94 0 0 1-24-24v-96a23.94 23.94 0 0 1 24-24h136V88c0-21.4 25.9-32 41-17l168 168a24.2 24.2 0 0 1 0 34L329 441c-15 15-41 4.52-41-17z"
+                        className="fa-primary">
+                      </path>
+                    </g>
+                  </svg>
+                  <LinkText>Logout</LinkText>
+                </NavigationLink>
+                :
+                <NavigationLink>
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fad"
+                    data-icon="sign-in-alt"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    className="">
+                    <g className="fa-group">
+                      <path
+                        fill="currentColor"
+                        d="M512 160v192a96 96 0 0 1-96 96h-84a12 12 0 0 1-12-12v-40a12 12 0 0 1 12-12h84a32 32 0 0 0 32-32V160a32 32 0 0 0-32-32h-84a12 12 0 0 1-12-12V76a12 12 0 0 1 12-12h84a96 96 0 0 1 96 96z"
+                        className="fa-secondary">
+                      </path>
+                      <path
+                        fill="currentColor"
+                        d="M369 273L201 441c-15 15-41 4.5-41-17v-96H24a23.94 23.94 0 0 1-24-24v-96a23.94 23.94 0 0 1 24-24h136V88c0-21.5 26-32 41-17l168 168a24.2 24.2 0 0 1 0 34z"
+                        className="fa-primary">
+                      </path>
+                    </g>
+                  </svg>
+                  <LinkText>Login</LinkText>
+                </NavigationLink>
+            }
           </Link>
         </NavigationItem>
       </NavigationBarNav>
@@ -312,4 +349,15 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+NavBar.propTypes = {
+  userLoggedIn: PropTypes.bool.isRequired,
+  setUserIsLoggedIn: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  userLoggedIn: state.user.userLoggedIn,
+});
+
+const mapDispatchToProps = { setUserIsLoggedIn };
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
