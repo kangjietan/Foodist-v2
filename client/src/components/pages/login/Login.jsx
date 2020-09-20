@@ -6,6 +6,12 @@ import qs from 'qs';
 
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+
+import { setUserIsLoggedIn } from '../../../actions/userActions';
+
 import DismissableError from '../../errors/DismissableError';
 
 // .container
@@ -481,4 +487,14 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  userLoggedIn: PropTypes.bool.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  userLoggedIn: state.userLoggedIn,
+});
+
+const mapDispatchToProps = { setUserIsLoggedIn };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
