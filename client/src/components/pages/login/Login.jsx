@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
+import DismissableError from '../../errors/DismissableError';
+
 // .container
 const Container = styled.div`
   background: #fff;
@@ -340,14 +342,15 @@ class Login extends Component {
       signUpErrors,
     } = this.state;
 
-    let displaySignUpErrors = signUpErrors.map((error) => <div>{error.msg}</div>)
+    let displaySignUpErrors = signUpErrors.map((error) => <DismissableError error={error} />)
+    let displaySignInErrors = signInErrors.map((error) => <DismissableError error={error} />)
 
     return (
       <FormBodyWrapper>
         <Container>
           <SignUpContainer style={rightPanelActive ? { transform: "translateX(100%)", opacity: "1", zIndex: "5" } : {}}>
             <SignUpForm onSubmit={this.handleFormSubmission} name="signUpForm">
-              <div>
+              <div style={{width: "125%"}}>
                 {displaySignUpErrors ? displaySignUpErrors : null}
               </div>
               <h1>Create Account</h1>
@@ -389,6 +392,9 @@ class Login extends Component {
           </SignUpContainer>
           <SignInContainer style={rightPanelActive ? { transform: "translateX(100%)" } : {}}>
             <SignInForm onSubmit={this.handleFormSubmission} name="signInForm">
+              <div style={{width: "125%"}}>
+                {displaySignInErrors ? displaySignInErrors : null}
+              </div>
               <h1>Sign in</h1>
               <input
                 type="name"
