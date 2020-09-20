@@ -132,11 +132,13 @@ const NavigationBar = styled.nav`
   }
 `;
 
+const LinkStyle = { width: "100%", textDecoration: "none" };
+
 function NavBar() {
   return (
     <NavigationBar>
       <NavigationBarNav>
-        <Link to="/" style={{ width: "100%", textDecoration: "none" }} id="logo">
+        <Link to="/" style={LinkStyle} id="logo">
           <Logo>
             <NavigationLink>
               <LinkText>Foodist</LinkText>
@@ -166,7 +168,7 @@ function NavBar() {
           </Logo>
         </Link>
         <NavigationItem>
-          <Link to="/" style={{ width: "100%", textDecoration: "none" }}>
+          <Link to="/" style={LinkStyle}>
             <NavigationLink>
               <svg
                 aria-hidden="true"
@@ -195,7 +197,7 @@ function NavBar() {
           </Link>
         </NavigationItem>
         <NavigationItem>
-          <Link to="/search" style={{ width: "100%", textDecoration: "none" }}>
+          <Link to="/search" style={LinkStyle}>
             <NavigationLink>
               <svg
                 aria-hidden="true"
@@ -223,7 +225,7 @@ function NavBar() {
           </Link>
         </NavigationItem>
         <NavigationItem>
-          <Link to="/user/list" style={{ width: "100%", textDecoration: "none" }}>
+          <Link to="/user/list" style={LinkStyle}>
             <NavigationLink>
               <svg
                 aria-hidden="true"
@@ -249,7 +251,7 @@ function NavBar() {
           </Link>
         </NavigationItem>
         <NavigationItem>
-          <Link to="/random" style={{ width: "100%", textDecoration: "none" }}>
+          <Link to="/random" style={LinkStyle}>
             <NavigationLink>
               <svg
                 aria-hidden="true"
