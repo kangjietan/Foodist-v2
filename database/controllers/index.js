@@ -17,7 +17,9 @@ module.exports = {
 
       // Check for alphanumeric chars only
       if (!username.match(alphanumeric)) {
-        data.errors.push({ msg: "Username can contain only numbers and the alphabet" });
+        data.errors.push({
+          msg: "Username can contain only numbers and the alphabet",
+        });
       }
 
       // Check passwords match
@@ -67,6 +69,37 @@ module.exports = {
           }
         });
       }
+    },
+    login: (req, res, next) => {
+      let errors = [];
+      let success = [];
+      passport.authenticate("local", (err, user, info) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+
+        if (!user) {
+          errors.push({
+            msg: "Login failed. Username or password is incorrect.",
+          });
+          return res.json({ errors });
+        }
+
+        req.login(user, (err) => {
+          if (err) {
+            console.log(err);
+            return next(err);
+          }
+
+          success.push({ msg: "Login successful" });
+          return res.json({ success });
+        });
+      })(req, res, next);
+    },
+    logout: (req, res) => {
+      req.logout();
+      res.json({ msg: "Signed out" });
     },
     isAuthenticated: (req, res) => {
       res.json({ success: { msg: "Authenticated" } });
