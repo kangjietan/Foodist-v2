@@ -142,6 +142,19 @@ const NavigationBar = styled.nav`
 const LinkStyle = { width: "100%", textDecoration: "none" };
 
 function NavBar(props) {
+  const userLogout = () => {
+    axios.get('/user/logout')
+      .then((response) => {
+        if (response.data.success) {
+          console.log(response);
+          props.setUserIsLoggedIn(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <NavigationBar>
       <NavigationBarNav>
@@ -290,7 +303,7 @@ function NavBar(props) {
             {
               props.userLoggedIn
                 ?
-                <NavigationLink>
+                <NavigationLink onClick={userLogout}>
                   <svg
                     aria-hidden="true"
                     focusable="false"
