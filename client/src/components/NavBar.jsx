@@ -95,7 +95,8 @@ const NavigationBar = styled.nav`
   position: fixed;
   background-color: ${bgPrimary};
   transition: width 200ms ease;
-
+  font-family: 'Roboto', sans-serif;
+  
   ${NavigationBar}:hover #logo svg {
     transform: rotate(180deg);
   }
