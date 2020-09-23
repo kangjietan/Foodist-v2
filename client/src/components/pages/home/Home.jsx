@@ -179,14 +179,6 @@ const InstructionsContainer = styled.div`
     & ${ButtonContainer} .button-chev svg {
       width: 1rem !important;
     }
-
-    & ${Instructions} p {
-      font-size: 1.2rem !important;
-    }
-
-    & ${Instructions} h1 {
-      font-size: 1.5rem !important;
-    }
   }
 
   @media screen and (max-width: 992px) {
@@ -204,6 +196,10 @@ const InstructionsContainer = styled.div`
 
     & ${Instructions} h1 {
       font-size: 1.25rem !important;
+    }
+
+    & ${Instructions} p {
+      font-size: 1.2rem !important;
     }
   }
 
@@ -231,7 +227,6 @@ const InstructionsContainer = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  height: 15vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,6 +240,12 @@ const ImageContainer = styled.div`
   @media screen and (max-width: 992px) {
     & {
       padding: 0 1rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    & {
+      padding: 0 0.5rem;
     }
   }
 `;
@@ -272,6 +273,12 @@ const ButtonContainer = styled.div`
 
   & svg {
     width: 1.25rem;
+  }
+
+  @media screen and (max-width: 480px) {
+    & {
+      padding: 0 1rem;
+    }
   }
 `;
 
