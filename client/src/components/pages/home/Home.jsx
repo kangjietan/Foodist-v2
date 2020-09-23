@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -407,4 +409,12 @@ function Home() {
   );
 }
 
-export default Home;
+Home.propTypes = {
+  userLoggedIn: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  userLoggedIn: state.user.userLoggedIn,
+});
+
+export default connect(mapStateToProps, null)(Home);
