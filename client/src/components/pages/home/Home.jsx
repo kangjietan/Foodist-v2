@@ -15,6 +15,28 @@ const Container = styled.div`
   justify-content: center;
   font-family: 'Roboto', sans-serif;
   margin-top: 1rem;
+
+  @media screen and (max-width: 1200px) {
+    .instructions-link {
+      max-width: 992px !important;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    .instructions-link {
+      max-width: 768px !important;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    &:last-child {
+      margin-bottom: 5rem;
+    }
+
+    & {
+      margin-top: 0;
+    }
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -100,13 +122,37 @@ const TitleContainer = styled.div`
     }
 
     & img {
-      width: 20%;
+      width: 100px;
     }
   }
 
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 400px) {
     & h1 {
       font-size: 0.9rem;
+    }
+
+    & img {
+      width: 90px;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    & img {
+      width: 70px;
+    }
+
+    & {
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    & h1 {
+      font-size: 0.8rem;
+    }
+
+    & img {
+      width: 70px;
     }
   }
 `;
@@ -158,12 +204,6 @@ const InstructionsContainer = styled.div`
 
     & ${Instructions} h1 {
       font-size: 1.25rem !important;
-    }
-  }
-
-  @media screen and (max-width: 600px) {
-    &:last-child {
-      margin-bottom: 5rem;
     }
   }
 
@@ -250,7 +290,7 @@ function Home(props) {
           <img src={'./images/Yelp_Logo.svg'} />
         </a>
       </TitleContainer>
-      <Link to="/search" style={LinkStyle}>
+      <Link to="/search" style={LinkStyle} className="instructions-link">
         <InstructionsContainer>
           <ImageContainer className="instruction-img">
             <svg
@@ -303,7 +343,7 @@ function Home(props) {
           </ButtonContainer>
         </InstructionsContainer>
       </Link>
-      <Link to={props.userLoggedIn ? "/user/list" : "/login" }  style={LinkStyle}>
+      <Link to={props.userLoggedIn ? "/user/list" : "/login"} style={LinkStyle} className="instructions-link">
         <InstructionsContainer>
           <ImageContainer className="instruction-img">
             <svg
@@ -354,7 +394,7 @@ function Home(props) {
           </ButtonContainer>
         </InstructionsContainer>
       </Link>
-      <Link to="/random" style={LinkStyle}>
+      <Link to="/random" style={LinkStyle} className="instructions-link">
         <InstructionsContainer>
           <ImageContainer className="instruction-img">
             <svg
