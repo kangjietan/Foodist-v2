@@ -46,6 +46,7 @@ const TitleContainer = styled.div`
   @media screen and (max-width: 992px) {
     & {
       max-width: 768px;
+      margin-bottom: 2rem;
     }
 
     & h1 {
@@ -76,7 +77,6 @@ const TitleContainer = styled.div`
       width: 120px;
     }
   }
-
 
   @media screen and (max-width: 576px) {
     & h1 {
@@ -116,26 +116,71 @@ const InstructionsContainer = styled.div`
   max-width: 1200px;
 
   @media screen and (max-width: 1200px) {
+    & {
+      max-width: 992px;
+    }
 
+    & ${ImageContainer} .instruction-img svg {
+      width: 3rem !important;
+    }
+
+    & ${ButtonContainer} .button-chev svg {
+      width: 1rem !important;
+    }
+
+    & ${Instructions} p {
+      font-size: 1.2rem !important;
+    }
+
+    & ${Instructions} h1 {
+      font-size: 1.5rem !important;
+    }
   }
 
   @media screen and (max-width: 992px) {
-  }
+    & {
+      max-width: 768px;
+    }
 
-  @media screen and (max-width: 768px) {
+    & ${ImageContainer} .instruction-img svg {
+      width: 3rem !important;
+    }
+
+    & ${ButtonContainer} .button-chev svg {
+      width: 1rem !important;
+    }
+
+    & ${Instructions} h1 {
+      font-size: 1.25rem !important;
+    }
   }
 
   @media screen and (max-width: 600px) {
+    &:last-child {
+      margin-bottom: 5rem;
+    }
   }
 
-
   @media screen and (max-width: 576px) {
+    & ${ImageContainer} .instruction-img svg {
+      width: 2.75rem !important;
+    }
+
+    & ${ButtonContainer} .button-chev svg {
+      width: 1rem !important;
+    }
   }
 
   @media screen and (max-width: 480px) {
+    & ${Instructions} p {
+      font-size: 1.1rem !important;
+    }
   }
 
   @media screen and (max-width: 380px) {
+    & ${Instructions} p {
+      font-size: 1rem !important;
+    }
   }
 `;
 
@@ -150,6 +195,12 @@ const ImageContainer = styled.div`
   & svg {
     width: 4rem;
   }
+
+  @media screen and (max-width: 992px) {
+    & {
+      padding: 0 1rem;
+    }
+  }
 `;
 
 const Instructions = styled.div`
@@ -157,6 +208,13 @@ const Instructions = styled.div`
 
   & p {
     color: gray;
+    font-size: 1.25rem;
+  }
+
+  @media screen and (max-width: 992px) {
+    & {
+      margin-left: 1rem;
+    }
   }
 `;
 
@@ -179,7 +237,7 @@ function Home() {
         <img src={'./images/Yelp_Logo.svg'} />
       </TitleContainer>
       <InstructionsContainer>
-        <ImageContainer>
+        <ImageContainer className="instruction-img">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -205,12 +263,12 @@ function Home() {
           </svg>
         </ImageContainer>
         <Instructions>
-          <h3>Search</h3>
+          <h1>Search</h1>
           <p>
             Search for your favorite restaurants and add them to your list later.
           </p>
         </Instructions>
-        <ButtonContainer>
+        <ButtonContainer className="button-chev">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -230,7 +288,7 @@ function Home() {
         </ButtonContainer>
       </InstructionsContainer>
       <InstructionsContainer>
-        <ImageContainer>
+        <ImageContainer className="instruction-img">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -256,10 +314,10 @@ function Home() {
           </svg>
         </ImageContainer>
         <Instructions>
-          <h3>List</h3>
+          <h1>List</h1>
           <p>Create an account to start saving your lists.</p>
         </Instructions>
-        <ButtonContainer>
+        <ButtonContainer className="button-chev">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -279,7 +337,7 @@ function Home() {
         </ButtonContainer>
       </InstructionsContainer>
       <InstructionsContainer>
-        <ImageContainer>
+        <ImageContainer className="instruction-img">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -305,12 +363,12 @@ function Home() {
           </svg>
         </ImageContainer>
         <Instructions>
-          <h3>Random</h3>
+          <h1>Random</h1>
           <p>
             Not sure where to eat? Have a restaurant randomly chosen for you.
           </p>
         </Instructions>
-        <ButtonContainer>
+        <ButtonContainer className="button-chev">
           <svg
             aria-hidden="true"
             focusable="false"
