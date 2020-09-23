@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
+import PropTypes from 'prop-types';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -239,7 +241,7 @@ const LinkStyle = {
   maxWidth: '1200px',
 };
 
-function Home() {
+function Home(props) {
   return (
     <Container>
       <TitleContainer>
@@ -301,7 +303,7 @@ function Home() {
           </ButtonContainer>
         </InstructionsContainer>
       </Link>
-      <Link to="/user/list" style={LinkStyle}>
+      <Link to={props.userLoggedIn ? "/user/list" : "/login" }  style={LinkStyle}>
         <InstructionsContainer>
           <ImageContainer className="instruction-img">
             <svg
