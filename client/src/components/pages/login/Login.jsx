@@ -466,7 +466,7 @@ class Login extends Component {
               <ButtonGroup>
                 <Button>Sign In</Button>
                 <span>Or</span>
-                <MobileSignUpButton type="button" onClick={this.disableRightPanelActive}>Sign Up</MobileSignUpButton>
+                <MobileSignUpButton type="button" onClick={this.enableRightPanelActive}>Sign Up</MobileSignUpButton>
               </ButtonGroup>
             </SignInForm>
           </SignInContainer>
