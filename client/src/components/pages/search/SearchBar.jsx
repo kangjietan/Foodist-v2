@@ -3,17 +3,24 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  font-family: 'Roboto', sans-serif;
+  // width: 100%;
 `;
 
 const FormContainer = styled.div`
-  position: relative;
-  height: 50px;
-  width: 25%;
-  overflow: hidden;
+  display: flex;
 `;
 
-const Form = styled.form`
+const FormInputContainer = styled.div`
+  position: relative;
+  height: 50px;
+  overflow: hidden;
 
+  // background: #fff;
+  // box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  width: 100%;
+  margin-bottom: 2rem;
+  color: #b19cd9;
 `;
 
 const FormInput = styled.input`
@@ -37,7 +44,7 @@ const FormLabel = styled.label`
   width: 100%;
   height: 100%;
   pointer-events: none;
-  border-bottom: 1px solid black;
+  // border-bottom: 1px solid black;
 
   &::after {
     content: "";
@@ -65,10 +72,13 @@ class SearchBar extends Component {
 
     this.state = {
       searchTermActive: false,
+      locationActive: false,
     };
 
     this.enableSearchTermActive = this.enableSearchTermActive.bind(this);
     this.disableSearchTermActive = this.disableSearchTermActive.bind(this);
+    this.enableLocationActive = this.enableLocationActive.bind(this);
+    this.disableLocationActive = this.disableLocationActive.bind(this);
   }
 
   enableSearchTermActive() {
@@ -79,9 +89,17 @@ class SearchBar extends Component {
     this.setState({ searchTermActive: false });
   }
 
+  enableLocationActive() {
+    this.setState({ locationActive: true });
+  }
+
+  disableLocationActive() {
+    this.setState({ locationActive: false });
+  }
+
   render() {
-    const { searchTermActive } = this.state;
-    let searchTermStyle = {};
+    const { searchTermActive, locationActive } = this.state;
+    let searchTermStyle = {}, locationStyle = {};
 
     if (searchTermActive) {
       searchTermStyle = {
@@ -91,15 +109,29 @@ class SearchBar extends Component {
       }
     }
 
+    if (locationActive) {
+      locationStyle = {
+        transform: "translateY(-150%)",
+        fontSize: "14px",
+        color: "#5fa8d3",
+      }
+    }
+
     return (
       <Container>
         <FormContainer>
-          <Form>
+          <FormInputContainer>
             <FormInput onFocus={this.enableSearchTermActive} onBlur={this.disableSearchTermActive} />
             <FormLabel>
               <FormLabelText style={searchTermStyle}>Term</FormLabelText>
             </FormLabel>
-          </Form>
+          </FormInputContainer>
+          <FormInputContainer>
+            <FormInput onFocus={this.enableLocationActive} onBlur={this.disableLocationActive} />
+            <FormLabel>
+              <FormLabelText style={locationStyle}>Location</FormLabelText>
+            </FormLabel>
+          </FormInputContainer>
         </FormContainer>
       </Container>
     );
