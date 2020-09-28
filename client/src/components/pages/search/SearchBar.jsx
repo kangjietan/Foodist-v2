@@ -95,7 +95,7 @@ class SearchBar extends Component {
       <Container>
         <FormContainer>
           <Form>
-            <FormInput onClick={this.enableSearchTermActive} onBlur={this.disableSearchTermActive} />
+            <FormInput onFocus={this.enableSearchTermActive} onBlur={this.disableSearchTermActive} />
             <FormLabel>
               <FormLabelText style={searchTermStyle}>Term</FormLabelText>
             </FormLabel>
