@@ -13,5 +13,8 @@ export default function (state = initialState, action) {
           [action.offset]: action.payload,
         }),
       };
+
+    default:
+      return state;
   }
 }
