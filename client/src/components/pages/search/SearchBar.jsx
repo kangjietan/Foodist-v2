@@ -146,6 +146,10 @@ const ButtonContainer = styled.div`
       padding: 0.5rem 0;
       background: #b19cd9;
     }
+
+    & svg {
+      width: 2rem;
+    }
   }
 `;
 
