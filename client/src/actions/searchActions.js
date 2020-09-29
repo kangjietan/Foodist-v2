@@ -4,11 +4,12 @@ import axios from "axios";
 
 export const searchBusinessesYelp = (params) => (dispatch) => {
   axios
-    .get("/yelp/search", params)
+    .get("/yelp/search", { params })
     .then((response) => {
+      console.log(response);
       dispatch({
         type: actions.SEARCH_BUSINESSES_YELP,
-        payload: response.data,
+        payload: response.data.businesses,
         offset: params.offset,
       });
     })
