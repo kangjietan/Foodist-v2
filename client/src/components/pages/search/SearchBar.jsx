@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { searchBusinessesYelp } from '../../../actions/searchActions';
+
 const Container = styled.div`
   font-family: 'Roboto', sans-serif;
   margin-top: 1rem;
@@ -57,7 +62,6 @@ const FormLabel = styled.label`
   width: 100%;
   height: 100%;
   pointer-events: none;
-  // border-bottom: 1px solid black;
 
   &::after {
     content: "";
@@ -91,6 +95,7 @@ const ButtonContainer = styled.div`
   margin: auto;
   & svg {
     width: 3rem;
+    color: #5fa8d3;
   }
 `;
 
@@ -110,6 +115,7 @@ class SearchBar extends Component {
     this.enableLocationActive = this.enableLocationActive.bind(this);
     this.disableLocationActive = this.disableLocationActive.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleFormSubmission = this.handleFormSubmission.bind(this);
   }
 
   enableSearchTermActive() {
@@ -133,6 +139,18 @@ class SearchBar extends Component {
     const { name, value } = target;
 
     this.setState({ [name]: value });
+  }
+
+  handleFormSubmission(event) {
+    event.preventDefault();
+
+    const { searchInput: term, locationInput: location } = this.state;
+
+    const params = {
+      term,
+      location,
+      offset: 0
+    };
   }
 
   render() {
@@ -161,11 +179,13 @@ class SearchBar extends Component {
     return (
       <Container>
         <FormContainer>
-          <SearchForm>
+          <SearchForm onSubmit={this.handleFormSubmission}>
             <FormInputContainer>
               <FormInput
                 type="text"
                 name="searchInput"
+                autoComplete="off"
+                required="required"
                 onFocus={this.enableSearchTermActive}
                 onBlur={this.disableSearchTermActive}
                 value={searchInput}
@@ -179,6 +199,8 @@ class SearchBar extends Component {
               <FormInput
                 type="text"
                 name="locationInput"
+                autoComplete="off"
+                required="required"
                 onFocus={this.enableLocationActive}
                 onBlur={this.disableLocationActive}
                 value={locationInput}
@@ -222,4 +244,10 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+SearchBar.propTypes = {
+  searchBusinessesYelp: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = { searchBusinessesYelp };
+
+export default connect(null, mapDispatchToProps)(SearchBar);
