@@ -178,6 +178,7 @@ class SearchBar extends Component {
 
     if (!locationActive && locationInput.length !== 0) locationStyle = labelFilledStyle;
 
+    console.log(this.props);
     return (
       <Container>
         <FormContainer>
@@ -248,6 +249,7 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   searchBusinessesYelp: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = { searchBusinessesYelp };
