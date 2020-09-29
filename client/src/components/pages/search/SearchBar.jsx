@@ -145,12 +145,14 @@ class SearchBar extends Component {
     event.preventDefault();
 
     const { searchInput: term, locationInput: location } = this.state;
-
     const params = {
       term,
       location,
-      offset: 0
+      offset: 0,
     };
+
+    this.props.searchBusinessesYelp(params);
+    this.props.history.push(`/search?term=${term}&location=${location}`);
   }
 
   render() {
