@@ -10,23 +10,33 @@ import { searchBusinessesYelp } from '../../../actions/searchActions';
 const Container = styled.div`
   font-family: 'Roboto', sans-serif;
   margin-top: 1rem;
-  width: 75%;
+  width: 100%;
   max-width: 1200px;
   font-size: 1.25rem;
 `;
 
 const FormContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   max-width: 1200px;
-  background: #fff;
+  background: #b19cd9;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 1rem;
+
+  @media screen and (max-width: 600px) {
+    & {
+      background: none;
+    }
+  }
 `;
 
 const SearchForm = styled.form`
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const FormInputContainer = styled.div`
@@ -34,9 +44,36 @@ const FormInputContainer = styled.div`
   height: 75px;
   overflow: hidden;
   width: 100%;
-  color: #b19cd9;
+  color: black;
+  transition: all 0.4s ease;
+
   &:first-child {
-    margin-right: 1rem;
+    margin-right: 0.10rem;
+  }
+
+  @media screen and (max-width: 600px) {
+    &:first-child {
+      margin-right: 0rem;
+    }
+
+    &:nth-child(2) {
+      width: 0%;
+      height: 0;
+    }
+
+    &:first-child:hover + &:nth-child(2),
+    &:first-child:focus + &:nth-child(2),
+    &:first-child:active + &:nth-child(2) {
+      width: 100%;
+      height: 75px;
+    }
+
+    &:nth-child(2):hover,
+    &:nth-child(2):focus,
+    &:nth-child(2):active {
+      width: 100%;
+      height: 75px;
+    }
   }
 `;
 
@@ -88,14 +125,27 @@ const SearchButton = styled.button`
   border: none;
   outline: none;
   background: none;
+  cursor: pointer;
 `;
 
 const ButtonContainer = styled.div`
   padding: 0.5rem 0.5rem;
   margin: auto;
+  cursor: pointer;
+  
   & svg {
     width: 3rem;
     color: #5fa8d3;
+  }
+
+  @media screen and (max-width: 600px) {
+    & {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 0.5rem 0;
+      background: #b19cd9;
+    }
   }
 `;
 
@@ -178,7 +228,6 @@ class SearchBar extends Component {
 
     if (!locationActive && locationInput.length !== 0) locationStyle = labelFilledStyle;
 
-    console.log(this.props);
     return (
       <Container>
         <FormContainer>
@@ -189,6 +238,7 @@ class SearchBar extends Component {
                 name="searchInput"
                 autoComplete="off"
                 required="required"
+                maxLength="64"
                 onFocus={this.enableSearchTermActive}
                 onBlur={this.disableSearchTermActive}
                 value={searchInput}
@@ -204,6 +254,7 @@ class SearchBar extends Component {
                 name="locationInput"
                 autoComplete="off"
                 required="required"
+                maxLength="80"
                 onFocus={this.enableLocationActive}
                 onBlur={this.disableLocationActive}
                 value={locationInput}
