@@ -205,8 +205,13 @@ class SearchBar extends Component {
       offset: 0,
     };
 
-    this.props.searchBusinessesYelp(params);
-    this.props.history.push(`/search?term=${term}&location=${location}`);
+    this.props.searchBusinessesYelp(params)
+      .then((response) => {
+        this.props.history.push('/loading');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
