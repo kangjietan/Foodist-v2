@@ -81,6 +81,23 @@ const Transactions = styled.div`
 
 `;
 
+// Format the food topics
+const topics = (list) => {
+  let categories = '';
+  list.forEach((entry) => { categories += `${entry.title}, `; });
+  categories = categories.substring(0, categories.length - 2);
+  return categories;
+};
+
+// Format the transaction types
+const methods = (list) => {
+  let categories = '';
+  list.forEach((entry) => { categories += `${entry}, `; });
+  categories = categories.substring(0, categories.length - 2);
+  categories = categories.split('_').join(' ');
+  return categories;
+};
+
 function ResultBusiness(props) {
   const { business } = props;
 
@@ -101,8 +118,8 @@ function ResultBusiness(props) {
           </RatingContainer>
         </MainInformationContainer>
         <CategoriesTransactionsContainer>
-          {/* <Categories>{business.categories}</Categories> */}
-          <Transactions>{business.transactions}</Transactions>
+          <Categories>{topics(business.categories)}</Categories>
+          <Transactions>{`Offers: ${methods(business.transactions)}`}</Transactions>
         </CategoriesTransactionsContainer>
       </InformationContainer>
     </Container>
