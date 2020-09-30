@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import GlobalStyle from './theme/GlobalStyle';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Home from './pages/home/Home';
 import Search from './pages/search/Search';
 import List from './pages/list/List';
@@ -24,6 +24,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/search" component={Search} />
+              <Route exact path="/loading" component={() => <Redirect to="/search" />} />
               <Route exact path="/:user/list" component={List} />
               <Route exact path="/random" component={Random} />
               <Route exact path="/login" component={Login} />
