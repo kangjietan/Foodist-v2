@@ -106,6 +106,7 @@ const NavigationBar = styled.nav`
       bottom: 0;
       width: 100vw;
       height: 5rem;
+      z-index: 10;
     }
   
     #logo {
