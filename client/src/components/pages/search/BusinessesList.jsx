@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 
-import { connect } from 'react-redux';
-
 import ResultBusiness from '../../businesses/ResultBusiness';
 
 const Container = styled.div`
@@ -31,8 +29,4 @@ BusinessesList.propTypes = {
   searchResults: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  searchResults: state.search.searchResults,
-});
-
-export default connect(mapStateToProps, null)(BusinessesList);
+export default BusinessesList;
