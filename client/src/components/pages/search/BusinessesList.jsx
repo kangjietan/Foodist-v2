@@ -9,17 +9,20 @@ import { connect } from 'react-redux';
 import ResultBusiness from '../../businesses/ResultBusiness';
 
 const Container = styled.div`
-margin: 5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 2rem;
 `;
 
 function BusinessesList(props) {
   let offset = 0;
   let results = props.searchResults[offset] ? props.searchResults[offset] : {};
   let businesses = Object.keys(results).map((id) => results[id]);
-  
+
   return (
     <Container>
-      {businesses.map((business) => <ResultBusiness business={business} />)}
+      {businesses.map((business) => <ResultBusiness key={business.id} business={business} />)}
     </Container>
   );
 }
