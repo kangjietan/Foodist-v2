@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`
-  width: 35%;
+  width: 45rem;
   padding: 3rem;
   background-color: #fff;
   box-shadow: 0 1.4rem 8rem rgba(0, 0, 0, 0.2);
@@ -13,6 +13,7 @@ const Container = styled.div`
   align-items: center;
   border-radius: 1rem;
   margin-bottom: 1rem;
+  position: relative;
 `;
 
 const ImageContainer = styled.div`
@@ -32,53 +33,70 @@ const Image = styled.img`
 `;
 
 const InformationContainer = styled.div`
-  // height: 100%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-3rem);
+  font-size: 1.20rem;
 `;
 
 /* START */
 const MainInformationContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
 `;
 
-const MainInformationTitle = styled.div`
-
+const MainInformation = styled.div`
 `;
 
 const BusinessName = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: bold;
+  margin-bottom: 0.2rem;
 `;
 
 const BusinessAddress = styled.div`
-
+  margin-bottom: 0.2rem;
 `;
 
 const RatingContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  margin-bottom: 0.2rem;
 `;
 
 const Rating = styled.div`
-
+  margin-right: 0.5rem;
 `;
 
 const ReviewCount = styled.div`
-  
+`;
+
+const Price = styled.div`
 `;
 
 /* END */
 
 const CategoriesTransactionsContainer = styled.div`
-
+  margin-bottom: 0.2rem;
 `;
 
 const Categories = styled.div`
-
+  margin-bottom: 0.2rem;
 `;
 
 const Transactions = styled.div`
+`;
 
+const YelpLogo = styled.div`
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+
+  & img {
+    width: 50px;
+  }
 `;
 
 // Format the food topics
@@ -101,7 +119,6 @@ const methods = (list) => {
 // Format rating image url src
 const ratings = (num) => {
   let rating = num.toString();
-
   let check = rating.split("");
 
   if (check[check.length - 1] === '5' && check.length === 3) {
@@ -122,28 +139,34 @@ function ResultBusiness(props) {
       </ImageContainer>
       <InformationContainer>
         <MainInformationContainer>
-          <MainInformationTitle>
+          <MainInformation>
             <BusinessName>{business.name}</BusinessName>
+            <RatingContainer>
+              {
+                business.rating
+                  ?
+                  <Rating>
+                    <img src={ratings(business.rating)} />
+                  </Rating>
+                  :
+                  null
+              }
+              <ReviewCount>{business.review_count}</ReviewCount>
+              {/* <Price>{business.price}</Price> */}
+            </RatingContainer>
             <BusinessAddress>{business.location.address1}</BusinessAddress>
-          </MainInformationTitle>
-          <RatingContainer>
-            {
-              business.rating
-                ?
-                <Rating>
-                  <img src={ratings(business.rating)} />
-                </Rating>
-                :
-                null
-            }
-            <ReviewCount>{business.review_count}</ReviewCount>
-          </RatingContainer>
+          </MainInformation>
         </MainInformationContainer>
         <CategoriesTransactionsContainer>
           <Categories>{topics(business.categories)}</Categories>
           <Transactions>{`Offers: ${methods(business.transactions)}`}</Transactions>
         </CategoriesTransactionsContainer>
       </InformationContainer>
+      <YelpLogo>
+        <a href={business.url} target="_blank">
+          <img src='./images/Yelp_Logo.svg' />
+        </a>
+      </YelpLogo>
     </Container>
   );
 }
