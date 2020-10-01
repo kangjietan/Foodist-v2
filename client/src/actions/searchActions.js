@@ -7,7 +7,6 @@ export const searchBusinessesYelp = (params) => (dispatch) => {
     axios
       .get("/yelp/search", { params })
       .then((response) => {
-        console.log(response);
         let data = {};
         response.data.businesses.forEach((entry) => (data[entry.id] = entry));
 
@@ -20,8 +19,14 @@ export const searchBusinessesYelp = (params) => (dispatch) => {
         resolve("Stored");
       })
       .catch((error) => {
-        console.error(error);
         reject(error);
       });
+  });
+};
+
+export const updateSearchTermAndLocation = (update) => (dispatch) => {
+  dispatch({
+    type: actions.UPDATE_SEARCH_TERM_AND_LOCATION,
+    payload: update,
   });
 };
