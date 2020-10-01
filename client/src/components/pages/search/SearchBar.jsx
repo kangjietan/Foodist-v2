@@ -172,6 +172,14 @@ class SearchBar extends Component {
     this.handleFormSubmission = this.handleFormSubmission.bind(this);
   }
 
+  componentDidMount() {
+    const { term, location } = this.props;
+    const { searchInput, locationInput } = this.state;
+    if (searchInput !== term || locationInput !== location) {
+      this.setState({ searchInput: term, locationInput: location });
+    }
+  }
+
   enableSearchTermActive() {
     this.setState({ searchTermActive: true });
   }
@@ -205,11 +213,9 @@ class SearchBar extends Component {
       offset: 0,
     };
 
-    this.props.updateSearchTermAndLocation({ term, location });
-
     this.props.searchBusinessesYelp(params)
       .then((response) => {
-        this.props.history.push('/loading');
+        this.props.updateSearchTermAndLocation({ term, location });
       })
       .catch((error) => {
         console.error(error);
@@ -312,9 +318,13 @@ class SearchBar extends Component {
 SearchBar.propTypes = {
   searchBusinessesYelp: PropTypes.func.isRequired,
   updateSearchTermAndLocation: PropTypes.func.isRequired,
-  push: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = { searchBusinessesYelp, updateSearchTermAndLocation };
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+const mapStateToProps = (state) => ({
+  term: state.search.term,
+  location: state.search.location,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
