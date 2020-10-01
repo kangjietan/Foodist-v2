@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { searchBusinessesYelp } from '../../../actions/searchActions';
+import { searchBusinessesYelp, updateSearchTermAndLocation } from '../../../actions/searchActions';
 
 const Container = styled.div`
   font-family: 'Roboto', sans-serif;
@@ -205,6 +205,8 @@ class SearchBar extends Component {
       offset: 0,
     };
 
+    this.props.updateSearchTermAndLocation({ term, location });
+
     this.props.searchBusinessesYelp(params)
       .then((response) => {
         this.props.history.push('/loading');
@@ -309,9 +311,10 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   searchBusinessesYelp: PropTypes.func.isRequired,
+  updateSearchTermAndLocation: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = { searchBusinessesYelp };
+const mapDispatchToProps = { searchBusinessesYelp, updateSearchTermAndLocation };
 
 export default connect(null, mapDispatchToProps)(SearchBar);
