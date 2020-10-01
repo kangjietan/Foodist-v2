@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import styled from 'styled-components';
+
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import SearchBar from './SearchBar';
 
@@ -13,13 +17,45 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-function Search(props) {
-  return (
-    <Container>
-      <SearchBar {...props} />
-      <BusinessesList />
-    </Container>
-  );
+class Search extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      term: "",
+      location: "",
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { term, location } = this.props;
+    const { term: prevTerm, location: prevLocation } = prevProps;
+
+    if (prevTerm !== term || prevLocation !== location) {
+      this.setState({ term, location });
+    }
+  }
+
+  render() {
+    return (
+      <Container>
+        <SearchBar />
+        <BusinessesList searchResults={this.props.searchResults} />
+      </Container>
+    );
+  }
 }
 
-export default Search;
+Search.propTypes = {
+  term: PropTypes.string,
+  location: PropTypes.string,
+  searchResults: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  term: state.search.term,
+  location: state.search.location,
+  searchResults: state.search.searchResults,
+});
+
+export default connect(mapStateToProps, null)(Search);
