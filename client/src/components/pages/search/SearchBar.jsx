@@ -316,6 +316,8 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
+  term: PropTypes.string,
+  location: PropTypes.string,
   searchBusinessesYelp: PropTypes.func.isRequired,
   updateSearchTermAndLocation: PropTypes.func.isRequired,
 };
