@@ -98,9 +98,23 @@ const methods = (list) => {
   return categories;
 };
 
+// Format rating image url src
+const ratings = (num) => {
+  let rating = num.toString();
+
+  let check = rating.split("");
+
+  if (check[check.length - 1] === '5' && check.length === 3) {
+    rating = `${check[0]}_half`;
+  }
+
+  const url = `./images/yelp_stars/web_and_ios/regular/regular_${rating}.png`
+
+  return url;
+}
+
 function ResultBusiness(props) {
   const { business } = props;
-
   return (
     <Container>
       <ImageContainer>
@@ -113,8 +127,16 @@ function ResultBusiness(props) {
             <BusinessAddress>{business.location.address1}</BusinessAddress>
           </MainInformationTitle>
           <RatingContainer>
+            {
+              business.rating
+                ?
+                <Rating>
+                  <img src={ratings(business.rating)} />
+                </Rating>
+                :
+                null
+            }
             <ReviewCount>{business.review_count}</ReviewCount>
-            <Rating>{business.rating}</Rating>
           </RatingContainer>
         </MainInformationContainer>
         <CategoriesTransactionsContainer>
