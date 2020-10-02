@@ -84,7 +84,7 @@ const FormInput = styled.input`
   padding-top: 20px;
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: 1.3rem;
 
   &:focus + ${FormLabel}::after,
   &:active + ${FormLabel}::after {
