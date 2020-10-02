@@ -16,6 +16,22 @@ const Container = styled.div`
   margin-bottom: 1rem;
   position: relative;
   margin-right: 1rem;
+
+  @media screen and (max-width: 1000px) {
+    width: 30rem;
+    margin-right: 0;  
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    max-width: 400px;
+    padding: 2.5rem;
+    margin: 2rem 0;
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -24,6 +40,17 @@ const ImageContainer = styled.div`
   height: 15rem;
   transform: translateX(-4rem);
   position: relative;
+
+  @media screen and (max-width: 1000px) {
+    min-width: 15rem;
+    max-width: 15rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    min-width: 100%;
+    max-width: 100%;
+    transform: translate(0, -4rem);
+  }
 `;
 
 const Image = styled.img`
@@ -39,13 +66,19 @@ const InformationContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  transform: translateX(-3rem);
+  transform: translateX(-2.5rem);
   font-size: 1.20rem;
+
+  @media screen and (max-width: 768px) {
+    align-items: center;
+    transform: translateX(0);
+    text-align: center;
+  }
 `;
 
 /* START */
 const MainInformationContainer = styled.div`
-  width: 100%;
+  // width: 100%;
   display: flex;
   justify-content: space-between;
 `;
