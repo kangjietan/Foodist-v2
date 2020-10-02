@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 const Container = styled.div`
   width: 45rem;
+  max-width: 768px;
   padding: 3rem;
   background-color: #fff;
   box-shadow: 0 1.4rem 8rem rgba(0, 0, 0, 0.2);
@@ -14,12 +15,13 @@ const Container = styled.div`
   border-radius: 1rem;
   margin-bottom: 1rem;
   position: relative;
+  margin-right: 1rem;
 `;
 
 const ImageContainer = styled.div`
-  min-width: 15rem;
-  max-width: 15rem;
-  height: 10rem;
+  min-width: 20rem;
+  max-width: 20rem;
+  height: 15rem;
   transform: translateX(-4rem);
   position: relative;
 `;
@@ -54,16 +56,16 @@ const MainInformation = styled.div`
 const BusinessName = styled.div`
   font-size: 1.35rem;
   font-weight: bold;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 `;
 
 const BusinessAddress = styled.div`
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 `;
 
 const RatingContainer = styled.div`
   display: flex;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 `;
 
 const Rating = styled.div`
@@ -79,11 +81,11 @@ const Price = styled.div`
 /* END */
 
 const CategoriesTransactionsContainer = styled.div`
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 `;
 
 const Categories = styled.div`
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 `;
 
 const Transactions = styled.div`
@@ -96,6 +98,32 @@ const YelpLogo = styled.div`
 
   & img {
     width: 50px;
+  }
+`;
+
+const ButtonContainer = styled.div`
+
+`;
+
+const AddButton = styled.button`
+  background: none;
+  width: 120px;
+  height: 40px;
+  border: 1px solid #28a745;
+  font-size: 18px;
+  border-radius: 4px;
+  transition: 0.6s;
+  overflow: hidden;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: #28a745;
+    color: white;
   }
 `;
 
@@ -151,16 +179,33 @@ function ResultBusiness(props) {
                   :
                   null
               }
-              <ReviewCount>{business.review_count}</ReviewCount>
-              {/* <Price>{business.price}</Price> */}
+              <ReviewCount>{business.review_count}&nbsp;</ReviewCount>
+              {
+                business.price
+                  ?
+                  <Price><span>&#183;</span>&nbsp;{business.price}</Price>
+                  :
+                  null
+              }
             </RatingContainer>
             <BusinessAddress>{business.location.address1}</BusinessAddress>
           </MainInformation>
         </MainInformationContainer>
         <CategoriesTransactionsContainer>
           <Categories>{topics(business.categories)}</Categories>
-          <Transactions>{`Offers: ${methods(business.transactions)}`}</Transactions>
+          {
+            business.transactions.length !== 0
+              ?
+              <Transactions>{`Offers: ${methods(business.transactions)}`}</Transactions>
+              :
+              null
+          }
         </CategoriesTransactionsContainer>
+        <ButtonContainer>
+          <AddButton type="button">
+            Add to list
+          </AddButton>
+        </ButtonContainer>
       </InformationContainer>
       <YelpLogo>
         <a href={business.url} target="_blank">
