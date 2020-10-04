@@ -12,6 +12,7 @@ import Random from './pages/random/Random';
 import Login from './pages/login/Login';
 
 import NavBar from './NavBar';
+import ScrollTop from './scroll/ScrollTop';
 
 class App extends Component {
   render() {
@@ -29,6 +30,7 @@ class App extends Component {
               <Route exact path="/random" component={Random} />
               <Route exact path="/login" component={Login} />
             </Switch>
+            <ScrollTop />
           </main>
         </Router>
       </div>
