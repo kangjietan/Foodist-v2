@@ -2,6 +2,8 @@ import * as actions from "../actions/types";
 
 let initialState = {
   userLoggedIn: false,
+  favoritesList: {},
+  customList: {},
 };
 
 export default function (state = initialState, action) {
@@ -10,6 +12,40 @@ export default function (state = initialState, action) {
       return {
         ...state,
         userLoggedIn: action.payload,
+      };
+
+    case actions.ADD_TO_CUSTOM_LIST:
+      return {
+        ...state,
+        customList: Object.assign({}, state.customList, {
+          [action.payload.id]: action.payload,
+        }),
+      };
+
+    case actions.REMOVE_FROM_CUSTOM_LIST:
+      let newCustomList = Object.assign(state.customList);
+      delete newCustomList[action.payload.id];
+
+      return {
+        ...state,
+        customList: newCustomList,
+      };
+
+    case actions.ADD_TO_FAVORITES_LIST:
+      return {
+        ...state,
+        favoritesList: Object.assign({}, state.favoritesList, {
+          [action.payload.id]: action.payload,
+        }),
+      };
+
+    case actions.REMOVE_FROM_FAVORITES_LIST:
+      let newFavoritesList = Object.assign(state.favoritesList);
+      delete newFavoritesList[action.payload.id];
+
+      return {
+        ...state,
+        favoritesList: newFavoritesList,
       };
 
     default:
