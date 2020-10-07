@@ -13,20 +13,32 @@ const Container = styled.div`
   margin-top: 2rem;
 `;
 
-function BusinessesList(props) {
+function BusinessesList({searchResults, customList, favoritesList}) {
   let offset = 0;
-  let results = props.searchResults[offset] ? props.searchResults[offset] : {};
+  let results = searchResults[offset] ? searchResults[offset] : {};
   let businesses = Object.keys(results).map((id) => results[id]);
 
   return (
     <Container>
-      {businesses.map((business) => <ResultBusiness key={business.id} business={business} />)}
+      {businesses.map((business) => {
+        let customListAdded = customList[business.id] === undefined ? false : true;
+        let favoritesListAdded = favoritesList[business.id] === undefined ? false : true;
+        
+        let listAdded = {
+          customListAdded,
+          favoritesListAdded,
+        };
+
+        return <ResultBusiness key={business.id} business={business} listAdded={listAdded} />
+      })}
     </Container>
   );
 }
 
 BusinessesList.propTypes = {
   searchResults: PropTypes.object.isRequired,
+  customList: PropTypes.object.isRequired,
+  favoritesList: PropTypes.object.isRequired,
 }
 
 export default BusinessesList;
