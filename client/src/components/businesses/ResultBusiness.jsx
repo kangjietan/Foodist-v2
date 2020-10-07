@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList } from '../../actions/userActions';
 
 const Container = styled.div`
   width: 45rem;
@@ -174,12 +177,12 @@ const ButtonList = styled.ul`
   transition: all 0.4s ease;
   transform: translateY(-10px);
   opacity: 0;
-  pointer-events: none;
+  visibility: hidden;
 
   ${AddButton}:focus + & {
     transform: translateY(0);
     opacity: 1;
-    pointer-events: all;
+    visibility: visible;
   }
 `;
 
@@ -233,7 +236,38 @@ const ratings = (num) => {
 }
 
 function ResultBusiness(props) {
-  const { business } = props;
+  const {
+    business,
+    listAdded,
+    addToCustomList,
+    removeFromCustomList,
+    addToFavoritesList,
+    removeFromFavoritesList,
+  } = props;
+
+  const [addedToCustomList, setAddedToCustomList] = useState(listAdded.customListAdded);
+  const [addedToFavoritesList, setAddedToFavoritesList] = useState(listAdded.favoritesListAdded);
+
+  const handleCustomList = () => {
+    if (addedToCustomList) {
+      removeFromCustomList(business);
+      setAddedToCustomList(false);
+    } else {
+      addToCustomList(business);
+      setAddedToCustomList(true);
+    }
+  }
+
+  const handleFavoritesList = () => {
+    if (addedToFavoritesList) {
+      removeFromFavoritesList(business);
+      setAddedToFavoritesList(false);
+    } else {
+      addToFavoritesList(business);
+      setAddedToFavoritesList(true);
+    }
+  }
+
   return (
     <Container>
       <ImageContainer>
@@ -280,8 +314,8 @@ function ResultBusiness(props) {
             Select list...
           </AddButton>
           <ButtonList>
-            <ButtonListItem>Add to custom list</ButtonListItem>
-            <ButtonListItem>Add to favorites</ButtonListItem>
+            <ButtonListItem onClick={handleCustomList}>{addedToCustomList ? "Remove from" : "Add to"} custom list</ButtonListItem>
+            <ButtonListItem onClick={handleFavoritesList}>{addedToFavoritesList ? "Remove from" : "Add to"} favorites</ButtonListItem>
           </ButtonList>
         </ButtonContainer>
       </InformationContainer>
@@ -295,7 +329,14 @@ function ResultBusiness(props) {
 }
 
 ResultBusiness.propTypes = {
-  
+  business: PropTypes.object.isRequired,
+  listAdded: PropTypes.object.isRequired,
+  addToCustomList: PropTypes.func.isRequired,
+  removeFromCustomList: PropTypes.func.isRequired,
+  addToFavoritesList: PropTypes.func.isRequired,
+  removeFromFavoritesList: PropTypes.func.isRequired,
 };
 
-export default ResultBusiness;
+const mapDispatchToProps = { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList }
+
+export default connect(null, mapDispatchToProps)(ResultBusiness);
