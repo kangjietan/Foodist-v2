@@ -52,6 +52,8 @@ Search.propTypes = {
   term: PropTypes.string,
   location: PropTypes.string,
   searchResults: PropTypes.object.isRequired,
+  customList: PropTypes.object.isRequired,
+  favoritesList: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
