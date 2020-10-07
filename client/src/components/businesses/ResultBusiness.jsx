@@ -26,7 +26,7 @@ const Container = styled.div`
     flex-direction: column;
     max-width: 400px;
     padding: 2.5rem;
-    margin: 2rem 0;
+    margin: 2.5rem 0;
   }
 
   @media screen and (max-width: 600px) {
@@ -73,6 +73,7 @@ const InformationContainer = styled.div`
     align-items: center;
     transform: translateX(0);
     text-align: center;
+    z-index: 2;
   }
 `;
 
@@ -83,8 +84,7 @@ const MainInformationContainer = styled.div`
   justify-content: space-between;
 `;
 
-const MainInformation = styled.div`
-`;
+const MainInformation = styled.div``;
 
 const BusinessName = styled.div`
   font-size: 1.35rem;
@@ -105,11 +105,9 @@ const Rating = styled.div`
   margin-right: 0.5rem;
 `;
 
-const ReviewCount = styled.div`
-`;
+const ReviewCount = styled.div``;
 
-const Price = styled.div`
-`;
+const Price = styled.div``;
 
 /* END */
 
@@ -121,8 +119,7 @@ const Categories = styled.div`
   margin-bottom: 0.25rem;
 `;
 
-const Transactions = styled.div`
-`;
+const Transactions = styled.div``;
 
 const YelpLogo = styled.div`
   position: absolute;
@@ -135,14 +132,14 @@ const YelpLogo = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-
+  position: relative;
 `;
 
 const AddButton = styled.button`
   background: none;
   width: 120px;
   height: 40px;
-  border: 1px solid #28a745;
+  border: 1px solid #b19cd9;
   font-size: 18px;
   border-radius: 4px;
   transition: 0.6s;
@@ -155,7 +152,47 @@ const AddButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: #28a745;
+    background: #b19cd9;
+    color: white;
+  }
+`;
+
+const ButtonList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  position: absolute;
+  background: white;
+  margin-top: 10px;
+  padding: 0;
+  width: 225px;
+  height: 100px;
+  border: 1px solid #b19cd9;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+
+  ${AddButton}:focus + & {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+`;
+
+const ButtonListItem = styled.li`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #b19cd9;
     color: white;
   }
 `;
@@ -236,8 +273,12 @@ function ResultBusiness(props) {
         </CategoriesTransactionsContainer>
         <ButtonContainer>
           <AddButton type="button">
-            Add to list
+            Select list...
           </AddButton>
+          <ButtonList>
+            <ButtonListItem>Add to custom list</ButtonListItem>
+            <ButtonListItem>Add to favorites</ButtonListItem>
+          </ButtonList>
         </ButtonContainer>
       </InformationContainer>
       <YelpLogo>
@@ -248,5 +289,9 @@ function ResultBusiness(props) {
     </Container>
   );
 }
+
+ResultBusiness.propTypes = {
+  
+};
 
 export default ResultBusiness;
