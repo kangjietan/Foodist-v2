@@ -37,10 +37,12 @@ class Search extends Component {
   }
 
   render() {
+    const { searchResults, customList, favoritesList } = this.props;
+
     return (
       <Container>
         <SearchBar />
-        <BusinessesList searchResults={this.props.searchResults} />
+        <BusinessesList searchResults={searchResults} customList={customList} favoritesList={favoritesList} />
       </Container>
     );
   }
@@ -56,6 +58,8 @@ const mapStateToProps = (state) => ({
   term: state.search.term,
   location: state.search.location,
   searchResults: state.search.searchResults,
+  customList: state.user.customList,
+  favoritesList: state.user.favoritesList,
 });
 
 export default connect(mapStateToProps, null)(Search);
