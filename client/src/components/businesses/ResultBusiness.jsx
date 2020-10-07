@@ -195,6 +195,10 @@ const ButtonListItem = styled.li`
     background-color: #b19cd9;
     color: white;
   }
+  
+  &:first-child {
+    border-bottom: 1px solid #b19cd9;
+  }
 `;
 
 // Format the food topics
