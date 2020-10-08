@@ -89,8 +89,6 @@ function ListPagination({ offset, updateOffset }) {
   let prevStyle = currentActivePage === 1 ? { pointerEvents: 'none', fontWeight: '100' } : {};
   let nextStyle = currentActivePage === 5 ? { pointerEvents: 'none', fontWeight: '100' } : {};
 
-  let scrollBackToTop = window.pageYOffset > 0 ? true : false;
-
   let activePageStyle = {
     background: '#b19cd9',
     color: '#fff',
@@ -130,24 +128,24 @@ function ListPagination({ offset, updateOffset }) {
     const { innerText } = event.target;
     const pageNumber = Number(innerText);
 
+    window.scrollTo({ top: 0, behavior: 'auto' });
+
     setCurrentActivePage(pageNumber);
     updateOffset(pageNumber - 1);
-
-    if (scrollBackToTop) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const handleNextClick = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+
     updateOffset(currentActivePage);
     setCurrentActivePage(currentActivePage + 1);
-
-    if (scrollBackToTop) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const handlePreviousClick = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+
     updateOffset(currentActivePage - 2);
     setCurrentActivePage(currentActivePage - 1);
-
-    if (scrollBackToTop) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   return (
