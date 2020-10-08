@@ -166,6 +166,7 @@ function ListPagination({ offset, updateOffset }) {
 
 ListPagination.propTypes = {
   updateOffset: PropTypes.func.isRequired,
+  offset: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = { updateOffset };
