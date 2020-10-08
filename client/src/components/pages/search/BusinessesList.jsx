@@ -13,8 +13,7 @@ const Container = styled.div`
   margin-top: 2rem;
 `;
 
-function BusinessesList({searchResults, customList, favoritesList}) {
-  let offset = 0;
+function BusinessesList({ searchResults, customList, favoritesList, offset }) {
   let results = searchResults[offset] ? searchResults[offset] : {};
   let businesses = Object.keys(results).map((id) => results[id]);
 
@@ -23,7 +22,7 @@ function BusinessesList({searchResults, customList, favoritesList}) {
       {businesses.map((business) => {
         let customListAdded = customList[business.id] === undefined ? false : true;
         let favoritesListAdded = favoritesList[business.id] === undefined ? false : true;
-        
+
         let listAdded = {
           customListAdded,
           favoritesListAdded,
@@ -39,6 +38,7 @@ BusinessesList.propTypes = {
   searchResults: PropTypes.object.isRequired,
   customList: PropTypes.object.isRequired,
   favoritesList: PropTypes.object.isRequired,
+  offset: PropTypes.number.isRequired,
 }
 
 export default BusinessesList;
