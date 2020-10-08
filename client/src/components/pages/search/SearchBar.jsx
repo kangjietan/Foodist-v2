@@ -101,7 +101,7 @@ const FormLabel = styled.label`
   pointer-events: none;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     bottom: -1px;
@@ -160,8 +160,8 @@ class SearchBar extends Component {
     this.state = {
       searchTermActive: false,
       locationActive: false,
-      searchInput: "",
-      locationInput: "",
+      searchInput: '',
+      locationInput: '',
     };
 
     this.enableSearchTermActive = this.enableSearchTermActive.bind(this);
@@ -228,13 +228,13 @@ class SearchBar extends Component {
     let searchTermStyle = {}, locationStyle = {};
 
     let labelFocusStyle = {
-      transform: "translateY(-140%)",
-      fontSize: "0.9rem",
-      color: "#5fa8d3",
+      transform: 'translateY(-140%)',
+      fontSize: '0.9rem',
+      color: '#5fa8d3',
     };
 
     let labelFilledStyle = {
-      transform: "translateY(-140%)",
+      transform: 'translateY(-140%)',
     };
 
     if (searchTermActive) searchTermStyle = labelFocusStyle;
@@ -251,11 +251,11 @@ class SearchBar extends Component {
           <SearchForm onSubmit={this.handleFormSubmission}>
             <FormInputContainer>
               <FormInput
-                type="text"
-                name="searchInput"
-                autoComplete="off"
-                required="required"
-                maxLength="64"
+                type='text'
+                name='searchInput'
+                autoComplete='off'
+                required='required'
+                maxLength='64'
                 onFocus={this.enableSearchTermActive}
                 onBlur={this.disableSearchTermActive}
                 value={searchInput}
@@ -267,11 +267,11 @@ class SearchBar extends Component {
             </FormInputContainer>
             <FormInputContainer>
               <FormInput
-                type="text"
-                name="locationInput"
-                autoComplete="off"
-                required="required"
-                maxLength="80"
+                type='text'
+                name='locationInput'
+                autoComplete='off'
+                required='required'
+                maxLength='80'
                 onFocus={this.enableLocationActive}
                 onBlur={this.disableLocationActive}
                 value={locationInput}
@@ -282,27 +282,27 @@ class SearchBar extends Component {
               </FormLabel>
             </FormInputContainer>
             <ButtonContainer>
-              <SearchButton type="submit">
+              <SearchButton type='submit'>
                 <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  data-prefix="fad"
-                  data-icon="search"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                  className=""
+                  aria-hidden='true'
+                  focusable='false'
+                  data-prefix='fad'
+                  data-icon='search'
+                  role='img'
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 512 512'
+                  className=''
                 >
-                  <g className="fa-group">
+                  <g className='fa-group'>
                     <path
-                      fill="currentColor"
-                      d="M208 80a128 128 0 1 1-90.51 37.49A127.15 127.15 0 0 1 208 80m0-80C93.12 0 0 93.12 0 208s93.12 208 208 208 208-93.12 208-208S322.88 0 208 0z"
-                      className=""
+                      fill='currentColor'
+                      d='M208 80a128 128 0 1 1-90.51 37.49A127.15 127.15 0 0 1 208 80m0-80C93.12 0 0 93.12 0 208s93.12 208 208 208 208-93.12 208-208S322.88 0 208 0z'
+                      className=''
                     ></path>
                     <path
-                      fill="currentColor"
-                      d="M504.9 476.7L476.6 505a23.9 23.9 0 0 1-33.9 0L343 405.3a24 24 0 0 1-7-17V372l36-36h16.3a24 24 0 0 1 17 7l99.7 99.7a24.11 24.11 0 0 1-.1 34z"
-                      className=""
+                      fill='currentColor'
+                      d='M504.9 476.7L476.6 505a23.9 23.9 0 0 1-33.9 0L343 405.3a24 24 0 0 1-7-17V372l36-36h16.3a24 24 0 0 1 17 7l99.7 99.7a24.11 24.11 0 0 1-.1 34z'
+                      className=''
                     ></path>
                   </g>
                 </svg>
