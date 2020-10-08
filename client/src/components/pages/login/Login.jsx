@@ -182,7 +182,7 @@ const MobileSignUpButton = styled(Button)`
 
 // body
 const FormBodyWrapper = styled.div`
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   // background: #f6f5f7;
   display: flex;
   flex-direction: column;
@@ -305,22 +305,22 @@ class Login extends Component {
 
     let errorList = [];
 
-    let alphanumeric = "[A-Za-z0-9]+";
+    let alphanumeric = '[A-Za-z0-9]+';
 
     if (!username || !password || !password2) {
-      errorList.push({ msg: "All fields must be filled out" });
+      errorList.push({ msg: 'All fields must be filled out' });
     }
 
     if (!username.match(alphanumeric)) {
-      errorList.push({ msg: "Username can contain only numbers and the alphabet" })
+      errorList.push({ msg: 'Username can contain only numbers and the alphabet' })
     }
 
     if (password !== password2) {
-      errorList.push({ msg: "Passwords do not match" });
+      errorList.push({ msg: 'Passwords do not match' });
     }
 
     if (password.length < 6) {
-      errorList.push({ msg: "Password should be at least 6 characters long" });
+      errorList.push({ msg: 'Password should be at least 6 characters long' });
     }
 
     if (errorList.length > 0) {
@@ -334,7 +334,7 @@ class Login extends Component {
         } else {
           if (response.data.success) {
             this.setState({ rightPanelActive: false }, () => {
-              this.setState({ signInErrors: [{ msg: "You have succesfully registered!" }] });
+              this.setState({ signInErrors: [{ msg: 'You have succesfully registered!' }] });
             });
           }
         }
@@ -350,11 +350,11 @@ class Login extends Component {
     let errorList = [];
 
     if (!username || !password) {
-      errorList.push({ msg: "All fields must be filled out" });
+      errorList.push({ msg: 'All fields must be filled out' });
       this.setState({ signInErrors: errorList });
     }
 
-    axios.post("/user/login", qs.stringify({ username, password }))
+    axios.post('/user/login', qs.stringify({ username, password }))
       .then((response) => {
         if (response.data.success) {
           this.setState({ loggedIn: true }, () => {
@@ -391,88 +391,88 @@ class Login extends Component {
     let displaySignUpErrors = signUpErrors.map((error) => <DismissableError error={error} />)
     let displaySignInErrors = signInErrors.map((error) => <DismissableError error={error} />)
 
-    if (loggedIn || this.props.userLoggedIn) return <Redirect to="/" />
+    if (loggedIn || this.props.userLoggedIn) return <Redirect to='/' />
 
     return (
       <FormBodyWrapper>
         <Container>
-          <SignUpContainer style={rightPanelActive ? { transform: "translateX(100%)", opacity: "1", zIndex: "5" } : {}}>
-            <SignUpForm onSubmit={this.handleFormSubmission} name="signUpForm">
-              <div style={{ width: "125%" }}>
+          <SignUpContainer style={rightPanelActive ? { transform: 'translateX(100%)', opacity: '1', zIndex: '5' } : {}}>
+            <SignUpForm onSubmit={this.handleFormSubmission} name='signUpForm'>
+              <div style={{ width: '125%' }}>
                 {displaySignUpErrors ? displaySignUpErrors : null}
               </div>
               <h1>Create Account</h1>
               <input
-                type="name"
-                name="signUpUsername"
-                placeholder="Enter username"
-                maxLength="15"
-                required="required"
+                type='name'
+                name='signUpUsername'
+                placeholder='Enter username'
+                maxLength='15'
+                required='required'
                 value={signUpUsername}
                 onChange={this.handleFormChange}
               />
               <input
-                type="password"
-                name="signUpPassword"
-                placeholder="Enter password"
-                minLength="6"
-                maxLength="20"
-                required="required"
+                type='password'
+                name='signUpPassword'
+                placeholder='Enter password'
+                minLength='6'
+                maxLength='20'
+                required='required'
                 value={signUpPassword}
                 onChange={this.handleFormChange}
               />
               <input
-                type="password"
-                name="signUpPassword2"
-                placeholder="Confirm password"
-                minLength="4"
-                maxLength="20"
-                required="required"
+                type='password'
+                name='signUpPassword2'
+                placeholder='Confirm password'
+                minLength='4'
+                maxLength='20'
+                required='required'
                 value={signUpPassword2}
                 onChange={this.handleFormChange}
               />
               <ButtonGroup>
                 <Button>Sign Up</Button>
                 <span>Or</span>
-                <MobileSignInButton type="button" onClick={this.disableRightPanelActive}>Sign In</MobileSignInButton>
+                <MobileSignInButton type='button' onClick={this.disableRightPanelActive}>Sign In</MobileSignInButton>
               </ButtonGroup>
             </SignUpForm>
           </SignUpContainer>
-          <SignInContainer style={rightPanelActive ? { transform: "translateX(100%)" } : {}}>
-            <SignInForm onSubmit={this.handleFormSubmission} name="signInForm">
-              <div style={{ width: "125%" }}>
+          <SignInContainer style={rightPanelActive ? { transform: 'translateX(100%)' } : {}}>
+            <SignInForm onSubmit={this.handleFormSubmission} name='signInForm'>
+              <div style={{ width: '125%' }}>
                 {displaySignInErrors ? displaySignInErrors : null}
               </div>
               <h1>Sign in</h1>
               <input
-                type="name"
-                name="signInUsername"
-                placeholder="Enter username"
-                maxLength="15"
-                required="required"
+                type='name'
+                name='signInUsername'
+                placeholder='Enter username'
+                maxLength='15'
+                required='required'
                 value={signInUsername}
                 onChange={this.handleFormChange}
               />
               <input
-                type="password"
-                name="signInPassword"
-                placeholder="Enter password"
-                minLength="6"
-                maxLength="20"
-                required="required"
+                type='password'
+                name='signInPassword'
+                placeholder='Enter password'
+                minLength='6'
+                maxLength='20'
+                required='required'
                 value={signInPassword}
                 onChange={this.handleFormChange}
               />
               <ButtonGroup>
                 <Button>Sign In</Button>
                 <span>Or</span>
-                <MobileSignUpButton type="button" onClick={this.enableRightPanelActive}>Sign Up</MobileSignUpButton>
+                <MobileSignUpButton type='button' onClick={this.enableRightPanelActive}>Sign Up</MobileSignUpButton>
               </ButtonGroup>
             </SignInForm>
           </SignInContainer>
-          <OverlayContainer style={rightPanelActive ? { transform: "translateX(-100%)" } : {}}>
-            <Overlay style={rightPanelActive ? { transform: "translateX(50%)" } : {}}>
-              <OverlayLeft style={rightPanelActive ? { transform: "translateX(0)" } : {}}>
+          <OverlayContainer style={rightPanelActive ? { transform: 'translateX(-100%)' } : {}}>
+            <Overlay style={rightPanelActive ? { transform: 'translateX(50%)' } : {}}>
+              <OverlayLeft style={rightPanelActive ? { transform: 'translateX(0)' } : {}}>
                 <OverlayContent>
                   <h1>Welcome Back!</h1>
                   <p>
@@ -481,7 +481,7 @@ class Login extends Component {
                 </OverlayContent>
                 <GhostButton onClick={this.disableRightPanelActive}>Sign In</GhostButton>
               </OverlayLeft>
-              <OverlayRight style={rightPanelActive ? { transform: "translateX(20%)" } : {}}>
+              <OverlayRight style={rightPanelActive ? { transform: 'translateX(20%)' } : {}}>
                 <OverlayContent>
                   <h1>Hello, Friend!</h1>
                   <p>Enter your personal details and start your journey with us</p>

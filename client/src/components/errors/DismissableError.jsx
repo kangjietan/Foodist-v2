@@ -33,12 +33,12 @@ function DismissableError({ error }) {
   if (dismiss) return null;
 
   return (
-    <Container role="alert">
-      <div style={{width: "120%"}}>
+    <Container role='alert'>
+      <div style={{width: '120%'}}>
         {error.msg}
       </div>
-      <Button type="button" onClick={() => { setDismiss(true) }} aria-label="Close">
-        <span aria-hidden="true" style={{fontSize: "1rem"}}>&times;</span>
+      <Button type='button' onClick={() => { setDismiss(true) }} aria-label='Close'>
+        <span aria-hidden='true' style={{fontSize: '1rem'}}>&times;</span>
       </Button>
     </Container>
   );

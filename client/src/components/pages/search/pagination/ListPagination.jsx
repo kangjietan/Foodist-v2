@@ -14,7 +14,7 @@ const PaginationContainer = styled.ul`
   padding: 10px 20px;
   border-radius: 50px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 
   @media screen and (max-width: 320px) {
     width: 95%;
