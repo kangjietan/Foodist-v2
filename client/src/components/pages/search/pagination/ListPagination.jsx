@@ -4,6 +4,9 @@ import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { updateOffset } from '../../../../actions/searchActions';
+
 const PaginationContainer = styled.ul`
   position: relative;
   background: #fff;
@@ -36,6 +39,10 @@ const PaginationItems = styled.li`
   list-style: none;
   line-height: 50px;
   margin: 0 5px;
+
+  &:hover {
+    color: black;
+  }
 
   @media screen and (max-width: 520px) {
     margin: 0;
@@ -85,18 +92,86 @@ const PageNumber = styled(PaginationItems)`
   text-align: center;
 `;
 
-function ListPagination({ offset }) {
+function ListPagination({ offset, updateOffset }) {
+  const [currentActivePage, setCurrentActivePage] = useState(offset + 1);
+  let pageOneStyle, pageTwoStyle, pageThreeStyle, pageFourStyle, pageFiveStyle;
+
+  let prevStyle = currentActivePage === 1 ? { pointerEvents: 'none', fontWeight: '100' } : {};
+  let nextStyle = currentActivePage === 5 ? { pointerEvents: 'none', fontWeight: '100' } : {};
+
+  let activePageStyle = {
+    background: '#b19cd9',
+    color: '#fff',
+  };
+
+  let pages = {
+    '1': 'pageOne',
+    '2': 'pageTwo',
+    '3': 'pageThree',
+    '4': 'pageFour',
+    '5': 'pageFive',
+  };
+
+  let activePage = `${pages[currentActivePage]}Style`;
+
+  switch (activePage) {
+    case 'pageOneStyle':
+      pageOneStyle = activePageStyle;
+      break;
+    case 'pageTwoStyle':
+      pageTwoStyle = activePageStyle;
+      break;
+    case 'pageThreeStyle':
+      pageThreeStyle = activePageStyle;
+      break;
+    case 'pageFourStyle':
+      pageFourStyle = activePageStyle;
+      break;
+    case 'pageFiveStyle':
+      pageFiveStyle = activePageStyle;
+      break;
+    default:
+      pageOneStyle = activePageStyle;
+  }
+
+  const handlePageClick = (event) => {
+    const { innerText } = event.target;
+    const pageNumber = Number(innerText);
+
+    setCurrentActivePage(pageNumber);
+    updateOffset(pageNumber);
+  }
+
+  const handleNextClick = () => {
+    updateOffset(currentActivePage + 1);
+    setCurrentActivePage(currentActivePage + 1);
+  }
+
+  const handlePreviousClick = () => {
+    updateOffset(currentActivePage - 1);
+    setCurrentActivePage(currentActivePage - 1);
+  }
+
   return (
-    <PaginationContainer>
-      <Previous>{"<"}<PreviousText>{" Prev"}</PreviousText></Previous>
-      <PageNumber>1</PageNumber>
-      <PageNumber>2</PageNumber>
-      <PageNumber>3</PageNumber>
-      <PageNumber>4</PageNumber>
-      <PageNumber>5</PageNumber>
-      <Next><NextText>{"Next "}</NextText>{">"}</Next>
-    </PaginationContainer>
+    <div style={{ textAlign: 'center' }}>
+      <PaginationContainer>
+        <Previous style={prevStyle} onClick={handlePreviousClick}>{'<'}<PreviousText>{' Prev'}</PreviousText></Previous>
+        <PageNumber style={pageOneStyle} onClick={handlePageClick}>1</PageNumber>
+        <PageNumber style={pageTwoStyle} onClick={handlePageClick}>2</PageNumber>
+        <PageNumber style={pageThreeStyle} onClick={handlePageClick}>3</PageNumber>
+        <PageNumber style={pageFourStyle} onClick={handlePageClick}>4</PageNumber>
+        <PageNumber style={pageFiveStyle} onClick={handlePageClick}>5</PageNumber>
+        <Next style={nextStyle} onClick={handleNextClick}><NextText>{'Next '}</NextText>{'>'}</Next>
+      </PaginationContainer>
+      <div>{`Page ${currentActivePage} of 5`}</div>
+    </div>
   );
 }
 
-export default ListPagination;
+ListPagination.propTypes = {
+  updateOffset: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = { updateOffset };
+
+export default connect(null, mapDispatchToProps)(ListPagination);
