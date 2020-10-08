@@ -139,6 +139,12 @@ const NavigationBar = styled.nav`
       transition: opacity ${transitionSpeed};
     }
   }
+
+  @media only screen and (max-width: 320px) {
+    ${NavigationBar} {
+      width: 100%;
+    }
+  }
 `;
 
 const LinkStyle = { width: '100%', textDecoration: 'none' };

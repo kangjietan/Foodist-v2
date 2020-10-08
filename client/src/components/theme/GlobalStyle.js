@@ -48,6 +48,12 @@ const GlobalStyle = createGlobalStyle`
       margin: 0;
     }
   }
+
+  @media only screen and (max-width: 320px) {
+    main {
+      width: 100%;
+    }
+  }
 `;
 
 export default GlobalStyle;
