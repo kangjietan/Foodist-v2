@@ -10,7 +10,10 @@ const Container = styled.div`
 
   @media screen and (max-width: 600px) {
     bottom: 6rem;
-    right: 0.5rem;
+  }
+
+  @media screen and (max-width: 320px) {
+    right: 2rem;
   }
 `;
 
