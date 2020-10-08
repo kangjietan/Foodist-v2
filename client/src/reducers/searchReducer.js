@@ -4,6 +4,7 @@ let initialState = {
   searchResults: {},
   term: "",
   location: "",
+  offset: 0,
 };
 
 export default function (state = initialState, action) {
@@ -21,6 +22,12 @@ export default function (state = initialState, action) {
         ...state,
         term: action.payload.term,
         location: action.payload.location,
+      };
+
+    case actions.UPDATE_OFFSET:
+      return {
+        ...state,
+        offset: action.payload,
       };
 
     default:
