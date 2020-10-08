@@ -23,12 +23,12 @@ class App extends Component {
           <NavBar />
           <main>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/search" component={Search} />
-              <Route exact path="/loading" component={() => <Redirect to="/search" />} />
-              <Route exact path="/:user/list" component={List} />
-              <Route exact path="/random" component={Random} />
-              <Route exact path="/login" component={Login} />
+              <Route exact path='/' component={Home} />
+              <Route exact path='/search' component={Search} />
+              <Route exact path='/loading' component={() => <Redirect to='/search' />} />
+              <Route exact path='/:user/list' component={List} />
+              <Route exact path='/random' component={Random} />
+              <Route exact path='/login' component={Login} />
             </Switch>
             <ScrollTop />
           </main>

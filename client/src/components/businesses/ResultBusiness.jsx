@@ -224,7 +224,7 @@ const methods = (list) => {
 // Format rating image url src
 const ratings = (num) => {
   let rating = num.toString();
-  let check = rating.split("");
+  let check = rating.split('');
 
   if (check[check.length - 1] === '5' && check.length === 3) {
     rating = `${check[0]}_half`;
@@ -310,17 +310,17 @@ function ResultBusiness(props) {
           }
         </CategoriesTransactionsContainer>
         <ButtonContainer>
-          <AddButton type="button">
+          <AddButton type='button'>
             Select list...
           </AddButton>
           <ButtonList>
-            <ButtonListItem onClick={handleCustomList}>{addedToCustomList ? "Remove from" : "Add to"} custom list</ButtonListItem>
-            <ButtonListItem onClick={handleFavoritesList}>{addedToFavoritesList ? "Remove from" : "Add to"} favorites</ButtonListItem>
+            <ButtonListItem onClick={handleCustomList}>{addedToCustomList ? 'Remove from' : 'Add to'} custom list</ButtonListItem>
+            <ButtonListItem onClick={handleFavoritesList}>{addedToFavoritesList ? 'Remove from' : 'Add to'} favorites</ButtonListItem>
           </ButtonList>
         </ButtonContainer>
       </InformationContainer>
       <YelpLogo>
-        <a href={business.url} target="_blank">
+        <a href={business.url} target='_blank'>
           <img src='./images/Yelp_Logo.svg' />
         </a>
       </YelpLogo>
