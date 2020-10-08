@@ -80,6 +80,7 @@ Search.propTypes = {
   searchResults: PropTypes.object.isRequired,
   customList: PropTypes.object.isRequired,
   favoritesList: PropTypes.object.isRequired,
+  searchBusinessesYelp: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
