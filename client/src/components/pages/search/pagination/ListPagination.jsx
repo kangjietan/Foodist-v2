@@ -16,16 +16,6 @@ const PaginationContainer = styled.ul`
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   font-family: "Poppins", sans-serif;
 
-  @media screen and (max-width: 650px) {
-    ${Previous} {
-      margin-right: 5px !important;
-    }
-
-    ${Next} {
-      margin-left: 5px !important;
-    }
-  }
-
   @media screen and (max-width: 320px) {
     width: 95%;
   }
@@ -99,6 +89,8 @@ function ListPagination({ offset, updateOffset }) {
   let prevStyle = currentActivePage === 1 ? { pointerEvents: 'none', fontWeight: '100' } : {};
   let nextStyle = currentActivePage === 5 ? { pointerEvents: 'none', fontWeight: '100' } : {};
 
+  let scrollBackToTop = window.pageYOffset > 0 ? true : false;
+
   let activePageStyle = {
     background: '#b19cd9',
     color: '#fff',
@@ -139,17 +131,23 @@ function ListPagination({ offset, updateOffset }) {
     const pageNumber = Number(innerText);
 
     setCurrentActivePage(pageNumber);
-    updateOffset(pageNumber);
+    updateOffset(pageNumber - 1);
+
+    if (scrollBackToTop) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const handleNextClick = () => {
-    updateOffset(currentActivePage + 1);
+    updateOffset(currentActivePage);
     setCurrentActivePage(currentActivePage + 1);
+
+    if (scrollBackToTop) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const handlePreviousClick = () => {
-    updateOffset(currentActivePage - 1);
+    updateOffset(currentActivePage - 2);
     setCurrentActivePage(currentActivePage - 1);
+
+    if (scrollBackToTop) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   return (
