@@ -30,3 +30,10 @@ export const updateSearchTermAndLocation = (update) => (dispatch) => {
     payload: update,
   });
 };
+
+export const updateOffset = (offset) => (dispatch) => {
+  dispatch({
+    type: actions.UPDATE_OFFSET,
+    payload: offset,
+  });
+};
