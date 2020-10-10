@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList } from '../../actions/userActions';
 
+import { formatTopics, formatMethods, getRatingsUrl } from '../utils';
+
 const Container = styled.div`
   width: 45rem;
   max-width: 768px;
@@ -204,37 +206,6 @@ const ButtonListItem = styled.li`
   }
 `;
 
-// Format the food topics
-const topics = (list) => {
-  let categories = '';
-  list.forEach((entry) => { categories += `${entry.title}, `; });
-  categories = categories.substring(0, categories.length - 2);
-  return categories;
-};
-
-// Format the transaction types
-const methods = (list) => {
-  let categories = '';
-  list.forEach((entry) => { categories += `${entry}, `; });
-  categories = categories.substring(0, categories.length - 2);
-  categories = categories.split('_').join(' ');
-  return categories;
-};
-
-// Format rating image url src
-const ratings = (num) => {
-  let rating = num.toString();
-  let check = rating.split('');
-
-  if (check[check.length - 1] === '5' && check.length === 3) {
-    rating = `${check[0]}_half`;
-  }
-
-  const url = `./images/yelp_stars/web_and_ios/regular/regular_${rating}.png`
-
-  return url;
-}
-
 function ResultBusiness(props) {
   const {
     business,
@@ -282,7 +253,7 @@ function ResultBusiness(props) {
                 business.rating
                   ?
                   <Rating>
-                    <img src={ratings(business.rating)} />
+                    <img src={getRatingsUrl(business.rating)} />
                   </Rating>
                   :
                   null
@@ -300,11 +271,11 @@ function ResultBusiness(props) {
           </MainInformation>
         </MainInformationContainer>
         <CategoriesTransactionsContainer>
-          <Categories>{topics(business.categories)}</Categories>
+          <Categories>{formatTopics(business.categories)}</Categories>
           {
             business.transactions.length !== 0
               ?
-              <Transactions>{`Offers: ${methods(business.transactions)}`}</Transactions>
+              <Transactions>{`Offers: ${formatMethods(business.transactions)}`}</Transactions>
               :
               null
           }
