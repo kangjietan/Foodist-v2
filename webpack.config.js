@@ -2,6 +2,8 @@ const path = require('path');
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
 
+const Dotenv = require('dotenv-webpack');
+
 module.exports = {
   mode: 'development',
   entry: `${SRC_DIR}/index.jsx`,
@@ -23,6 +25,9 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new Dotenv()
+  ],
   resolve: {
     extensions: [".js", ".jsx", "*"],
   },
