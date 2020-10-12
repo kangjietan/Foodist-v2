@@ -73,12 +73,12 @@ const InformationContainer = styled.div`
   flex-direction: column;
   transform: translateX(-2.5rem);
   font-size: 1.20rem;
+  z-index: 2;
 
   @media screen and (max-width: 768px) {
     align-items: center;
     transform: translateX(0);
     text-align: center;
-    z-index: 2;
   }
 `;
 
