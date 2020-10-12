@@ -18,10 +18,14 @@ const Container = styled.div`
   border: 1px solid #eeeeef;
   background-color: #fff;
   transition: all 0.3s;
-  width: 600px;
+  width: inherit;
 
   &:hover {
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
   }
 `;
 
@@ -30,6 +34,18 @@ const ImageContainer = styled.div`
   max-width: 13rem;
   height: 13rem;
   margin-right: 1rem;
+
+  @media screen and (max-width: 1300px) {
+    min-width: 12rem;
+    max-width: 12rem;
+    height: 12rem;
+  }
+
+  @media screen and (max-width: 1100px) {
+    min-width: 11rem;
+    max-width: 11rem;
+    height: 11rem;
+  }
 `;
 
 const Image = styled.img`
@@ -41,13 +57,20 @@ const Image = styled.img`
 const InformationContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
   gap: 0.3rem;
 `;
 
 const BusinessName = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
+
+  @media screen and (max-width: 1600px) {
+    font-size: 1.4rem;
+  }
+
+  @media screen and (max-width: 1300px) {
+    font-size: 1.25rem;
+  }
 `;
 
 const RatingContainer = styled.div`
@@ -143,6 +166,11 @@ const YelpLogo = styled.div`
 
   & img {
     width: 50px;
+  }
+
+  @media screen and (max-width: 1300px) {
+    bottom: 0;
+    right: 0;
   }
 `;
 
