@@ -101,6 +101,10 @@ const BusinessAddress = styled.div`
   margin-bottom: 0.25rem;
 `;
 
+const BusinessPhone = styled.div`
+  margin-bottom: 0.25rem;
+`;
+
 const RatingContainer = styled.div`
   display: flex;
   margin-bottom: 0.25rem;
@@ -267,6 +271,7 @@ function ResultBusiness(props) {
                   null
               }
             </RatingContainer>
+            <BusinessPhone>{business.display_phone}</BusinessPhone>
             <BusinessAddress>{business.location.address1}</BusinessAddress>
           </MainInformation>
         </MainInformationContainer>
