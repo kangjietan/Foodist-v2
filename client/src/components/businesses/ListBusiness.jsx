@@ -13,15 +13,22 @@ const Container = styled.div`
   display: flex;
   margin-bottom: 1rem;
   padding: 1.5rem;
-  font-size: 1.25rem;
+  font-size: 1rem;
   position: relative;
-  border: 1px solid black;
+  border: 1px solid #eeeeef;
+  background-color: #fff;
+  transition: all 0.3s;
+  width: 600px;
+
+  &:hover {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const ImageContainer = styled.div`
-  min-width: 14rem;
-  max-width: 14rem;
-  height: 14rem;
+  min-width: 13rem;
+  max-width: 13rem;
+  height: 13rem;
   margin-right: 1rem;
 `;
 
@@ -34,7 +41,7 @@ const Image = styled.img`
 const InformationContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1rem 0;
   gap: 0.3rem;
 `;
 
@@ -49,6 +56,10 @@ const RatingContainer = styled.div`
 
 const Rating = styled.div`
   margin-right: 0.25rem;
+`;
+
+const BusinessPhone = styled.div`
+
 `;
 
 const AddressContainer = styled.div`
@@ -68,7 +79,6 @@ const Transactions = styled.div``;
 
 const ButtonContainer = styled.div`
   position: absolute;
-  /* top: 3rem; */
   top: 0.25rem;
   right: 0.25rem;
 `;
@@ -88,12 +98,12 @@ const DropDownList = styled.ul`
   align-items: center;
   list-style: none;
   position: absolute;
-  background: white;
+  background: rgb(255, 255, 255);
   margin-top: 10px;
   padding: 0;
   width: 225px;
   height: 100px;
-  border: 1px solid black;
+  border: 1px solid #eeeeef;
   border-radius: 5px;
   transition: all 0.4s ease;
   transform: translateY(-10px);
@@ -105,6 +115,24 @@ const DropDownList = styled.ul`
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+  }
+`;
+
+const DropDownItem = styled.li`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: gray;
+    color: white;
+  }
+  
+  &:first-child {
+    border-bottom: 1px solid #eeeeef;
   }
 `;
 
@@ -148,6 +176,7 @@ function ListBusiness(props) {
               null
           }
         </RatingContainer>
+        <BusinessPhone>{business.display_phone}</BusinessPhone>
         <AddressContainer>
           <span>{business.location.display_address[0]}</span>
           <span>{business.location.display_address[1]}</span>
@@ -179,7 +208,8 @@ function ListBusiness(props) {
             </svg>
           </DropDownButton>
           <DropDownList>
-
+            <DropDownItem>Remove from list</DropDownItem>
+            <DropDownItem>View on Maps</DropDownItem>
           </DropDownList>
         </ButtonContainer>
       </InformationContainer>
