@@ -36,6 +36,7 @@ const MapsContainer = styled.div`
 `;
 
 const ButtonListContainer = styled.div`
+  display: flex;
   margin-bottom: 1rem;
 `;
 
@@ -52,6 +53,19 @@ const CustomListButton = styled(Button)`
 `;
 
 const FavoritesListButton = styled(Button)``;
+
+const ListMapContainer = styled.div`
+  display: none;
+  margin-left: auto;
+
+  @media screen and (max-width: 700px) {
+    display: block;
+  }
+`;
+
+const ShowListButton = styled(Button)``;
+
+const ShowMapsButton = styled(Button)``;
 
 const { GOOGLE_MAPS_API_KEY } = process.env;
 
@@ -76,6 +90,10 @@ function List(props) {
         <ButtonListContainer>
           <CustomListButton style={showFavoritesList ? {} : { background: '#bfbfbf' }} onClick={() => setShowFavoritesList(false)}>Custom</CustomListButton>
           <FavoritesListButton style={showFavoritesList ? { background: '#bfbfbf' } : {}} onClick={() => setShowFavoritesList(true)}>Favorites</FavoritesListButton>
+          <ListMapContainer>
+            <ShowListButton>List</ShowListButton>
+            <ShowMapsButton>Map</ShowMapsButton>
+          </ListMapContainer>
         </ButtonListContainer>
         {businesses.map((business) => <ListBusiness business={business} key={business.id} />)}
         {businesses.length === 0 ? <div>List is empty. Search for businesses to add to your list.</div> : null}
