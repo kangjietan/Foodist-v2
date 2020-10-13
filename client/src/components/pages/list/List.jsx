@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -18,6 +18,10 @@ const ListContainer = styled.div`
   flex-direction: column;
   margin-right: 2rem;
   flex: 1;
+
+  @media screen and (max-width: 700px) {
+    margin-right: 0;
+  }
 `;
 
 const MapsContainer = styled.div`
@@ -25,20 +29,56 @@ const MapsContainer = styled.div`
   top: 0;
   position: sticky;
   flex: 2;
+
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
 `;
 
+const ButtonListContainer = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const Button = styled.button`
+  background: none;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid #4a4a4a;
+  padding: 0.5rem 0.5rem;
+`;
+
+const CustomListButton = styled(Button)`
+  border-right: none;
+`;
+
+const FavoritesListButton = styled(Button)``;
+
+const { GOOGLE_MAPS_API_KEY } = process.env;
+
 function List(props) {
+  const [showFavoritesList, setShowFavoritesList] = useState(false);
+
   let list = props.customList ? props.customList : {};
+  if (showFavoritesList) list = props.favoritesList ? props.favoritesList : {};
+
   let businesses = Object.keys(list).map((id) => list[id]);
 
-  const { GOOGLE_MAPS_API_KEY } = process.env;
-  const businessLoc = businesses[0].location;
-  const query = businesses[0].name + businessLoc.display_address;
+  let businessLoc, query;
+
+  if (businesses.length !== 0) {
+    businessLoc = businesses[0].location;
+    query = businesses[0].name + businessLoc.display_address;
+  }
 
   return (
     <Container>
       <ListContainer>
+        <ButtonListContainer>
+          <CustomListButton style={showFavoritesList ? {} : { background: '#bfbfbf' }} onClick={() => setShowFavoritesList(false)}>Custom</CustomListButton>
+          <FavoritesListButton style={showFavoritesList ? { background: '#bfbfbf' } : {}} onClick={() => setShowFavoritesList(true)}>Favorites</FavoritesListButton>
+        </ButtonListContainer>
         {businesses.map((business) => <ListBusiness business={business} key={business.id} />)}
+        {businesses.length === 0 ? <div>List is empty. Search for businesses to add to your list.</div> : null}
       </ListContainer>
       <MapsContainer>
         <iframe
