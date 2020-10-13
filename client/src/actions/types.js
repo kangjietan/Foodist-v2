@@ -12,3 +12,4 @@ export const UPDATE_OFFSET = "UPDATE_OFFSET";
 
 // Map reducer
 export const UPDATE_BUSINESS_ON_MAP = "UPDATE_BUSINESS_ON_MAP";
+export const SWTICH_TO_GOOGLE_MAPS = "SWTICH_TO_GOOGLE_MAPS";
