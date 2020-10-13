@@ -70,11 +70,11 @@ const ShowMapsButton = styled(Button)``;
 
 const { GOOGLE_MAPS_API_KEY } = process.env;
 
-function List(props) {
+function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoogleMaps }) {
   const [showFavoritesList, setShowFavoritesList] = useState(false);
 
-  let list = props.customList ? props.customList : {};
-  if (showFavoritesList) list = props.favoritesList ? props.favoritesList : {};
+  let list = customList ? customList : {};
+  if (showFavoritesList) list = favoritesList ? favoritesList : {};
 
   let businesses = Object.keys(list).map((id) => list[id]);
 
@@ -85,12 +85,12 @@ function List(props) {
     query = businesses[0].name + businessLoc.display_address;
   }
 
-  if (props.enableSwitchToGoogleMaps) {
+  if (enableSwitchToGoogleMaps) {
     return (
       <MapsContainer style={{ display: "block" }}>
-        <ListMapContainer>
-          <ShowListButton style={props.enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => props.switchToGoogleMaps(false)}>List</ShowListButton>
-          <ShowMapsButton style={props.enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => props.switchToGoogleMaps(true)}>Map</ShowMapsButton>
+        <ListMapContainer style={{ marginBottom: "1rem" }}>
+          <ShowListButton style={enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => switchToGoogleMaps(false)}>List</ShowListButton>
+          <ShowMapsButton style={enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => switchToGoogleMaps(true)}>Map</ShowMapsButton>
         </ListMapContainer>
         <iframe
           className="maps"
@@ -109,8 +109,8 @@ function List(props) {
           <CustomListButton style={showFavoritesList ? {} : { background: '#bfbfbf' }} onClick={() => setShowFavoritesList(false)}>Custom</CustomListButton>
           <FavoritesListButton style={showFavoritesList ? { background: '#bfbfbf' } : {}} onClick={() => setShowFavoritesList(true)}>Favorites</FavoritesListButton>
           <ListMapContainer>
-            <ShowListButton style={props.enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => props.switchToGoogleMaps(false)}>List</ShowListButton>
-            <ShowMapsButton style={props.enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => props.switchToGoogleMaps(true)}>Map</ShowMapsButton>
+            <ShowListButton style={enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => switchToGoogleMaps(false)}>List</ShowListButton>
+            <ShowMapsButton style={enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => switchToGoogleMaps(true)}>Map</ShowMapsButton>
           </ListMapContainer>
         </ButtonListContainer>
         {businesses.map((business) => <ListBusiness business={business} key={business.id} />)}
@@ -128,7 +128,12 @@ function List(props) {
   );
 }
 
-List.propTypes = {};
+List.propTypes = {
+  customList: PropTypes.object.isRequired,
+  favoritesList: PropTypes.object.isRequired,
+  enableSwitchToGoogleMaps: PropTypes.bool.isRequired,
+  switchToGoogleMaps: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   customList: state.user.customList,
