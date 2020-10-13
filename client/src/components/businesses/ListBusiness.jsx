@@ -250,7 +250,12 @@ function ListBusiness(props) {
   );
 }
 
-ListBusiness.propTypes = {};
+ListBusiness.propTypes = {
+  addToCustomList: PropTypes.func.isRequired,
+  removeFromCustomList: PropTypes.func.isRequired,
+  addToFavoritesList: PropTypes.func.isRequired,
+  removeFromFavoritesList: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList };
 
