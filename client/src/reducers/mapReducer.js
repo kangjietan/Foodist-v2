@@ -2,6 +2,7 @@ import * as actions from "../actions/types";
 
 let initialState = {
   business: {},
+  switchToGoogleMaps: false,
 };
 
 export default function (state = initialState, action) {
@@ -10,6 +11,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         business: action.payload,
+      };
+
+    case actions.SWTICH_TO_GOOGLE_MAPS:
+      return {
+        ...state,
+        switchToGoogleMaps: action.payload,
       };
 
     default:
