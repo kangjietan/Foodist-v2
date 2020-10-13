@@ -16,7 +16,7 @@ export default function (state = initialState, action) {
     case actions.SWTICH_TO_GOOGLE_MAPS:
       return {
         ...state,
-        switchToGoogleMaps: action.payload,
+        enableSwitchToGoogleMaps: action.payload,
       };
 
     default:
