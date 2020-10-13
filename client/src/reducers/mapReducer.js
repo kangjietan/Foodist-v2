@@ -2,7 +2,7 @@ import * as actions from "../actions/types";
 
 let initialState = {
   business: {},
-  switchToGoogleMaps: false,
+  enableSwitchToGoogleMaps: false,
 };
 
 export default function (state = initialState, action) {
