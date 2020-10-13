@@ -13,7 +13,7 @@ const businessSearch = (params) => {
       Authorization: YELP_API_KEY,
     },
     params,
-    url: `${url}`,
+    url,
   };
 
   return new Promise((resolve, reject) => {
