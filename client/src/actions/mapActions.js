@@ -6,3 +6,10 @@ export const updateBusinessOnMap = (business) => (dispatch) => {
     payload: business,
   });
 };
+
+export const switchToGoogleMaps = (state) => (dispatch) => {
+  dispatch({
+    type: actions.SWTICH_TO_GOOGLE_MAPS,
+    payload: state,
+  });
+};
