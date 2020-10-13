@@ -72,7 +72,7 @@ const ShowListButton = styled(Button)``;
 
 const ShowMapsButton = styled(Button)``;
 
-function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoogleMaps }) {
+function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoogleMaps, businessOnMap }) {
   const { GOOGLE_MAPS_API_KEY } = process.env;
 
   const [showFavoritesList, setShowFavoritesList] = useState(false);
@@ -82,11 +82,14 @@ function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoo
 
   let businesses = Object.keys(list).map((id) => list[id]);
 
-  let businessLoc, query;
+  let query;
 
-  if (businesses.length !== 0) {
-    businessLoc = businesses[0].location;
-    query = businesses[0].name + businessLoc.display_address;
+  if (Object.keys(businessOnMap).length !== 0) {
+    query = businessOnMap.name + businessOnMap.location.display_address;
+  }
+
+  if (businesses.length !== 0 && Object.keys(businessOnMap).length === 0) {
+    query = businesses[0].name + businesses[0].location.display_address;
   }
 
   const handleResize = () => {
@@ -95,18 +98,17 @@ function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoo
 
   window.addEventListener('resize', handleResize);
 
-  if (enableSwitchToGoogleMaps) {
+  if (enableSwitchToGoogleMaps && window.innerWidth < 700) {
     return (
       <Container>
-        <MapsContainer style={{ display: "block" }}>
-          <ListMapContainer style={{ marginBottom: "1rem" }}>
+        <MapsContainer style={{ display: 'block' }}>
+          <ListMapContainer style={{ marginBottom: '1rem' }}>
             <ShowListButton style={enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => switchToGoogleMaps(false)}>List</ShowListButton>
             <ShowMapsButton style={enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => switchToGoogleMaps(true)}>Map</ShowMapsButton>
           </ListMapContainer>
           <iframe
-            className="maps"
-            frameBorder="0"
-            style={{ border: "0", width: "100%", height: "100%" }}
+            frameBorder='0'
+            style={{ border: '0', width: '100%', height: '100%' }}
             src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`}>
           </iframe>
         </MapsContainer>
@@ -125,14 +127,13 @@ function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoo
             <ShowMapsButton style={enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => switchToGoogleMaps(true)}>Map</ShowMapsButton>
           </ListMapContainer>
         </ButtonListContainer>
-        {businesses.map((business) => <ListBusiness business={business} key={business.id} />)}
+        {businesses.map((business) => <ListBusiness business={business} key={business.id} list={showFavoritesList ? 'favorites' : 'custom'} />)}
         {businesses.length === 0 ? <div>List is empty. Search for businesses to add to your list.</div> : null}
       </ListContainer>
       <MapsContainer>
         <iframe
-          className="maps"
-          frameBorder="0"
-          style={{ border: "0", width: "100%", height: "100%" }}
+          frameBorder='0'
+          style={{ border: '0', width: '100%', height: '100%' }}
           src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`}>
         </iframe>
       </MapsContainer>
@@ -151,6 +152,7 @@ const mapStateToProps = (state) => ({
   customList: state.user.customList,
   favoritesList: state.user.favoritesList,
   enableSwitchToGoogleMaps: state.map.enableSwitchToGoogleMaps,
+  businessOnMap: state.map.businessOnMap,
 });
 
 const mapDispatchToProps = { switchToGoogleMaps };
