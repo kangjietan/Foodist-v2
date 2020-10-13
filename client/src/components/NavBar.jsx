@@ -253,7 +253,7 @@ function NavBar(props) {
           </Link>
         </NavigationItem>
         <NavigationItem>
-          <Link to='/user/list' style={LinkStyle}>
+          <Link to='/list' style={LinkStyle}>
             <NavigationLink>
               <svg
                 aria-hidden='true'

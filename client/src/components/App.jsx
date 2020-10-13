@@ -26,7 +26,7 @@ class App extends Component {
               <Route exact path='/' component={Home} />
               <Route exact path='/search' component={Search} />
               <Route exact path='/loading' component={() => <Redirect to='/search' />} />
-              <Route exact path='/:user/list' component={List} />
+              <Route exact path='/list' component={List} />
               <Route exact path='/random' component={Random} />
               <Route exact path='/login' component={Login} />
             </Switch>

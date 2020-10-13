@@ -350,7 +350,7 @@ function Home(props) {
           </ButtonContainer>
         </InstructionsContainer>
       </Link>
-      <Link to={props.userLoggedIn ? '/user/list' : '/login'} style={LinkStyle} className='instructions-link'>
+      <Link to='/list' style={LinkStyle} className='instructions-link'>
         <InstructionsContainer>
           <ImageContainer className='instruction-img'>
             <svg
