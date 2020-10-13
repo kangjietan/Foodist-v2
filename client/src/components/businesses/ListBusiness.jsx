@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList } from '../../actions/userActions';
+import { updateBusinessOnMap, switchToGoogleMaps } from '../../actions/mapActions';
 
 import { formatTopics, formatMethods, getRatingsUrl } from '../utils';
 
@@ -175,7 +176,44 @@ const YelpLogo = styled.div`
 `;
 
 function ListBusiness(props) {
-  const { business } = props;
+  const [businessRemovedFromList, setBusinessRemovedFromList] = useState(false);
+
+  const {
+    business,
+    list,
+    addToCustomList,
+    removeFromCustomList,
+    addToFavoritesList,
+    removeFromFavoritesList,
+    updateBusinessOnMap,
+    switchToGoogleMaps,
+  } = props;
+
+  const handleRemoveFromList = () => {
+    if (!businessRemovedFromList) {
+      if (list === 'custom') {
+        removeFromCustomList(business);
+        setBusinessRemovedFromList(true);
+      } else if (list === 'favorites') {
+        removeFromFavoritesList(business);
+        setBusinessRemovedFromList(true);
+      }
+    } else if (businessRemovedFromList) {
+      if (list === 'custom') {
+        removeFromCustomList(business);
+        setBusinessRemovedFromList(false);
+      } else if (list === 'favorites') {
+        removeFromFavoritesList(business);
+        setBusinessRemovedFromList(false);
+      }
+    }
+  }
+
+  const handleMapClick = () => {
+    updateBusinessOnMap(business);
+    switchToGoogleMaps(true);
+  }
+
   return (
     <Container>
       <ImageContainer>
@@ -222,22 +260,22 @@ function ListBusiness(props) {
         <ButtonContainer>
           <DropDownButton>
             <svg
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="far"
-              data-icon="ellipsis-v"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 128 512"
-              className="">
-              <path fill="currentColor" d="M64 208c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zM16 104c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48zm0 304c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48z"
-                className="">
+              aria-hidden='true'
+              focusable='false'
+              data-prefix='far'
+              data-icon='ellipsis-v'
+              role='img'
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 128 512'
+              className=''>
+              <path fill='currentColor' d='M64 208c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zM16 104c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48zm0 304c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48z'
+                className=''>
               </path>
             </svg>
           </DropDownButton>
           <DropDownList>
-            <DropDownItem>Remove from list</DropDownItem>
-            <DropDownItem>View on Maps</DropDownItem>
+            <DropDownItem onClick={handleRemoveFromList}>{businessRemovedFromList ? 'Add back to list' : 'Remove from list'}</DropDownItem>
+            <DropDownItem onClick={handleMapClick}>View on Maps</DropDownItem>
           </DropDownList>
         </ButtonContainer>
       </InformationContainer>
@@ -251,12 +289,16 @@ function ListBusiness(props) {
 }
 
 ListBusiness.propTypes = {
+  business: PropTypes.object.isRequired,
+  list: PropTypes.string.isRequired,
   addToCustomList: PropTypes.func.isRequired,
   removeFromCustomList: PropTypes.func.isRequired,
   addToFavoritesList: PropTypes.func.isRequired,
   removeFromFavoritesList: PropTypes.func.isRequired,
+  updateBusinessOnMap: PropTypes.func.isRequired,
+  switchToGoogleMaps: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList };
+const mapDispatchToProps = { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList, updateBusinessOnMap, switchToGoogleMaps };
 
 export default connect(null, mapDispatchToProps)(ListBusiness);
