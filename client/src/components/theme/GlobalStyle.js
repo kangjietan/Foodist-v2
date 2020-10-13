@@ -46,6 +46,7 @@ const GlobalStyle = createGlobalStyle`
   @media only screen and (max-width: 600px) {
     main {
       margin: 0;
+      margin-bottom: 5rem;
     }
   }
 `;
