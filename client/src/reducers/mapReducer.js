@@ -1,7 +1,7 @@
 import * as actions from "../actions/types";
 
 let initialState = {
-  business: {},
+  businessOnMap: {},
   enableSwitchToGoogleMaps: false,
 };
 
@@ -10,7 +10,7 @@ export default function (state = initialState, action) {
     case actions.UPDATE_BUSINESS_ON_MAP:
       return {
         ...state,
-        business: action.payload,
+        businessOnMap: action.payload,
       };
 
     case actions.SWTICH_TO_GOOGLE_MAPS:
