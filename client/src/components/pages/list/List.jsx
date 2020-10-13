@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { switchToGoogleMaps } from '../../../actions/mapActions';
 
 import ListBusiness from '../../businesses/ListBusiness';
 
@@ -84,6 +85,23 @@ function List(props) {
     query = businesses[0].name + businessLoc.display_address;
   }
 
+  if (props.enableSwitchToGoogleMaps) {
+    return (
+      <MapsContainer style={{ display: "block" }}>
+        <ListMapContainer>
+          <ShowListButton style={props.enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => props.switchToGoogleMaps(false)}>List</ShowListButton>
+          <ShowMapsButton style={props.enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => props.switchToGoogleMaps(true)}>Map</ShowMapsButton>
+        </ListMapContainer>
+        <iframe
+          className="maps"
+          frameBorder="0"
+          style={{ border: "0", width: "100%", height: "100%" }}
+          src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`}>
+        </iframe>
+      </MapsContainer>
+    );
+  }
+
   return (
     <Container>
       <ListContainer>
@@ -91,8 +109,8 @@ function List(props) {
           <CustomListButton style={showFavoritesList ? {} : { background: '#bfbfbf' }} onClick={() => setShowFavoritesList(false)}>Custom</CustomListButton>
           <FavoritesListButton style={showFavoritesList ? { background: '#bfbfbf' } : {}} onClick={() => setShowFavoritesList(true)}>Favorites</FavoritesListButton>
           <ListMapContainer>
-            <ShowListButton>List</ShowListButton>
-            <ShowMapsButton>Map</ShowMapsButton>
+            <ShowListButton style={props.enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => props.switchToGoogleMaps(false)}>List</ShowListButton>
+            <ShowMapsButton style={props.enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => props.switchToGoogleMaps(true)}>Map</ShowMapsButton>
           </ListMapContainer>
         </ButtonListContainer>
         {businesses.map((business) => <ListBusiness business={business} key={business.id} />)}
@@ -115,6 +133,9 @@ List.propTypes = {};
 const mapStateToProps = (state) => ({
   customList: state.user.customList,
   favoritesList: state.user.favoritesList,
+  enableSwitchToGoogleMaps: state.map.enableSwitchToGoogleMaps,
 });
 
-export default connect(mapStateToProps, null)(List);
+const mapDispatchToProps = { switchToGoogleMaps };
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);
