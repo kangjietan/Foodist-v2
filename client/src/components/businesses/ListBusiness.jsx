@@ -200,10 +200,10 @@ function ListBusiness(props) {
       }
     } else if (businessRemovedFromList) {
       if (list === 'custom') {
-        removeFromCustomList(business);
+        addToCustomList(business);
         setBusinessRemovedFromList(false);
       } else if (list === 'favorites') {
-        removeFromFavoritesList(business);
+        addToFavoritesList(business);
         setBusinessRemovedFromList(false);
       }
     }
