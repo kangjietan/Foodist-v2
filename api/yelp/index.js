@@ -27,6 +27,29 @@ const businessSearch = (params) => {
   });
 };
 
+const getBusinessDetails = (id) => {
+  const url = `https://api.yelp.com/v3/businesses/${id}`;
+
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: YELP_API_KEY,
+    },
+    url,
+  };
+
+  return new Promise((resolve, reject) => {
+    axios(options)
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 module.exports = {
   businessSearch,
+  getBusinessDetails,
 };
