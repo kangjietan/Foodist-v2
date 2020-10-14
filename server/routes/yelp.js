@@ -18,4 +18,17 @@ router.get("/search", (req, res) => {
     });
 });
 
+router.get("/business/:id", (req, res) => {
+  const { id } = req.params;
+
+  yelp
+    .getBusinessDetails(id)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});
+
 module.exports = router;
