@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { getBusinessInfoAndUpdate } from '../../../actions/userActions';
+import { updateFavoritesListTotalPages } from '../../../actions/favoritesListActions';
 
 import ListBusiness from '../../businesses/ListBusiness';
-
 
 class FavoritesList extends Component {
   constructor(props) {
@@ -14,7 +14,6 @@ class FavoritesList extends Component {
 
     this.state = {
       pages: 0,
-      currentPage: 1,
       currentPageBusinesses: [],
       businessByPage: {},
       showList: false,
@@ -22,7 +21,17 @@ class FavoritesList extends Component {
   }
 
   componentDidMount() {
-    const { list } = this.props;
+    this.formatBusinessesByPages();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.favoritesListCurrentPage !== this.props.favoritesListCurrentPage) {
+      this.setCurrentPageBusiness();
+    }
+  }
+
+  formatBusinessesByPages() {
+    const { list, updateFavoritesListTotalPages, favoritesListCurrentPage } = this.props;
     const keys = Object.keys(list);
     const businesses = keys.map((id) => list[id]);
     const pages = Math.floor(keys.length / 10) + 1;
@@ -34,12 +43,13 @@ class FavoritesList extends Component {
       businessByPage[i + 1] = businesses.slice(i * 10, ((i + 1) * 10));
     }
 
-    this.setState({ pages, businessByPage, currentPageBusinesses: businessByPage[1] }, this.getBusinessesDetails);
+    updateFavoritesListTotalPages(pages);
+    this.setState({ pages, businessByPage, currentPageBusinesses: businessByPage[favoritesListCurrentPage] }, this.getBusinessesDetails);
   }
 
   getBusinessesDetails() {
-    const { currentPageBusinesses } = this.state;
-    const { getBusinessInfoAndUpdate } = this.props;
+    const { currentPageBusinesses, businessByPage } = this.state;
+    const { getBusinessInfoAndUpdate, favoritesListCurrentPage } = this.props;
 
     let updatedWithInfo = currentPageBusinesses.map((business, idx) => {
       // if only id exists, send request for info
@@ -57,7 +67,18 @@ class FavoritesList extends Component {
     });
 
     // Upon all completed requests, set the current page list and then show list
-    Promise.all(updatedWithInfo).then(() => this.setState({ currentPageBusinesses: updatedWithInfo }, () => this.setState({ showList: true })));
+    Promise.all(updatedWithInfo).then(() => {
+      let newBusinessByPage = Object.assign({}, businessByPage, { [favoritesListCurrentPage]: updatedWithInfo });
+
+      this.setState({ currentPageBusinesses: updatedWithInfo, businessByPage: newBusinessByPage }, () => this.setState({ showList: true }));
+    });
+  }
+
+  setCurrentPageBusiness() {
+    const { favoritesListCurrentPage } = this.props;
+    const { businessByPage } = this.state;
+
+    this.setState({ currentPageBusinesses: businessByPage[favoritesListCurrentPage] }, this.getBusinessesDetails);
   }
 
   render() {
@@ -65,7 +86,7 @@ class FavoritesList extends Component {
 
     if (showList) {
       return (
-        currentPageBusinesses.map((business) => <ListBusiness business={business} list='favorites' />)
+        currentPageBusinesses.map((business) => <ListBusiness business={business} list='favorites' key={business.id} />)
       );
     }
 
@@ -81,6 +102,6 @@ const mapStateToProps = (state) => ({
   favoritesListCurrentPage: state.favoritesList.favoritesListCurrentPage,
 });
 
-const mapDispatchToProps = { getBusinessInfoAndUpdate };
+const mapDispatchToProps = { getBusinessInfoAndUpdate, updateFavoritesListTotalPages };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoritesList);
