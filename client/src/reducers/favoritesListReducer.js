@@ -1,8 +1,8 @@
 import * as actions from "../actions/types";
 
 let initialState = {
-  favoritesListCurrentPage: 0,
-  favoritesListTotalPages: 0,
+  favoritesListCurrentPage: 1,
+  favoritesListTotalPages: 1,
 };
 
 export default function (state = initialState, action) {
