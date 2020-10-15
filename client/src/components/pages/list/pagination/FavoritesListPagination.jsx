@@ -15,6 +15,7 @@ const PaginationContainer = styled.ul`
   border-radius: 50px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   font-family: 'Poppins', sans-serif;
+  justify-content: center;
 
   @media screen and (max-width: 320px) {
     width: 95%;
@@ -84,7 +85,6 @@ const PageNumber = styled(PaginationItems)`
 
 function FavoritesListPagination({ favoritesListCurrentPage, favoritesListTotalPages, updateFavoritesListCurrentPage }) {
   const [currentActivePage, setCurrentActivePage] = useState(favoritesListCurrentPage);
-  let pageOneStyle, pageTwoStyle, pageThreeStyle, pageFourStyle, pageFiveStyle;
 
   let prevStyle = currentActivePage === 1 ? { pointerEvents: 'none', fontWeight: '100' } : {};
   let nextStyle = currentActivePage === favoritesListTotalPages ? { pointerEvents: 'none', fontWeight: '100' } : {};
@@ -94,36 +94,6 @@ function FavoritesListPagination({ favoritesListCurrentPage, favoritesListTotalP
     color: '#fff',
   };
 
-  let pages = {
-    '1': 'pageOne',
-    '2': 'pageTwo',
-    '3': 'pageThree',
-    '4': 'pageFour',
-    '5': 'pageFive',
-  };
-
-  let activePage = `${pages[currentActivePage]}Style`;
-
-  switch (activePage) {
-    case 'pageOneStyle':
-      pageOneStyle = activePageStyle;
-      break;
-    case 'pageTwoStyle':
-      pageTwoStyle = activePageStyle;
-      break;
-    case 'pageThreeStyle':
-      pageThreeStyle = activePageStyle;
-      break;
-    case 'pageFourStyle':
-      pageFourStyle = activePageStyle;
-      break;
-    case 'pageFiveStyle':
-      pageFiveStyle = activePageStyle;
-      break;
-    default:
-      pageOneStyle = activePageStyle;
-  }
-
   const handlePageClick = (event) => {
     const { innerText } = event.target;
     const pageNumber = Number(innerText);
@@ -131,7 +101,7 @@ function FavoritesListPagination({ favoritesListCurrentPage, favoritesListTotalP
     window.scrollTo({ top: 0, behavior: 'auto' });
 
     setCurrentActivePage(pageNumber);
-    updateFavoritesListCurrentPage(pageNumber - 1);
+    updateFavoritesListCurrentPage(pageNumber);
   }
 
   const handleNextClick = () => {
@@ -152,11 +122,11 @@ function FavoritesListPagination({ favoritesListCurrentPage, favoritesListTotalP
     <div style={{ textAlign: 'center' }}>
       <PaginationContainer>
         <Previous style={prevStyle} onClick={handlePreviousClick}>{'<'}<PreviousText>{' Prev'}</PreviousText></Previous>
-        {/* <PageNumber style={pageOneStyle} onClick={handlePageClick}>1</PageNumber>
-        <PageNumber style={pageTwoStyle} onClick={handlePageClick}>2</PageNumber>
-        <PageNumber style={pageThreeStyle} onClick={handlePageClick}>3</PageNumber>
-        <PageNumber style={pageFourStyle} onClick={handlePageClick}>4</PageNumber>
-        <PageNumber style={pageFiveStyle} onClick={handlePageClick}>5</PageNumber> */}
+        {currentActivePage <= favoritesListTotalPages ? <PageNumber style={activePageStyle} onClick={handlePageClick}>{currentActivePage}</PageNumber> : null}
+        {currentActivePage + 1 <= favoritesListTotalPages ? <PageNumber onClick={handlePageClick}>{currentActivePage + 1}</PageNumber> : null}
+        {currentActivePage + 2 <= favoritesListTotalPages ? <PageNumber onClick={handlePageClick}>{currentActivePage + 2}</PageNumber> : null}
+        {currentActivePage + 3 <= favoritesListTotalPages ? <PageNumber onClick={handlePageClick}>{currentActivePage + 3}</PageNumber> : null}
+        {currentActivePage + 4 <= favoritesListTotalPages ? <PageNumber onClick={handlePageClick}>{currentActivePage + 4}</PageNumber> : null}
         <Next style={nextStyle} onClick={handleNextClick}><NextText>{'Next '}</NextText>{'>'}</Next>
       </PaginationContainer>
       <div>{`Page ${currentActivePage} of ${favoritesListTotalPages}`}</div>
@@ -164,7 +134,9 @@ function FavoritesListPagination({ favoritesListCurrentPage, favoritesListTotalP
   );
 }
 
-FavoritesListPagination.propTypes = {};
+FavoritesListPagination.propTypes = {
+  
+};
 
 const mapStateToProps = (state) => ({
   favoritesListCurrentPage: state.favoritesList.favoritesListCurrentPage,
