@@ -9,6 +9,8 @@ import { switchToGoogleMaps } from '../../../actions/mapActions';
 
 import ListBusiness from '../../businesses/ListBusiness';
 
+import FavoritesList from './FavoritesList';
+
 const Container = styled.div`
   display: flex;
   margin-top: 2rem;
@@ -89,7 +91,9 @@ function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoo
   }
 
   if (businesses.length !== 0 && Object.keys(businessOnMap).length === 0) {
-    query = businesses[0].name + businesses[0].location.display_address;
+    if (Object.keys(businesses[0]).length > 1) {
+      query = businesses[0].name + businesses[0].location.display_address;
+    }
   }
 
   const handleResize = () => {
@@ -116,29 +120,60 @@ function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoo
     );
   }
 
-  return (
-    <Container>
-      <ListContainer>
-        <ButtonListContainer>
-          <CustomListButton style={showFavoritesList ? {} : { background: '#bfbfbf' }} onClick={() => setShowFavoritesList(false)}>Custom</CustomListButton>
-          <FavoritesListButton style={showFavoritesList ? { background: '#bfbfbf' } : {}} onClick={() => setShowFavoritesList(true)}>Favorites</FavoritesListButton>
-          <ListMapContainer>
-            <ShowListButton style={enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => switchToGoogleMaps(false)}>List</ShowListButton>
-            <ShowMapsButton style={enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => switchToGoogleMaps(true)}>Map</ShowMapsButton>
-          </ListMapContainer>
-        </ButtonListContainer>
-        {businesses.map((business) => <ListBusiness business={business} key={business.id} list={showFavoritesList ? 'favorites' : 'custom'} />)}
-        {businesses.length === 0 ? <div>List is empty. Search for businesses to add to your list.</div> : null}
-      </ListContainer>
-      <MapsContainer>
-        <iframe
-          frameBorder='0'
-          style={{ border: '0', width: '100%', height: '100%' }}
-          src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`}>
-        </iframe>
-      </MapsContainer>
-    </Container>
-  );
+  if (showFavoritesList) {
+    // FavoritesList
+    // Render favorites list with pagination
+    // Get results each by 10 businesses
+    // let FavoritesList component handle logic
+    return (
+      <Container>
+        <ListContainer>
+          <ButtonListContainer>
+            <CustomListButton style={showFavoritesList ? {} : { background: '#bfbfbf' }} onClick={() => setShowFavoritesList(false)}>Custom</CustomListButton>
+            <FavoritesListButton style={showFavoritesList ? { background: '#bfbfbf' } : {}} onClick={() => setShowFavoritesList(true)}>Favorites</FavoritesListButton>
+            <ListMapContainer>
+              <ShowListButton style={enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => switchToGoogleMaps(false)}>List</ShowListButton>
+              <ShowMapsButton style={enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => switchToGoogleMaps(true)}>Map</ShowMapsButton>
+            </ListMapContainer>
+          </ButtonListContainer>
+          <FavoritesList list={favoritesList ? favoritesList : {}} />
+          {businesses.length === 0 ? <div>List is empty. Search for businesses to add to your list.</div> : null}
+        </ListContainer>
+        <MapsContainer>
+          <iframe
+            frameBorder='0'
+            style={{ border: '0', width: '100%', height: '100%' }}
+            src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`}>
+          </iframe>
+        </MapsContainer>
+      </Container>
+    );
+  } else if (!showFavoritesList) {
+    // CustomList
+    return (
+      <Container>
+        <ListContainer>
+          <ButtonListContainer>
+            <CustomListButton style={showFavoritesList ? {} : { background: '#bfbfbf' }} onClick={() => setShowFavoritesList(false)}>Custom</CustomListButton>
+            <FavoritesListButton style={showFavoritesList ? { background: '#bfbfbf' } : {}} onClick={() => setShowFavoritesList(true)}>Favorites</FavoritesListButton>
+            <ListMapContainer>
+              <ShowListButton style={enableSwitchToGoogleMaps ? {} : { background: '#bfbfbf' }} onClick={() => switchToGoogleMaps(false)}>List</ShowListButton>
+              <ShowMapsButton style={enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => switchToGoogleMaps(true)}>Map</ShowMapsButton>
+            </ListMapContainer>
+          </ButtonListContainer>
+          {businesses.map((business) => <ListBusiness business={business} key={business.id} list='custom' />)}
+          {businesses.length === 0 ? <div>List is empty. Search for businesses to add to your list.</div> : null}
+        </ListContainer>
+        <MapsContainer>
+          <iframe
+            frameBorder='0'
+            style={{ border: '0', width: '100%', height: '100%' }}
+            src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`}>
+          </iframe>
+        </MapsContainer>
+      </Container>
+    );
+  }
 }
 
 List.propTypes = {
