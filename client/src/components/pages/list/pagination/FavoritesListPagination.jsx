@@ -16,10 +16,6 @@ const PaginationContainer = styled.ul`
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   font-family: 'Poppins', sans-serif;
   justify-content: center;
-
-  @media screen and (max-width: 320px) {
-    width: 95%;
-  }
 `;
 
 const PaginationItems = styled.li`
@@ -53,7 +49,7 @@ const Previous = styled(PaginationItems)`
 `;
 
 const PreviousText = styled.span`
-  @media screen and (max-width: 460px) {
+  @media screen and (max-width: 1660px) {
     display: none;
   }
 `;
@@ -71,15 +67,15 @@ const Next = styled(PaginationItems)`
 `;
 
 const NextText = styled.span`
-  @media screen and (max-width: 460px) {
+  @media screen and (max-width: 1660px) {
     display: none;
   }
 `;
 
 const PageNumber = styled(PaginationItems)`
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
   text-align: center;
 `;
 
@@ -135,7 +131,9 @@ function FavoritesListPagination({ favoritesListCurrentPage, favoritesListTotalP
 }
 
 FavoritesListPagination.propTypes = {
-  
+  favoritesListCurrentPage: PropTypes.number.isRequired,
+  favoritesListTotalPages: PropTypes.number.isRequired,
+  updateFavoritesListCurrentPage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
