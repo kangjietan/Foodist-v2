@@ -10,6 +10,8 @@ import { switchToGoogleMaps } from '../../../actions/mapActions';
 import ListBusiness from '../../businesses/ListBusiness';
 
 import FavoritesList from './FavoritesList';
+import FavoritesListPagination from './pagination/FavoritesListPagination';
+
 
 const Container = styled.div`
   display: flex;
@@ -138,6 +140,7 @@ function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoo
           </ButtonListContainer>
           <FavoritesList list={favoritesList ? favoritesList : {}} />
           {businesses.length === 0 ? <div>List is empty. Search for businesses to add to your list.</div> : null}
+          {Object.keys(favoritesList).length ? <FavoritesListPagination /> : null}
         </ListContainer>
         <MapsContainer>
           <iframe
