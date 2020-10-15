@@ -214,6 +214,10 @@ function ListBusiness(props) {
     switchToGoogleMaps(true);
   }
 
+  console.log(business);
+  // return <div></div>
+  if (Object.keys(business).length === 1) return null;
+
   return (
     <Container>
       <ImageContainer>
