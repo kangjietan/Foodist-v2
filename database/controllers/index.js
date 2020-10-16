@@ -106,5 +106,31 @@ module.exports = {
     isAuthenticated: (req, res) => {
       res.json({ success: { msg: "Authenticated" } });
     },
+    updateUserFavoritesList: (req, res) => {
+      const list = JSON.parse(Object.keys(req.body)[0]);
+
+      User.findOneAndUpdate(
+        { username: req.user.username },
+        { favoriteslist: list }
+      )
+        .then((user) => {
+          res.sendStatus(200);
+        })
+        .catch((err) => console.log(err));
+    },
+    getUserFavoritesList: (req, res) => {
+      User.findOne({ username: req.user.username })
+        .then((user) => {
+          let list = {};
+          console.log(user);
+          console.log(user.favoriteslist);
+          user.favoriteslist.forEach((id) => (list[id] = { id }));
+          res.json(list);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(503);
+        });
+    },
   },
 };
