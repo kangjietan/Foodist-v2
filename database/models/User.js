@@ -13,7 +13,7 @@ const UserSchema = new db.Schema({
     type: Date,
     default: Date.now,
   },
-  restaurantList: [],
+  favoriteslist: [],
 });
 
 const User = db.model("User", UserSchema);
