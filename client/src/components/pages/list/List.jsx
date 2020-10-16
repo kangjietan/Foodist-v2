@@ -138,7 +138,7 @@ function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoo
               <ShowMapsButton style={enableSwitchToGoogleMaps ? { background: '#bfbfbf' } : {}} onClick={() => switchToGoogleMaps(true)}>Map</ShowMapsButton>
             </ListMapContainer>
           </ButtonListContainer>
-          <FavoritesList list={favoritesList ? favoritesList : {}} />
+          <FavoritesList list={list} />
           {businesses.length === 0 ? <div>List is empty. Search for businesses to add to your list.</div> : null}
           {Object.keys(favoritesList).length ? <FavoritesListPagination /> : null}
         </ListContainer>
