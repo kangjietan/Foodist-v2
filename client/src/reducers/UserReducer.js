@@ -43,6 +43,11 @@ export default function (state = initialState, action) {
       let newFavoritesList = Object.assign(state.favoritesList);
       delete newFavoritesList[action.payload.id];
 
+      return {
+        ...state,
+        favoritesList: newFavoritesList,
+      };
+
     case actions.GET_BUSINESS_INFO_AND_UPDATE:
       return {
         ...state,
@@ -54,7 +59,7 @@ export default function (state = initialState, action) {
     case actions.GET_USER_FAVORITES_LIST:
       return {
         ...state,
-        favoritesList: Object.assign({}, state.favoritesList, action.payload),
+        favoritesList: Object.assign({}, action.payload),
       };
 
     case actions.CLEAR_FAVORITES_LIST:
