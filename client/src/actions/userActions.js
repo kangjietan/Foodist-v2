@@ -46,12 +46,31 @@ export const getBusinessInfoAndUpdate = (business) => (dispatch) => {
           type: actions.GET_BUSINESS_INFO_AND_UPDATE,
           payload: response.data,
         });
-
         resolve(response.data);
       })
       .catch((error) => {
         console.log(error);
         reject(error);
       });
+  });
+};
+
+export const getUserFavoritesList = () => (dispatch) => {
+  axios
+    .get("/user/favoriteslist")
+    .then((response) => {
+      dispatch({
+        type: actions.GET_USER_FAVORITES_LIST,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const clearFavoritesList = () => (dispatch) => {
+  dispatch({
+    type: actions.CLEAR_FAVORITES_LIST,
   });
 };
