@@ -14,8 +14,8 @@ router.get('/logout', controller.user.logout);
 
 router.get("/authenticated", ensureAuthenticated, controller.user.isAuthenticated);
 
-router.get("/list", (req, res) => {
-  res.redirect("/");
-});
+router.post("/favoriteslist/update", ensureAuthenticated, controller.user.updateUserFavoritesList);
+
+router.get("/favoriteslist", ensureAuthenticated, controller.user.getUserFavoritesList);
 
 module.exports = router;
