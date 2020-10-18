@@ -4,7 +4,16 @@ import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
 
-const DropDownContainer = styled.div``;
+import RandomSelectedOption from './RandomSelectedOption';
+
+const Container = styled.div`
+  text-align: center;
+`;
+
+const DropDownContainer = styled.div`
+  display: flex;
+  /* text-align: left; */
+`;
 
 const SelectBox = styled.div`
   display: flex;
@@ -77,35 +86,39 @@ const SelectInput = styled.input`
 
 function RandomDropDown() {
   const [optionsActive, setOptionsActive] = useState(false);
+  const [activeOption, setActiveOption] = useState('custom-list');
 
   let activeOptionsContainerStyle = optionsActive ? { maxHeight: '240px', opacity: 1, overflowY: scroll } : {};
 
   let activeSelectStyle = optionsActive ? { transform: 'rotate(180deg)', top: '-6px' } : {};
 
   return (
-    <DropDownContainer>
-      <h2>Random</h2>
-      <SelectBox onClick={() => setOptionsActive(!optionsActive)}>
-        <OptionsContainer style={activeOptionsContainerStyle}>
-          <Option onClick={() => setOptionsActive(false)}>
-            <SelectInput type='radio' id='term-location' name='category' />
-            <label htmlFor='term-location'>Term and Location</label>
-          </Option>
-          <Option onClick={() => setOptionsActive(false)}>
-            <SelectInput type='radio' id='favorites-list' name='category' />
-            <label htmlFor='favorites-list'>Your favorites</label>
-          </Option>
-          <Option onClick={() => setOptionsActive(false)}>
-            <SelectInput type='radio' id='custom-list' name='category' />
-            <label htmlFor='custom-list'>Custom List</label>
-          </Option>
-        </OptionsContainer>
-        <Select>
-          Select Randomizing Option
+    <Container>
+      <h1>Not sure where to eat? Have a random business chosen for you.</h1>
+      <DropDownContainer>
+        <SelectBox onClick={() => setOptionsActive(!optionsActive)}>
+          <OptionsContainer style={activeOptionsContainerStyle}>
+            <Option onClick={() => setOptionsActive(false)}>
+              <SelectInput type='radio' id='term-location' name='category' />
+              <label htmlFor='term-location'>Term and Location</label>
+            </Option>
+            <Option onClick={() => setOptionsActive(false)}>
+              <SelectInput type='radio' id='favorites-list' name='category' />
+              <label htmlFor='favorites-list'>Your favorites</label>
+            </Option>
+            <Option onClick={() => setOptionsActive(false)}>
+              <SelectInput type='radio' id='custom-list' name='category' />
+              <label htmlFor='custom-list'>Custom list</label>
+            </Option>
+          </OptionsContainer>
+          <Select>
+            Select Randomizing Option
           <SelectAfter style={activeSelectStyle} />
-        </Select>
-      </SelectBox>
-    </DropDownContainer>
+          </Select>
+        </SelectBox>
+        <RandomSelectedOption />
+      </DropDownContainer>
+    </Container>
   );
 }
 
