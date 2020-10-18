@@ -4,9 +4,7 @@ import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
 
-const DropDownContainer = styled.div`
-
-`;
+const DropDownContainer = styled.div``;
 
 const SelectBox = styled.div`
   display: flex;
@@ -59,19 +57,6 @@ const Select = styled.div`
   order: 0;
   padding: 12px 24px;
   cursor: pointer;
-
-  /* &::after {
-    content: '';
-    background: url('./images/arrow-down.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    position: absolute;
-    height: 100%;
-    width: 32px;
-    right: 10px;
-    top: 5px;
-    transition: all 0.4s;
-  } */
 `;
 
 const SelectAfter = styled.div`
@@ -119,7 +104,6 @@ function RandomDropDown() {
           Select Randomizing Option
           <SelectAfter style={activeSelectStyle} />
         </Select>
-
       </SelectBox>
     </DropDownContainer>
   );
