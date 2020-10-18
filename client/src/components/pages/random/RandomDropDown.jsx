@@ -7,49 +7,63 @@ import PropTypes from 'prop-types';
 import RandomSelectedOption from './RandomSelectedOption';
 
 const Container = styled.div`
-  text-align: center;
-`;
-
-const DropDownContainer = styled.div`
   display: flex;
-  /* text-align: left; */
 `;
 
-const SelectBox = styled.div`
-  display: flex;
-  width: 400px;
-  flex-direction: column;
-
-  & label {
-    cursor: pointer;
-  }
+const ButtonContainer = styled.div`
+  position: relative;
 `;
 
-const OptionsContainer = styled.div`
+const AddButton = styled.button`
   background: #2f3640;
-  color: #f5f6fa;
-  max-height: 0;
-  width: 100%;
-  opacity: 0;
-  transition: all 0.4s;
-  border-radius: 8px;
+  width: 300px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  transition: 0.6s;
   overflow: hidden;
-  order: 1;
+  padding: 0;
 
-  &::-webkit-scrollbar {
-    width: 8px;
-    background: #0d141f;
-    border-radius: 0 8px 8px 0;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #525861;
-    border-radius: 0 8px 8px 0;
+  &:focus {
+    outline: none;
   }
 `;
 
-const Option = styled.div`
-  padding: 12px 24px;
+const ButtonList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  position: absolute;
+  background: #2f3640;
+  margin-top: 10px;
+  padding: 0;
+  width: 225px;
+  height: 100px;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+
+  ${AddButton}:focus + & {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+`;
+
+const ButtonListItem = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  color: #f5f6fa;
   cursor: pointer;
 
   &:hover {
@@ -57,69 +71,27 @@ const Option = styled.div`
   }
 `;
 
-const Select = styled.div`
-  background: #2f3640;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  color: #f5f6fa;
-  position: relative;
-  order: 0;
-  padding: 12px 24px;
-  cursor: pointer;
-`;
+const BusinessLimitContainer = styled.div``;
 
-const SelectAfter = styled.div`
-    background: url('./images/arrow-down.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    position: absolute;
-    height: 100%;
-    width: 32px;
-    right: 10px;
-    top: 5px;
-    transition: all 0.4s;
-`;
-
-const SelectInput = styled.input`
-  display: none;
-`;
-
-function RandomDropDown() {
-  const [optionsActive, setOptionsActive] = useState(false);
+function RandomDropDown(props) {
   const [activeOption, setActiveOption] = useState('custom-list');
-
-  let activeOptionsContainerStyle = optionsActive ? { maxHeight: '240px', opacity: 1, overflowY: scroll } : {};
-
-  let activeSelectStyle = optionsActive ? { transform: 'rotate(180deg)', top: '-6px' } : {};
-
   return (
     <Container>
-      <h1>Not sure where to eat? Have a random business chosen for you.</h1>
-      <DropDownContainer>
-        <SelectBox onClick={() => setOptionsActive(!optionsActive)}>
-          <OptionsContainer style={activeOptionsContainerStyle}>
-            <Option onClick={() => setOptionsActive(false)}>
-              <SelectInput type='radio' id='term-location' name='category' />
-              <label htmlFor='term-location'>Term and Location</label>
-            </Option>
-            <Option onClick={() => setOptionsActive(false)}>
-              <SelectInput type='radio' id='favorites-list' name='category' />
-              <label htmlFor='favorites-list'>Your favorites</label>
-            </Option>
-            <Option onClick={() => setOptionsActive(false)}>
-              <SelectInput type='radio' id='custom-list' name='category' />
-              <label htmlFor='custom-list'>Custom list</label>
-            </Option>
-          </OptionsContainer>
-          <Select>
-            Select Randomizing Option
-          <SelectAfter style={activeSelectStyle} />
-          </Select>
-        </SelectBox>
-        <RandomSelectedOption />
-      </DropDownContainer>
+      <ButtonContainer>
+        <AddButton type='button'>
+          Select Randomizing Option
+          </AddButton>
+        <ButtonList>
+          <ButtonListItem>Term and Location</ButtonListItem>
+          <ButtonListItem>Your Favorites</ButtonListItem>
+          <ButtonListItem>Custom List</ButtonListItem>
+        </ButtonList>
+      </ButtonContainer>
+      <RandomSelectedOption />
     </Container>
   );
 }
+
+RandomDropDown.propTypes = {};
 
 export default RandomDropDown;
