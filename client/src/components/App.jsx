@@ -58,8 +58,16 @@ class App extends Component {
 
     axios.post('/user/favoriteslist/update', JSON.stringify(businessIds))
       .then((response) => {
+        // userLogged = false
+        // If user logged out on app, send logout request to server. 
         if (!userLoggedIn) {
-          clearFavoritesList();
+          axios.get('/user/logout')
+            .then((response) => {
+              clearFavoritesList();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
       })
       .catch((error) => {
@@ -78,7 +86,6 @@ class App extends Component {
     // If user reloads page, check session
     axios.get('/user/authenticated')
       .then((response) => {
-        console.log(response);
         if (response.data.success) {
           setUserIsLoggedIn(true);
           getUserFavoritesList();
