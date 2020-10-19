@@ -151,16 +151,7 @@ const LinkStyle = { width: '100%', textDecoration: 'none' };
 
 function NavBar(props) {
   const userLogout = () => {
-    axios.get('/user/logout')
-      .then((response) => {
-        if (response.data.success) {
-          console.log(response);
-          props.setUserIsLoggedIn(false);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    props.setUserIsLoggedIn(false);
   }
 
   return (
