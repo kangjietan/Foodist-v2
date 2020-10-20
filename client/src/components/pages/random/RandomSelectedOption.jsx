@@ -6,6 +6,10 @@ import PropTypes from 'prop-types';
 
 const SelectedContainer = styled.div`
   display: flex;
+
+  @media screen and (max-width: 400px) {
+    margin-left: 0 !important;
+  }
 `;
 
 const RandomizeButton = styled.button`
@@ -60,13 +64,13 @@ function RandomSelectedOption({ option }) {
     );
   } else if (option === 'Your Favorites') {
     return (
-      <SelectedContainer style={{ marginLeft: '1rem' }}>
+      <SelectedContainer style={{ marginLeft: '0.75rem' }}>
         <RandomizeButton>Randomize</RandomizeButton>
       </SelectedContainer>
     );
   } else if (option === 'Custom List') {
     return (
-      <SelectedContainer style={{ marginLeft: '1rem' }}>
+      <SelectedContainer style={{ marginLeft: '0.75rem' }}>
         <RandomizeButton>Randomize</RandomizeButton>
       </SelectedContainer>
     );
