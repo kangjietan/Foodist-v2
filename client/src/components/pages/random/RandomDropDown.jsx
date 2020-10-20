@@ -9,6 +9,10 @@ import RandomSelectedOption from './RandomSelectedOption';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 500px) {
+    align-items: center;
+  }
 `;
 
 const OptionsLimitContainer = styled.div`
@@ -22,6 +26,10 @@ const OptionsContainer = styled.div`
 
   @media screen and (max-width: 700px) {
     margin-right: 0.5rem;
+  }
+
+  @media screen and (max-width: 396px) {
+    margin-bottom: 0.25rem;
   }
 `;
 
