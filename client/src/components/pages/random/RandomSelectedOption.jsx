@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -32,6 +32,7 @@ const RandomizeButton = styled.button`
 `;
 
 const TermLocationInputContainer = styled.div`
+  display: flex;
   margin-right: 1rem;
 
   @media screen and (max-width: 500px) {
@@ -40,7 +41,6 @@ const TermLocationInputContainer = styled.div`
   }
 
   @media screen and (max-width: 410px) {
-    display: flex;
     flex-direction: column;
     margin-bottom: 0;
   }
@@ -79,6 +79,8 @@ const TermInput = styled(Input)`
   }
 `;
 
+const LocationContainer = styled.div``;
+
 const LocationInput = styled(Input)`
   transition: all 0.5s;
 
@@ -88,7 +90,7 @@ const LocationInput = styled(Input)`
     margin-bottom: 0;
   }
 
-  ${TermInput}:focus + &, 
+  ${TermInput}:focus + ${LocationContainer} &,
   &:focus {
     opacity: 1;
     height: 40px;
@@ -96,13 +98,40 @@ const LocationInput = styled(Input)`
   }
 `;
 
+const CurrentLocationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 0;
+  background: #2f3640;
+  color: white;
+  letter-spacing: 0.05rem;
+  visibility: hidden;
+  transition: all 0.6s;
+  cursor: pointer;
+
+  ${LocationInput}:focus + & {
+    visibility: visible;
+    height: 40px;
+    margin-bottom: 0.1rem;
+  }
+`;
+
 function RandomSelectedOption({ option }) {
+  const [locationFocus, setLocationFocus] = useState(false);
+
   if (option === 'Term and Location') {
     return (
       <SelectedContainer>
         <TermLocationInputContainer>
-          <TermInput placeholder="Enter Term"></TermInput>
-          <LocationInput placeholder="Enter Location"></LocationInput>
+          <TermInput placeholder="Enter Term" onBlur={() => setLocationFocus(false)} onFocus={() => setLocationFocus(true)} />
+          <LocationContainer style={{ height: locationFocus ? 'auto' : '0px' }}>
+            <LocationInput placeholder="Enter Location" onBlur={() => setLocationFocus(false)} onFocus={() => setLocationFocus(true)} />
+            <CurrentLocationContainer>
+              <span>Current Location</span>
+            </CurrentLocationContainer>
+          </LocationContainer>
         </TermLocationInputContainer>
         <RandomizeButton>Randomize</RandomizeButton>
       </SelectedContainer>
