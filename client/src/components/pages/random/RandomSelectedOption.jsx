@@ -120,14 +120,58 @@ const CurrentLocationContainer = styled.div`
 
 function RandomSelectedOption({ option }) {
   const [locationFocus, setLocationFocus] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchLocaction, setSearchLocation] = useState('');
+
+  const handleInputChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    if (name === 'searchTerm') {
+      setSearchTerm(value);
+    } else if (name === 'searchLocation') {
+      setSearchLocation(value);
+    }
+  };
+
+  const handleTermLocationRandomization = () => {
+
+  };
+
+  const handleCustomListRandomization = () => {
+
+  };
+
+  const handleFavoritesListRandomization = () => {
+
+  };
 
   if (option === 'Term and Location') {
     return (
       <SelectedContainer>
         <TermLocationInputContainer>
-          <TermInput placeholder="Enter Term" onBlur={() => setLocationFocus(false)} onFocus={() => setLocationFocus(true)} />
+          <TermInput
+            name='searchTerm'
+            placeholder='Enter Term'
+            autoComplete='off'
+            maxLength='64'
+            value={searchTerm}
+            onBlur={() => setLocationFocus(false)}
+            onFocus={() => setLocationFocus(true)}
+            onChange={handleInputChange}
+          />
           <LocationContainer style={{ height: locationFocus ? 'auto' : '0px' }}>
-            <LocationInput placeholder="Enter Location" onBlur={() => setLocationFocus(false)} onFocus={() => setLocationFocus(true)} />
+            <LocationInput
+              name='searchLocation'
+              placeholder='Enter Location'
+              autoComplete='off'
+              maxLength='80'
+              required='require'
+              value={searchLocaction}
+              onBlur={() => setLocationFocus(false)}
+              onFocus={() => setLocationFocus(true)}
+              onChange={handleInputChange}
+            />
             <CurrentLocationContainer>
               <span>Current Location</span>
             </CurrentLocationContainer>
