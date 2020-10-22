@@ -71,6 +71,7 @@ const OptionsButton = styled.button`
 
   @media screen and (max-width: 510px) {
     width: 100% !important;
+    padding-left: 0.1rem;
   }
 `;
 
@@ -146,6 +147,10 @@ const BusinessLimitList = styled(ButtonList)`
 function RandomDropDown(props) {
   const [activeOption, setActiveOption] = useState('');
   const [businessLimit, setBusinessLimit] = useState(0);
+
+  let selectLimit = (limit) => setBusinessLimit(limit);
+  let selectedActiveOption = <RandomSelectedOption option={activeOption} limit={businessLimit} selectLimit={selectLimit} />;
+
   return (
     <Container>
       <OptionsLimitContainer>
@@ -162,24 +167,30 @@ function RandomDropDown(props) {
             </ButtonList>
           </ButtonContainer>
         </OptionsContainer>
-        <BusinessLimitContainer>
-          <ButtonContainer>
-            <BusinessLimitButton type='button'>
-              <span>{businessLimit ? `${businessLimit} businesses` : 'Select Limit'}</span>
-              <img src='./images/arrow-down.svg' />
-            </BusinessLimitButton>
-            <BusinessLimitList>
-              <ButtonListItem onClick={() => setBusinessLimit(50)}>50 businesses</ButtonListItem>
-              <ButtonListItem onClick={() => setBusinessLimit(100)}>100 businesses</ButtonListItem>
-              <ButtonListItem onClick={() => setBusinessLimit(150)}>150 businesses</ButtonListItem>
-              <ButtonListItem onClick={() => setBusinessLimit(200)}>200 businesses</ButtonListItem>
-              <ButtonListItem onClick={() => setBusinessLimit(250)}>250 businesses</ButtonListItem>
-            </BusinessLimitList>
-          </ButtonContainer>
-        </BusinessLimitContainer>
-        {activeOption === 'Your Favorites' || activeOption === 'Custom List' ? <RandomSelectedOption option={activeOption} /> : null}
+        {
+          activeOption === 'Term and Location'
+            ?
+            <BusinessLimitContainer>
+              <ButtonContainer>
+                <BusinessLimitButton type='button'>
+                  <span>{businessLimit ? `${businessLimit} businesses` : 'Select Limit'}</span>
+                  <img src='./images/arrow-down.svg' />
+                </BusinessLimitButton>
+                <BusinessLimitList>
+                  <ButtonListItem onClick={() => setBusinessLimit(50)}>50 businesses</ButtonListItem>
+                  <ButtonListItem onClick={() => setBusinessLimit(100)}>100 businesses</ButtonListItem>
+                  <ButtonListItem onClick={() => setBusinessLimit(150)}>150 businesses</ButtonListItem>
+                  <ButtonListItem onClick={() => setBusinessLimit(200)}>200 businesses</ButtonListItem>
+                  <ButtonListItem onClick={() => setBusinessLimit(250)}>250 businesses</ButtonListItem>
+                </BusinessLimitList>
+              </ButtonContainer>
+            </BusinessLimitContainer>
+            :
+            null
+        }
+        {activeOption === 'Your Favorites' || activeOption === 'Custom List' ? selectedActiveOption : null}
       </OptionsLimitContainer>
-      {activeOption === 'Term and Location' ? <RandomSelectedOption option={activeOption} /> : null}
+      {activeOption === 'Term and Location' ? selectedActiveOption : null}
     </Container>
   );
 }
