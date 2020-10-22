@@ -254,7 +254,6 @@ class SearchBar extends Component {
                 type='text'
                 name='searchInput'
                 autoComplete='off'
-                required='required'
                 maxLength='64'
                 onFocus={this.enableSearchTermActive}
                 onBlur={this.disableSearchTermActive}
