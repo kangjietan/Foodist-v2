@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
 
+import { Redirect } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { getBusinessesWithinLimit, updateRandomBusiness } from '../../../actions/randomActions';
 
@@ -163,6 +165,7 @@ function RandomSelectedOption(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchLocaction, setSearchLocation] = useState('');
   const [generateRandomBusiness, setGenerateRandomBusiness] = useState(false);
+  const [redirectToSearch, setRedirectToSearch] = useState(false);
 
   const handleInputChange = (event) => {
     const { target } = event;
@@ -209,6 +212,8 @@ function RandomSelectedOption(props) {
     updateRandomBusiness(randomBusinessesList[randomIdx]);
     setGenerateRandomBusiness(false);
   }
+
+  if (redirectToSearch) return <Redirect to='/search' />;
 
   if (option === 'Term and Location') {
     return (
@@ -258,7 +263,7 @@ function RandomSelectedOption(props) {
       // List is empty
       return (
         <EmptyListContainer>
-          <EmptyListButton>Add to list</EmptyListButton>
+          <EmptyListButton onClick={() => setRedirectToSearch(true)}>Add to list</EmptyListButton>
         </EmptyListContainer>
       );
     }
@@ -274,7 +279,7 @@ function RandomSelectedOption(props) {
       // List is empty
       return (
         <EmptyListContainer>
-          <EmptyListButton>Add to list</EmptyListButton>
+          <EmptyListButton onClick={() => setRedirectToSearch(true)}>Add to list</EmptyListButton>
         </EmptyListContainer>
       );
     }
