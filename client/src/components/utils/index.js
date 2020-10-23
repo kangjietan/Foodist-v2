@@ -39,3 +39,19 @@ export function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
+
+// Get coordinates for user
+export function getUserLocation() {
+  return new Promise((resolve, reject) => {
+    const showPosition = (position) =>
+      resolve({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      reject(new Error("Geolocation is not supported by this browser."));
+    }
+  });
+}
