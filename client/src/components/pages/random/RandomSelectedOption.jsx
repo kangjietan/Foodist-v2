@@ -9,7 +9,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getBusinessesWithinLimit, updateRandomBusiness } from '../../../actions/randomActions';
 
-import { getRandomInt } from '../../utils';
+import { getRandomInt, getUserLocation } from '../../utils';
 
 const SelectedContainer = styled.div`
   display: flex;
@@ -164,6 +164,7 @@ function RandomSelectedOption(props) {
   const [locationFocus, setLocationFocus] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchLocaction, setSearchLocation] = useState('');
+  const [useCurrentLocation, setUseCurrentLocation] = useState(false);
   const [generateRandomBusiness, setGenerateRandomBusiness] = useState(false);
   const [redirectToSearch, setRedirectToSearch] = useState(false);
 
@@ -173,8 +174,11 @@ function RandomSelectedOption(props) {
 
     if (name === 'searchTerm') {
       setSearchTerm(value);
+
     } else if (name === 'searchLocation') {
       setSearchLocation(value);
+
+      if (useCurrentLocation && searchLocaction !== 'Current Location') setUseCurrentLocation(false);
     }
   };
 
@@ -189,11 +193,57 @@ function RandomSelectedOption(props) {
       businessLimit = 50;
     }
 
-    getBusinessesWithinLimit(params, businessLimit)
-      .then(() => {
-        setGenerateRandomBusiness(true);
-      });
+    if (useCurrentLocation && searchLocaction === 'Current Location') {
+      getUserLocation()
+        .then((response) => {
+          delete params['location'];
+
+          params.latitude = response.latitude;
+          params.longitude = response.longitude;
+
+          getBusinessesWithinLimit(params, businessLimit)
+            .then(() => {
+              setGenerateRandomBusiness(true);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      getBusinessesWithinLimit(params, businessLimit)
+        .then(() => {
+          setGenerateRandomBusiness(true);
+        });
+    }
   };
+
+  const handleCurrentLocationSearch = () => {
+    setUseCurrentLocation(true);
+    setSearchLocation('Current Location');
+
+    let params = { term: searchTerm };
+
+    let businessLimit = limit;
+
+    if (limit === 0) {
+      selectLimit(50);
+      businessLimit = 50;
+    }
+
+    getUserLocation()
+      .then((response) => {
+        params.latitude = response.latitude;
+        params.longitude = response.longitude;
+
+        getBusinessesWithinLimit(params, businessLimit)
+          .then(() => {
+            setGenerateRandomBusiness(true);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   const handleCustomListRandomization = () => {
     let list = Object.keys(customList);
@@ -242,12 +292,18 @@ function RandomSelectedOption(props) {
                 onFocus={() => setLocationFocus(true)}
                 onChange={handleInputChange}
               />
-              <CurrentLocationContainer>
-                <span>Current Location</span>
-              </CurrentLocationContainer>
+              {
+                navigator.geolocation && useCurrentLocation === false
+                  ?
+                  <CurrentLocationContainer onClick={handleCurrentLocationSearch}>
+                    <span>Current Location</span>
+                  </CurrentLocationContainer>
+                  :
+                  null
+              }
             </LocationContainer>
           </TermLocationInputContainer>
-          <RandomizeButton type="submit">Randomize</RandomizeButton>
+          <RandomizeButton type='submit'>Randomize</RandomizeButton>
         </SelectedForm>
       </SelectedContainer>
     );
