@@ -4,11 +4,28 @@ import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { getBusinessesWithinLimit, updateRandomBusiness } from '../../../actions/randomActions';
+
+import { getRandomInt } from '../../utils';
+
 const SelectedContainer = styled.div`
   display: flex;
 
   @media screen and (max-width: 500px) {
    flex-direction: column; 
+  }
+
+  @media screen and (max-width: 400px) {
+    margin-left: 0 !important;
+  }
+`;
+
+const SelectedForm = styled.form`
+  display: flex;
+
+  @media screen and (max-width: 500px) {
+  flex-direction: column; 
   }
 
   @media screen and (max-width: 400px) {
@@ -118,10 +135,34 @@ const CurrentLocationContainer = styled.div`
   }
 `;
 
-function RandomSelectedOption({ option }) {
+const EmptyListContainer = styled.div``;
+
+const EmptyListButton = styled.button`
+  background: #2f3640;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  color: white;
+  cursor: pointer;
+`;
+
+function RandomSelectedOption(props) {
+  const {
+    limit,
+    option,
+    customList,
+    selectLimit,
+    favoritesList,
+    updateRandomBusiness,
+    randomBusinessesList,
+    getBusinessesWithinLimit,
+  } = props;
+
   const [locationFocus, setLocationFocus] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchLocaction, setSearchLocation] = useState('');
+  const [generateRandomBusiness, setGenerateRandomBusiness] = useState(false);
 
   const handleInputChange = (event) => {
     const { target } = event;
@@ -134,67 +175,120 @@ function RandomSelectedOption({ option }) {
     }
   };
 
-  const handleTermLocationRandomization = () => {
+  const handleTermLocationRandomization = (event) => {
+    event.preventDefault();
 
+    let params = { term: searchTerm, location: searchLocaction };
+    let businessLimit = limit;
+
+    if (limit === 0) {
+      selectLimit(50);
+      businessLimit = 50;
+    }
+
+    getBusinessesWithinLimit(params, businessLimit)
+      .then(() => {
+        setGenerateRandomBusiness(true);
+      });
   };
 
   const handleCustomListRandomization = () => {
-
+    let list = Object.keys(customList);
+    let randomIdx = getRandomInt(0, list.length);
+    updateRandomBusiness(customList[list[randomIdx]]);
   };
 
   const handleFavoritesListRandomization = () => {
-
+    let list = Object.keys(favoritesList);
+    let randomIdx = getRandomInt(0, list.length);
+    updateRandomBusiness(favoritesList[list[randomIdx]]);
   };
+
+  if (generateRandomBusiness) {
+    let randomIdx = getRandomInt(0, randomBusinessesList.length);
+    updateRandomBusiness(randomBusinessesList[randomIdx]);
+    setGenerateRandomBusiness(false);
+  }
 
   if (option === 'Term and Location') {
     return (
       <SelectedContainer>
-        <TermLocationInputContainer>
-          <TermInput
-            name='searchTerm'
-            placeholder='Enter Term'
-            autoComplete='off'
-            maxLength='64'
-            value={searchTerm}
-            onBlur={() => setLocationFocus(false)}
-            onFocus={() => setLocationFocus(true)}
-            onChange={handleInputChange}
-          />
-          <LocationContainer style={{ height: locationFocus ? 'auto' : '0px' }}>
-            <LocationInput
-              name='searchLocation'
-              placeholder='Enter Location'
+        <SelectedForm onSubmit={handleTermLocationRandomization}>
+          <TermLocationInputContainer>
+            <TermInput
+              name='searchTerm'
+              placeholder='Enter Term'
               autoComplete='off'
-              maxLength='80'
-              required='require'
-              value={searchLocaction}
+              maxLength='64'
+              value={searchTerm}
               onBlur={() => setLocationFocus(false)}
               onFocus={() => setLocationFocus(true)}
               onChange={handleInputChange}
             />
-            <CurrentLocationContainer>
-              <span>Current Location</span>
-            </CurrentLocationContainer>
-          </LocationContainer>
-        </TermLocationInputContainer>
-        <RandomizeButton>Randomize</RandomizeButton>
+            <LocationContainer style={{ height: locationFocus ? 'auto' : '0px' }}>
+              <LocationInput
+                name='searchLocation'
+                placeholder='Enter Location'
+                autoComplete='off'
+                maxLength='80'
+                required='require'
+                value={searchLocaction}
+                onBlur={() => setLocationFocus(false)}
+                onFocus={() => setLocationFocus(true)}
+                onChange={handleInputChange}
+              />
+              <CurrentLocationContainer>
+                <span>Current Location</span>
+              </CurrentLocationContainer>
+            </LocationContainer>
+          </TermLocationInputContainer>
+          <RandomizeButton type="submit">Randomize</RandomizeButton>
+        </SelectedForm>
       </SelectedContainer>
     );
   } else if (option === 'Your Favorites') {
-    return (
-      <SelectedContainer style={{ marginLeft: '0.75rem' }}>
-        <RandomizeButton>Randomize</RandomizeButton>
-      </SelectedContainer>
-    );
+    // If list is not empty
+    if (Object.keys(favoritesList).length > 0) {
+      return (
+        <SelectedContainer style={{ marginLeft: '0.75rem' }}>
+          <RandomizeButton onClick={handleFavoritesListRandomization}>Randomize</RandomizeButton>
+        </SelectedContainer>
+      );
+    } else {
+      // List is empty
+      return (
+        <EmptyListContainer>
+          <EmptyListButton>Add to list</EmptyListButton>
+        </EmptyListContainer>
+      );
+    }
   } else if (option === 'Custom List') {
-    return (
-      <SelectedContainer style={{ marginLeft: '0.75rem' }}>
-        <RandomizeButton>Randomize</RandomizeButton>
-      </SelectedContainer>
-    );
+    // If list is not empty
+    if (Object.keys(customList).length > 0) {
+      return (
+        <SelectedContainer style={{ marginLeft: '0.75rem' }}>
+          <RandomizeButton onClick={handleCustomListRandomization}>Randomize</RandomizeButton>
+        </SelectedContainer>
+      );
+    } else {
+      // List is empty
+      return (
+        <EmptyListContainer>
+          <EmptyListButton>Add to list</EmptyListButton>
+        </EmptyListContainer>
+      );
+    }
   }
 
   return null;
 }
 
-export default RandomSelectedOption;
+const mapStateToProps = (state) => ({
+  customList: state.user.customList,
+  favoritesList: state.user.favoritesList,
+  randomBusinessesList: state.random.randomBusinessesList,
+});
+
+const mapDispatchToProps = { getBusinessesWithinLimit, updateRandomBusiness };
+
+export default connect(mapStateToProps, mapDispatchToProps)(RandomSelectedOption);
