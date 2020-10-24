@@ -23,7 +23,7 @@ export default function (state = initialState, action) {
       };
 
     case actions.REMOVE_FROM_CUSTOM_LIST:
-      let newCustomList = Object.assign(state.customList);
+      let newCustomList = Object.assign({}, state.customList);
       delete newCustomList[action.payload.id];
 
       return {
@@ -40,7 +40,7 @@ export default function (state = initialState, action) {
       };
 
     case actions.REMOVE_FROM_FAVORITES_LIST:
-      let newFavoritesList = Object.assign(state.favoritesList);
+      let newFavoritesList = Object.assign({}, state.favoritesList);
       delete newFavoritesList[action.payload.id];
 
       return {
