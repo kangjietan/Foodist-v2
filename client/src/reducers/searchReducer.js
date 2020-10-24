@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
     case actions.SEARCH_BUSINESSES_YELP:
       return {
         ...state,
-        searchResults: Object.assign(state.searchResults, {
+        searchResults: Object.assign({}, state.searchResults, {
           [action.offset]: action.payload,
         }),
       };
