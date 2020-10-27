@@ -35,7 +35,7 @@ export const getBusinessesWithinLimit = (params, limit) => (dispatch) => {
         type: actions.GET_BUSINESSES_WITHIN_LIMIT,
         payload: results,
       });
-      resolve("Stored results");
+      resolve(results);
     });
   });
 };
