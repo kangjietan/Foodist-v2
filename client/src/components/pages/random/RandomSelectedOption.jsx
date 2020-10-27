@@ -165,7 +165,6 @@ function RandomSelectedOption(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchLocaction, setSearchLocation] = useState('');
   const [useCurrentLocation, setUseCurrentLocation] = useState(false);
-  const [generateRandomBusiness, setGenerateRandomBusiness] = useState(false);
   const [redirectToSearch, setRedirectToSearch] = useState(false);
 
   const handleInputChange = (event) => {
@@ -203,7 +202,7 @@ function RandomSelectedOption(props) {
 
           getBusinessesWithinLimit(params, businessLimit)
             .then(() => {
-              setGenerateRandomBusiness(true);
+              generateRandomBusiness(response);
             });
         })
         .catch((error) => {
@@ -212,7 +211,7 @@ function RandomSelectedOption(props) {
     } else {
       getBusinessesWithinLimit(params, businessLimit)
         .then(() => {
-          setGenerateRandomBusiness(true);
+          generateRandomBusiness(response);
         });
     }
   };
@@ -236,8 +235,8 @@ function RandomSelectedOption(props) {
         params.longitude = response.longitude;
 
         getBusinessesWithinLimit(params, businessLimit)
-          .then(() => {
-            setGenerateRandomBusiness(true);
+          .then((response) => {
+            generateRandomBusiness(response);
           });
       })
       .catch((error) => {
@@ -257,10 +256,9 @@ function RandomSelectedOption(props) {
     updateRandomBusiness(favoritesList[list[randomIdx]]);
   };
 
-  if (generateRandomBusiness) {
-    let randomIdx = getRandomInt(0, randomBusinessesList.length);
-    updateRandomBusiness(randomBusinessesList[randomIdx]);
-    setGenerateRandomBusiness(false);
+  const generateRandomBusiness = (list) => {
+    let randomIdx = getRandomInt(0, list.length);
+    updateRandomBusiness(list[randomIdx]);
   }
 
   if (redirectToSearch) return <Redirect to='/search' />;
