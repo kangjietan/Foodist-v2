@@ -201,7 +201,7 @@ function RandomSelectedOption(props) {
           params.longitude = response.longitude;
 
           getBusinessesWithinLimit(params, businessLimit)
-            .then(() => {
+            .then((response) => {
               generateRandomBusiness(response);
             });
         })
@@ -210,7 +210,7 @@ function RandomSelectedOption(props) {
         });
     } else {
       getBusinessesWithinLimit(params, businessLimit)
-        .then(() => {
+        .then((response) => {
           generateRandomBusiness(response);
         });
     }
