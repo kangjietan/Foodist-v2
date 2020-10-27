@@ -89,12 +89,12 @@ function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoo
   let query;
 
   if (Object.keys(businessOnMap).length !== 0) {
-    query = businessOnMap.name + businessOnMap.location.display_address;
+    query = businessOnMap.alias + businessOnMap.location.display_address;
   }
 
   if (businesses.length !== 0 && Object.keys(businessOnMap).length === 0) {
     if (Object.keys(businesses[0]).length > 1) {
-      query = businesses[0].name + businesses[0].location.display_address;
+      query = businesses[0].alias + businesses[0].location.display_address;
     }
   }
 
