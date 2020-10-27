@@ -344,6 +344,17 @@ function RandomSelectedOption(props) {
   return null;
 }
 
+RandomSelectedOption.propTypes = {
+  limit: PropTypes.number.isRequired,
+  option: PropTypes.string.isRequired,
+  customList: PropTypes.object.isRequired,
+  selectLimit: PropTypes.func.isRequired,
+  favoritesList: PropTypes.object.isRequired,
+  updateRandomBusiness: PropTypes.func.isRequired,
+  randomBusinessesList: PropTypes.array.isRequired,
+  getBusinessesWithinLimit: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   customList: state.user.customList,
   favoritesList: state.user.favoritesList,
