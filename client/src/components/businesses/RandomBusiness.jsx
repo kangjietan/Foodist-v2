@@ -2,22 +2,25 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import { formatMethods, formatTopics, getRatingsUrl } from '../utils';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1rem 1rem;
   gap: 0.25rem;
 `;
 
 const BusinessName = styled.div`
   font-size: 1.5rem;
+  font-weight: bold;
 `;
 
 const BusinessImageContainer = styled.div`
-  min-width: 25rem;
-  max-width: 30rem;
+  min-width: 20rem;
+  max-width: 25rem;
+  height: 20rem;
 `;
 
 const BusinessImage = styled.img`
@@ -25,6 +28,24 @@ const BusinessImage = styled.img`
   height: 100%;
   object-fit: cover;
 `;
+
+const InformationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`;
+
+const RatingContainer = styled.div`
+  display: flex;
+`;
+
+const Rating = styled.div`
+  margin-right: 0.5rem;
+`;
+
+const ReviewCount = styled.div``;
+
+const Price = styled.div``;
 
 function RandomBusiness(props) {
   const { business } = props;
@@ -37,6 +58,27 @@ function RandomBusiness(props) {
       <BusinessName>
         <span>{business.name}</span>
       </BusinessName>
+      <InformationContainer>
+        <RatingContainer>
+          {
+            business.rating
+              ?
+              <Rating>
+                <img src={getRatingsUrl(business.rating)} />
+              </Rating>
+              :
+              null
+          }
+          <ReviewCount>{business.review_count}&nbsp;</ReviewCount>
+          {
+            business.price
+              ?
+              <Price><span>&#183;</span>&nbsp;{business.price}</Price>
+              :
+              null
+          }
+        </RatingContainer>
+      </InformationContainer>
     </Container>
   );
 }
