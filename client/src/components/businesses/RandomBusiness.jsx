@@ -6,9 +6,12 @@ import { formatMethods, formatTopics, getRatingsUrl } from '../utils';
 
 const Container = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  height: 100%;
   gap: 0.25rem;
 `;
 
@@ -32,7 +35,10 @@ const BusinessImage = styled.img`
 const InformationContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.25rem;
+  font-size: 1.2rem;
+  margin-top: 1rem;
 `;
 
 const RatingContainer = styled.div`
@@ -46,6 +52,35 @@ const Rating = styled.div`
 const ReviewCount = styled.div``;
 
 const Price = styled.div``;
+
+const BusinessAddress = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CategoriesTransactionsContainer = styled.div``;
+
+const Categories = styled.div``;
+
+const Transactions = styled.div``;
+
+const RandomizeButtonContainer = styled.div`
+  margin-top: auto;
+`;
+
+const RandomizeRollButton = styled.button`
+
+`;
+
+const YelpLogo = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  & img {
+    width: 50px;
+  }
+`;
 
 function RandomBusiness(props) {
   const { business } = props;
@@ -78,7 +113,31 @@ function RandomBusiness(props) {
               null
           }
         </RatingContainer>
+        <BusinessAddress>
+          <span>{business.location.display_address[0]}</span>
+          <span>{business.location.display_address[1]}</span>
+        </BusinessAddress>
+        <CategoriesTransactionsContainer>
+          <Categories>{formatTopics(business.categories)}</Categories>
+          {
+            business.transactions.length !== 0
+              ?
+              <Transactions>{`Offers: ${formatMethods(business.transactions)}`}</Transactions>
+              :
+              null
+          }
+        </CategoriesTransactionsContainer>
       </InformationContainer>
+      <RandomizeButtonContainer>
+        <RandomizeRollButton>
+          Roll
+        </RandomizeRollButton>
+      </RandomizeButtonContainer>
+      <YelpLogo>
+        <a href={business.url} target='_blank'>
+          <img src='./images/Yelp_Logo.svg' />
+        </a>
+      </YelpLogo>
     </Container>
   );
 }
