@@ -51,9 +51,13 @@ class Random extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // console.log(prevProps, this.props);
     const prevBusiness = prevProps.randomBusiness;
     const business = this.props.randomBusiness;
+
+    if (prevProps.currentRandomList !== this.props.currentRandomList) {
+      this.clearCurrentRandomBusiness();
+    }
+
     if (Object.keys(prevBusiness).length === 0 && Object.keys(business).length > 1) {
       this.updateCurrentRandomBusiness();
     }
