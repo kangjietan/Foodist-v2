@@ -69,7 +69,14 @@ const RandomizeButtonContainer = styled.div`
 `;
 
 const RandomizeRollButton = styled.button`
-
+  outline: none;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.1rem;
+  background: #2f3640;
+  color: white;
+  cursor: pointer;
 `;
 
 const YelpLogo = styled.div`
@@ -82,9 +89,7 @@ const YelpLogo = styled.div`
   }
 `;
 
-function RandomBusiness(props) {
-  const { business } = props;
-  console.log(business);
+function RandomBusiness({ business, roll }) {
   return (
     <Container>
       <BusinessImageContainer>
@@ -129,7 +134,7 @@ function RandomBusiness(props) {
         </CategoriesTransactionsContainer>
       </InformationContainer>
       <RandomizeButtonContainer>
-        <RandomizeRollButton>
+        <RandomizeRollButton onClick={roll}>
           Roll
         </RandomizeRollButton>
       </RandomizeButtonContainer>
