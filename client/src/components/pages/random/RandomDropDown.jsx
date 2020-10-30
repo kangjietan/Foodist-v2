@@ -4,6 +4,9 @@ import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { updateCurrentList } from '../../../actions/randomActions';
+
 import RandomSelectedOption from './RandomSelectedOption';
 
 const Container = styled.div`
@@ -144,12 +147,17 @@ const BusinessLimitList = styled(ButtonList)`
   }
 `;
 
-function RandomDropDown(props) {
+function RandomDropDown({ updateCurrentList }) {
   const [activeOption, setActiveOption] = useState('');
   const [businessLimit, setBusinessLimit] = useState(0);
 
   let selectLimit = (limit) => setBusinessLimit(limit);
   let selectedActiveOption = <RandomSelectedOption option={activeOption} limit={businessLimit} selectLimit={selectLimit} />;
+
+  const handleListActiveOption = (option) => {
+    setActiveOption(option);
+    updateCurrentList(option);
+  }
 
   return (
     <Container>
@@ -161,9 +169,9 @@ function RandomDropDown(props) {
               <img src='./images/arrow-down.svg' />
             </OptionsButton>
             <ButtonList>
-              <ButtonListItem onClick={() => setActiveOption('Term and Location')}>Term and Location</ButtonListItem>
-              <ButtonListItem onClick={() => setActiveOption('Your Favorites')}>Your Favorites</ButtonListItem>
-              <ButtonListItem onClick={() => setActiveOption('Custom List')}>Custom List</ButtonListItem>
+              <ButtonListItem onClick={() => handleListActiveOption('Term and Location')}>Term and Location</ButtonListItem>
+              <ButtonListItem onClick={() => handleListActiveOption('Your Favorites')}>Your Favorites</ButtonListItem>
+              <ButtonListItem onClick={() => handleListActiveOption('Custom List')}>Custom List</ButtonListItem>
             </ButtonList>
           </ButtonContainer>
         </OptionsContainer>
@@ -197,4 +205,6 @@ function RandomDropDown(props) {
 
 RandomDropDown.propTypes = {};
 
-export default RandomDropDown;
+const mapDispatchToProps = { updateCurrentList };
+
+export default connect(null, mapDispatchToProps)(RandomDropDown);
