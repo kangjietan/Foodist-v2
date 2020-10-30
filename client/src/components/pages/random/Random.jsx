@@ -51,7 +51,7 @@ class Random extends Component {
   }
 
   componentDidMount() {
-    this.updateCurrentRandomBusiness();
+    this.clearCurrentRandomBusiness();
   }
 
   componentDidUpdate(prevProps) {
@@ -66,7 +66,7 @@ class Random extends Component {
       this.updateCurrentRandomBusiness();
     }
 
-    if (prevBusiness.id) {
+    if (prevBusiness.id !== undefined && business.id !== undefined) {
       if (prevBusiness.id !== business.id) {
         this.updateCurrentRandomBusiness();
       }
@@ -92,13 +92,13 @@ class Random extends Component {
       let randomIdx = getRandomInt(0, randomBusinessesList.length);
       updateRandomBusiness(randomBusinessesList[randomIdx]);
     } else if (currentRandomList === 'Your Favorites') {
-      let list = Object.keys(customList);
-      let randomIdx = getRandomInt(0, list.length);
-      updateRandomBusiness(customList[list[randomIdx]]);
-    } else if (currentRandomList === 'Custom List') {
       let list = Object.keys(favoritesList);
       let randomIdx = getRandomInt(0, list.length);
       updateRandomBusiness(favoritesList[list[randomIdx]]);
+    } else if (currentRandomList === 'Custom List') {
+      let list = Object.keys(customList);
+      let randomIdx = getRandomInt(0, list.length);
+      updateRandomBusiness(customList[list[randomIdx]]);
     }
   }
 
