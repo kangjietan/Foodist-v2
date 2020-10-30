@@ -39,3 +39,10 @@ export const getBusinessesWithinLimit = (params, limit) => (dispatch) => {
     });
   });
 };
+
+export const updateCurrentList = (list) => (dispatch) => {
+  dispatch({
+    type: actions.UPDATE_CURRENT_RANDOM_LIST,
+    payload: list,
+  });
+};
