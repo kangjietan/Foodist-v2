@@ -3,6 +3,7 @@ import * as actions from "../actions/types";
 let initialState = {
   randomBusiness: {},
   randomBusinessesList: [],
+  currentRandomList: "",
 };
 
 export default function (state = initialState, action) {
@@ -17,6 +18,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         randomBusinessesList: action.payload,
+      };
+
+    case actions.UPDATE_CURRENT_RANDOM_LIST:
+      return {
+        ...state,
+        currentRandomList: action.payload,
       };
 
     default:
