@@ -157,7 +157,6 @@ function RandomSelectedOption(props) {
     selectLimit,
     favoritesList,
     updateRandomBusiness,
-    randomBusinessesList,
     getBusinessesWithinLimit,
   } = props;
 
@@ -173,11 +172,10 @@ function RandomSelectedOption(props) {
 
     if (name === 'searchTerm') {
       setSearchTerm(value);
-
     } else if (name === 'searchLocation') {
-      setSearchLocation(value);
-
       if (useCurrentLocation && searchLocaction !== 'Current Location') setUseCurrentLocation(false);
+      if (searchLocaction === 'Current Location' || searchLocaction.toLowerCase() === 'current location') setUseCurrentLocation(true);
+      setSearchLocation(value);
     }
   };
 
@@ -192,7 +190,7 @@ function RandomSelectedOption(props) {
       businessLimit = 50;
     }
 
-    if (useCurrentLocation && searchLocaction === 'Current Location') {
+    if (useCurrentLocation || searchLocaction === 'Current Location' || searchLocaction.toLowerCase() === 'current location') {
       getUserLocation()
         .then((response) => {
           delete params['location'];
@@ -217,9 +215,6 @@ function RandomSelectedOption(props) {
   };
 
   const handleCurrentLocationSearch = () => {
-    setUseCurrentLocation(true);
-    setSearchLocation('Current Location');
-
     let params = { term: searchTerm };
 
     let businessLimit = limit;
@@ -233,6 +228,9 @@ function RandomSelectedOption(props) {
       .then((response) => {
         params.latitude = response.latitude;
         params.longitude = response.longitude;
+
+        setSearchLocation('Current Location');
+        setUseCurrentLocation(true);
 
         getBusinessesWithinLimit(params, businessLimit)
           .then((response) => {
@@ -291,7 +289,7 @@ function RandomSelectedOption(props) {
                 onChange={handleInputChange}
               />
               {
-                navigator.geolocation && useCurrentLocation === false
+                navigator.geolocation && useCurrentLocation === false && searchLocaction !== 'Current Location'
                   ?
                   <CurrentLocationContainer onClick={handleCurrentLocationSearch}>
                     <span>Current Location</span>
@@ -349,14 +347,12 @@ RandomSelectedOption.propTypes = {
   selectLimit: PropTypes.func.isRequired,
   favoritesList: PropTypes.object.isRequired,
   updateRandomBusiness: PropTypes.func.isRequired,
-  randomBusinessesList: PropTypes.array.isRequired,
   getBusinessesWithinLimit: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   customList: state.user.customList,
   favoritesList: state.user.favoritesList,
-  randomBusinessesList: state.random.randomBusinessesList,
 });
 
 const mapDispatchToProps = { getBusinessesWithinLimit, updateRandomBusiness };
