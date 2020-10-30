@@ -11,6 +11,8 @@ import RandomDropDown from './RandomDropDown';
 
 import RandomBusiness from '../../businesses/RandomBusiness';
 
+import { getRandomInt } from '../../utils';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -44,6 +46,8 @@ class Random extends Component {
     this.state = {
       currentRandomBusiness: {},
     }
+
+    this.handleListRandomization = this.handleListRandomization.bind(this);
   }
 
   componentDidMount() {
@@ -81,6 +85,23 @@ class Random extends Component {
     this.setState({ currentRandomBusiness: {} });
   }
 
+  handleListRandomization() {
+    const { randomBusinessesList, currentRandomList, customList, favoritesList, updateRandomBusiness } = this.props;
+
+    if (currentRandomList === 'Term and Location') {
+      let randomIdx = getRandomInt(0, randomBusinessesList.length);
+      updateRandomBusiness(randomBusinessesList[randomIdx]);
+    } else if (currentRandomList === 'Your Favorites') {
+      let list = Object.keys(customList);
+      let randomIdx = getRandomInt(0, list.length);
+      updateRandomBusiness(customList[list[randomIdx]]);
+    } else if (currentRandomList === 'Custom List') {
+      let list = Object.keys(favoritesList);
+      let randomIdx = getRandomInt(0, list.length);
+      updateRandomBusiness(favoritesList[list[randomIdx]]);
+    }
+  }
+
   render() {
     const { GOOGLE_MAPS_API_KEY } = process.env;
 
@@ -100,7 +121,7 @@ class Random extends Component {
             ?
             <RandomBusinessAndMapContainer>
               <RandomBusinessContainer>
-                <RandomBusiness business={currentRandomBusiness} />
+                <RandomBusiness business={currentRandomBusiness} roll={this.handleListRandomization} />
               </RandomBusinessContainer>
               <MapContainer>
                 <iframe
@@ -118,13 +139,18 @@ class Random extends Component {
   }
 }
 
-Random.propTypes = {};
+Random.propTypes = {
+
+};
 
 const mapStateToProps = (state) => ({
   randomBusiness: state.random.randomBusiness,
   currentRandomList: state.random.currentRandomList,
+  randomBusinessesList: state.random.randomBusinessesList,
+  customList: state.user.customList,
+  favoritesList: state.user.favoritesList,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { updateRandomBusiness };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Random);
