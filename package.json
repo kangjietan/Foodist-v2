@@ -5,8 +5,7 @@
   "main": "server/app.js",
   "scripts": {
     "start": "nodemon server/app.js",
-    "build": "webpack -w",
-    "production": "webpack"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
