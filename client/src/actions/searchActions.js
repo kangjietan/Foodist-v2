@@ -23,6 +23,8 @@ export const searchBusinessesYelp = (params) => (dispatch) => {
             type: actions.UPDATE_SEARCH_RESULTS,
             payload: {},
           });
+
+          resolve("No results");
         }
       })
       .catch((error) => {
@@ -42,5 +44,12 @@ export const updateOffset = (offset) => (dispatch) => {
   dispatch({
     type: actions.UPDATE_OFFSET,
     payload: offset,
+  });
+};
+
+export const updateParamsHasNoResults = (status) => (dispatch) => {
+  dispatch({
+    type: actions.UPDATE_PARAMS_HAS_NO_RESULTS,
+    payload: status,
   });
 };

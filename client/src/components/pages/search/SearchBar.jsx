@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { searchBusinessesYelp, updateSearchTermAndLocation } from '../../../actions/searchActions';
+import { searchBusinessesYelp, updateSearchTermAndLocation, updateParamsHasNoResults } from '../../../actions/searchActions';
 
 const Container = styled.div`
   font-family: 'Roboto', sans-serif;
@@ -208,21 +208,30 @@ class SearchBar extends Component {
     event.preventDefault();
 
     const { searchInput: term, locationInput: location, noResults } = this.state;
+    const { updateParamsHasNoResults, updateSearchTermAndLocation, searchBusinessesYelp } = this.props;
+
     const params = {
       term,
       location,
       offset: 0,
     };
 
-    this.props.searchBusinessesYelp(params)
+    updateSearchTermAndLocation({ term, location });
+
+    searchBusinessesYelp(params)
       .then((response) => {
-        this.props.updateSearchTermAndLocation({ term, location });
+        if (response === 'No results') {
+          updateParamsHasNoResults(true);
+          this.setState({ noResults: true });
+        } else {
+          updateParamsHasNoResults(false);
+        }
         if (noResults) this.setState({ noResults: false });
       })
       .catch((error) => {
         console.error(error);
+        updateParamsHasNoResults(true);
         this.setState({ noResults: true });
-        this.props.updateSearchTermAndLocation({ term, location });
       });
   }
 
@@ -313,7 +322,7 @@ class SearchBar extends Component {
             </ButtonContainer>
           </SearchForm>
         </FormContainer>
-        {noResults ? <div style={{ marginTop: '1rem' }}>No results.</div> : null}
+        {noResults ? <div style={{ marginTop: '2rem', fontSize:'1.5rem' }}>{`No results for ${searchInput} ${locationInput}.`}</div> : null}
       </Container>
     );
   }
@@ -324,9 +333,10 @@ SearchBar.propTypes = {
   location: PropTypes.string,
   searchBusinessesYelp: PropTypes.func.isRequired,
   updateSearchTermAndLocation: PropTypes.func.isRequired,
+  updateParamsHasNoResults: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = { searchBusinessesYelp, updateSearchTermAndLocation };
+const mapDispatchToProps = { searchBusinessesYelp, updateSearchTermAndLocation, updateParamsHasNoResults };
 
 const mapStateToProps = (state) => ({
   term: state.search.term,
