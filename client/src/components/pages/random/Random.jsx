@@ -32,6 +32,7 @@ const RandomBusinessAndMapContainer = styled.div`
 
   @media screen and (max-width: 900px) {
     flex-direction: column;
+    height: auto;
   }
 `;
 
