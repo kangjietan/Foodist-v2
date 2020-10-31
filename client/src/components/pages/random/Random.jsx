@@ -18,6 +18,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+
+  @media screen and (max-width: 600px) {
+    margin-bottom: 6rem;
+  }
 `;
 
 const RandomBusinessAndMapContainer = styled.div`
