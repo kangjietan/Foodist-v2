@@ -7,11 +7,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { switchToGoogleMaps } from '../../../actions/mapActions';
 
+import { Redirect } from 'react-router-dom';
+
 import ListBusiness from '../../businesses/ListBusiness';
 
 import FavoritesList from './FavoritesList';
 import FavoritesListPagination from './pagination/FavoritesListPagination';
-
 
 const Container = styled.div`
   display: flex;
@@ -76,10 +77,21 @@ const ShowListButton = styled(Button)``;
 
 const ShowMapsButton = styled(Button)``;
 
-function List({ customList, favoritesList, enableSwitchToGoogleMaps, switchToGoogleMaps, businessOnMap }) {
+function List(props) {
   const { GOOGLE_MAPS_API_KEY } = process.env;
 
+  const {
+    customList,
+    favoritesList,
+    enableSwitchToGoogleMaps,
+    switchToGoogleMaps,
+    businessOnMap,
+    userLoggedIn
+  } = props;
+
   const [showFavoritesList, setShowFavoritesList] = useState(false);
+
+  if (showFavoritesList && !userLoggedIn) return <Redirect to='/login' />;
 
   let list = customList ? customList : {};
   if (showFavoritesList) list = favoritesList ? favoritesList : {};
@@ -184,6 +196,7 @@ List.propTypes = {
   favoritesList: PropTypes.object.isRequired,
   enableSwitchToGoogleMaps: PropTypes.bool.isRequired,
   switchToGoogleMaps: PropTypes.func.isRequired,
+  userLoggedIn: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -191,6 +204,7 @@ const mapStateToProps = (state) => ({
   favoritesList: state.user.favoritesList,
   enableSwitchToGoogleMaps: state.map.enableSwitchToGoogleMaps,
   businessOnMap: state.map.businessOnMap,
+  userLoggedIn: state.user.userLoggedIn,
 });
 
 const mapDispatchToProps = { switchToGoogleMaps };
