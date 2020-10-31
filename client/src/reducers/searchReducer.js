@@ -5,6 +5,7 @@ let initialState = {
   term: "",
   location: "",
   offset: 0,
+  paramsHasNoResults: false,
 };
 
 export default function (state = initialState, action) {
@@ -34,6 +35,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         searchResults: action.payload,
+      };
+
+    case actions.UPDATE_PARAMS_HAS_NO_RESULTS:
+      return {
+        ...state,
+        paramsHasNoResults: action.payload,
       };
 
     default:
