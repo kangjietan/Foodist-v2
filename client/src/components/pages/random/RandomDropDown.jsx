@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -143,10 +143,29 @@ const BusinessLimitList = styled(ButtonList)`
 `;
 
 function RandomDropDown({ updateCurrentList }) {
+  const optionsWrapperRef = useRef(null);
+  const limitWrapperRef = useRef(null);
+
   const [activeOption, setActiveOption] = useState('');
   const [businessLimit, setBusinessLimit] = useState(0);
   const [optionsButtonFocus, setOptionsButtonFocus] = useState(false);
   const [limitButtonFocus, setLimitButtonFocus] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, false);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, false);
+    };
+  }, []);
+
+  const handleClickOutside = event => {
+    if (optionsWrapperRef.current && !optionsWrapperRef.current.contains(event.target)) {
+      setOptionsButtonFocus(false);
+    }
+    if (limitWrapperRef.current && !limitWrapperRef.current.contains(event.target)) {
+      setLimitButtonFocus(false);
+    }
+  };
 
   let selectLimit = (limit) => setBusinessLimit(limit);
   let selectedActiveOption = <RandomSelectedOption option={activeOption} limit={businessLimit} selectLimit={selectLimit} />;
@@ -178,7 +197,7 @@ function RandomDropDown({ updateCurrentList }) {
       <OptionsLimitContainer>
         <OptionsContainer>
           <ButtonContainer >
-            <OptionsButton type='button' onClick={() => setOptionsButtonFocus(true)} onFocus={() => setOptionsButtonFocus(true)} onBlur={() => setOptionsButtonFocus(false)}>
+            <OptionsButton type='button' ref={optionsWrapperRef} onClick={() => setOptionsButtonFocus(true)} onFocus={() => setOptionsButtonFocus(true)} onBlur={() => setOptionsButtonFocus(false)}>
               <span>{activeOption ? activeOption : 'Select Randomizing Option'}</span>
               <img src='./images/arrow-down.svg' />
             </OptionsButton>
@@ -194,7 +213,7 @@ function RandomDropDown({ updateCurrentList }) {
             ?
             <BusinessLimitContainer>
               <ButtonContainer>
-                <BusinessLimitButton type='button' onClick={() => setLimitButtonFocus(true)} onFocus={() => setLimitButtonFocus(true)} onBlur={() => setLimitButtonFocus(false)}>
+                <BusinessLimitButton type='button' ref={limitWrapperRef} onClick={() => setLimitButtonFocus(true)} onFocus={() => setLimitButtonFocus(true)} onBlur={() => setLimitButtonFocus(false)}>
                   <span>{businessLimit ? `${businessLimit} businesses` : 'Select Limit'}</span>
                   <img src='./images/arrow-down.svg' />
                 </BusinessLimitButton>
