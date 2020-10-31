@@ -223,6 +223,7 @@ class SearchBar extends Component {
       .catch((error) => {
         console.error(error);
         this.setState({ noResults: true });
+        this.props.updateSearchTermAndLocation({ term, location });
       });
   }
 
