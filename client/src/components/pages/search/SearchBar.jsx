@@ -334,6 +334,7 @@ SearchBar.propTypes = {
   location: PropTypes.string,
   searchBusinessesYelp: PropTypes.func.isRequired,
   updateSearchTermAndLocation: PropTypes.func.isRequired,
+  updateParamsHasNoResults: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = { searchBusinessesYelp, updateSearchTermAndLocation, updateParamsHasNoResults };
