@@ -175,7 +175,7 @@ function RandomDropDown({ updateCurrentList }) {
     <Container>
       <OptionsLimitContainer>
         <OptionsContainer>
-          <ButtonContainer>
+          <ButtonContainer onClick={() => setOptionsButtonFocus(true)}>
             <OptionsButton type='button' onFocus={() => setOptionsButtonFocus(true)} onBlur={() => setOptionsButtonFocus(false)}>
               <span>{activeOption ? activeOption : 'Select Randomizing Option'}</span>
               <img src='./images/arrow-down.svg' />
