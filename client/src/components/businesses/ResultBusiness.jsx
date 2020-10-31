@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList } from '../../actions/userActions';
 
+import { Redirect } from 'react-router-dom';
+
 import { formatTopics, formatMethods, getRatingsUrl } from '../utils';
 
 const Container = styled.div`
@@ -217,10 +219,12 @@ function ResultBusiness(props) {
     removeFromCustomList,
     addToFavoritesList,
     removeFromFavoritesList,
+    userLoggedIn,
   } = props;
 
   const [addedToCustomList, setAddedToCustomList] = useState(listAdded.customListAdded);
   const [addedToFavoritesList, setAddedToFavoritesList] = useState(listAdded.favoritesListAdded);
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
 
   const handleCustomList = () => {
     if (addedToCustomList) {
@@ -233,6 +237,11 @@ function ResultBusiness(props) {
   }
 
   const handleFavoritesList = () => {
+    if (!userLoggedIn) {
+      setRedirectToLogin(true);
+      return;
+    }
+
     if (addedToFavoritesList) {
       removeFromFavoritesList(business);
       setAddedToFavoritesList(false);
@@ -241,6 +250,8 @@ function ResultBusiness(props) {
       setAddedToFavoritesList(true);
     }
   }
+
+  if (redirectToLogin) return <Redirect to='/login' />;
 
   return (
     <Container>
@@ -310,8 +321,13 @@ ResultBusiness.propTypes = {
   removeFromCustomList: PropTypes.func.isRequired,
   addToFavoritesList: PropTypes.func.isRequired,
   removeFromFavoritesList: PropTypes.func.isRequired,
+  userLoggedIn: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList }
+const mapStateToProps = (state) => ({
+  userLoggedIn: state.user.userLoggedIn,
+});
 
-export default connect(null, mapDispatchToProps)(ResultBusiness);
+const mapDispatchToProps = { addToCustomList, removeFromCustomList, addToFavoritesList, removeFromFavoritesList };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResultBusiness);
