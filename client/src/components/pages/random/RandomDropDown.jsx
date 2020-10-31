@@ -26,6 +26,7 @@ const OptionsLimitContainer = styled.div`
 
 const OptionsContainer = styled.div`
   margin-right: 1rem;
+  cursor: pointer;
 
   @media screen and (max-width: 700px) {
     margin-right: 0.5rem;
