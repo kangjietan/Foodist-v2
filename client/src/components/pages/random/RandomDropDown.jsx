@@ -98,12 +98,6 @@ const ButtonList = styled.ul`
   visibility: hidden;
   z-index: 2;
 
-  /* ${OptionsButton}:focus + & {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-  } */
-
   @media screen and (max-width: 600px) {
     width: 175px !important;
   }
@@ -152,6 +146,7 @@ function RandomDropDown({ updateCurrentList }) {
   const [activeOption, setActiveOption] = useState('');
   const [businessLimit, setBusinessLimit] = useState(0);
   const [optionsButtonFocus, setOptionsButtonFocus] = useState(false);
+  const [limitButtonFocus, setLimitButtonFocus] = useState(false);
 
   let selectLimit = (limit) => setBusinessLimit(limit);
   let selectedActiveOption = <RandomSelectedOption option={activeOption} limit={businessLimit} selectLimit={selectLimit} />;
@@ -159,6 +154,12 @@ function RandomDropDown({ updateCurrentList }) {
   const handleListActiveOption = (option) => {
     setActiveOption(option);
     updateCurrentList(option);
+    setOptionsButtonFocus(false);
+  }
+
+  const handleBusinessLimitActiveOption = (limit) => {
+    setBusinessLimit(limit);
+    setLimitButtonFocus(false);
   }
 
   let activeStyle = {
@@ -167,16 +168,17 @@ function RandomDropDown({ updateCurrentList }) {
     visibility: 'visible',
   }
 
-  let activeOptionsStyle = {};
+  let activeOptionsStyle = {}, activeLimitStyle = {};
 
   if (optionsButtonFocus) activeOptionsStyle = activeStyle;
+  if (limitButtonFocus) activeLimitStyle = activeStyle;
 
   return (
     <Container>
       <OptionsLimitContainer>
         <OptionsContainer>
-          <ButtonContainer onClick={() => setOptionsButtonFocus(true)}>
-            <OptionsButton type='button' onFocus={() => setOptionsButtonFocus(true)} onBlur={() => setOptionsButtonFocus(false)}>
+          <ButtonContainer >
+            <OptionsButton type='button' onClick={() => setOptionsButtonFocus(true)} onFocus={() => setOptionsButtonFocus(true)} onBlur={() => setOptionsButtonFocus(false)}>
               <span>{activeOption ? activeOption : 'Select Randomizing Option'}</span>
               <img src='./images/arrow-down.svg' />
             </OptionsButton>
@@ -192,16 +194,16 @@ function RandomDropDown({ updateCurrentList }) {
             ?
             <BusinessLimitContainer>
               <ButtonContainer>
-                <BusinessLimitButton type='button'>
+                <BusinessLimitButton type='button' onClick={() => setLimitButtonFocus(true)} onFocus={() => setLimitButtonFocus(true)} onBlur={() => setLimitButtonFocus(false)}>
                   <span>{businessLimit ? `${businessLimit} businesses` : 'Select Limit'}</span>
                   <img src='./images/arrow-down.svg' />
                 </BusinessLimitButton>
-                <BusinessLimitList>
-                  <ButtonListItem onClick={() => setBusinessLimit(50)}>50 businesses</ButtonListItem>
-                  <ButtonListItem onClick={() => setBusinessLimit(100)}>100 businesses</ButtonListItem>
-                  <ButtonListItem onClick={() => setBusinessLimit(150)}>150 businesses</ButtonListItem>
-                  <ButtonListItem onClick={() => setBusinessLimit(200)}>200 businesses</ButtonListItem>
-                  <ButtonListItem onClick={() => setBusinessLimit(250)}>250 businesses</ButtonListItem>
+                <BusinessLimitList style={activeLimitStyle}>
+                  <ButtonListItem onClick={() => handleBusinessLimitActiveOption(50)}>50 businesses</ButtonListItem>
+                  <ButtonListItem onClick={() => handleBusinessLimitActiveOption(100)}>100 businesses</ButtonListItem>
+                  <ButtonListItem onClick={() => handleBusinessLimitActiveOption(150)}>150 businesses</ButtonListItem>
+                  <ButtonListItem onClick={() => handleBusinessLimitActiveOption(200)}>200 businesses</ButtonListItem>
+                  <ButtonListItem onClick={() => handleBusinessLimitActiveOption(250)}>250 businesses</ButtonListItem>
                 </BusinessLimitList>
               </ButtonContainer>
             </BusinessLimitContainer>
