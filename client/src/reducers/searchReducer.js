@@ -30,6 +30,12 @@ export default function (state = initialState, action) {
         offset: action.payload,
       };
 
+    case actions.UPDATE_SEARCH_RESULTS:
+      return {
+        ...state,
+        searchResults: action.payload,
+      };
+
     default:
       return state;
   }
