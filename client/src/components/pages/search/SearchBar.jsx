@@ -162,6 +162,7 @@ class SearchBar extends Component {
       locationActive: false,
       searchInput: '',
       locationInput: '',
+      noResults: false,
     };
 
     this.enableSearchTermActive = this.enableSearchTermActive.bind(this);
@@ -206,7 +207,7 @@ class SearchBar extends Component {
   handleFormSubmission(event) {
     event.preventDefault();
 
-    const { searchInput: term, locationInput: location } = this.state;
+    const { searchInput: term, locationInput: location, noResults } = this.state;
     const params = {
       term,
       location,
@@ -216,14 +217,16 @@ class SearchBar extends Component {
     this.props.searchBusinessesYelp(params)
       .then((response) => {
         this.props.updateSearchTermAndLocation({ term, location });
+        if (noResults) this.setState({ noResults: false });
       })
       .catch((error) => {
         console.error(error);
+        this.setState({ noResults: true });
       });
   }
 
   render() {
-    const { searchTermActive, locationActive, searchInput, locationInput } = this.state;
+    const { searchTermActive, locationActive, searchInput, locationInput, noResults } = this.state;
 
     let searchTermStyle = {}, locationStyle = {};
 
@@ -309,6 +312,7 @@ class SearchBar extends Component {
             </ButtonContainer>
           </SearchForm>
         </FormContainer>
+        {noResults ? <div style={{ marginTop: '1rem' }}>No results.</div> : null}
       </Container>
     );
   }
