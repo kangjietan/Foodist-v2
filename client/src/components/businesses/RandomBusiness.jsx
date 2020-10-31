@@ -13,6 +13,11 @@ const Container = styled.div`
   text-align: center;
   height: 100%;
   gap: 0.25rem;
+
+  @media screen and (max-width: 280px) {
+    text-align: left;
+    align-items: flex-start;
+  }
 `;
 
 const BusinessName = styled.div`
@@ -24,6 +29,12 @@ const BusinessImageContainer = styled.div`
   min-width: 20rem;
   max-width: 25rem;
   height: 20rem;
+
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    height: 15rem;
+    min-width: 0;
+  }
 `;
 
 const BusinessImage = styled.img`
@@ -39,6 +50,10 @@ const InformationContainer = styled.div`
   gap: 0.25rem;
   font-size: 1.2rem;
   margin-top: 1rem;
+
+  @media screen and (max-width: 280px) {
+    align-items: flex-start;
+  }
 `;
 
 const RatingContainer = styled.div`

@@ -24,6 +24,10 @@ const RandomBusinessAndMapContainer = styled.div`
   display: flex;
   width: 100%;
   height: 75vh;
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+  }
 `;
 
 const RandomBusinessContainer = styled.div`
@@ -31,12 +35,20 @@ const RandomBusinessContainer = styled.div`
   margin-right: 1rem;
   border: 1px solid #eeeeef;
   padding: 1rem 1rem;
+
+  @media screen and (max-width: 900px) {
+    margin-right: 0;    
+  }
 `;
 
 const MapContainer = styled.div`
   flex: 1.75;
   border: 1px solid #eeeeef;
   padding: 1rem 1rem;
+
+  @media screen and (max-width: 900px) {
+    height: 75vh;
+  }
 `;
 
 class Random extends Component {
