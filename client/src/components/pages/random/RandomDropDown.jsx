@@ -68,12 +68,6 @@ const OptionsButton = styled.button`
     transform: rotate(180deg);
   }
 
-  &:focus + ${ButtonList} {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-  }
-
   @media screen and (max-width: 750px) {
     width: 250px;
     font-size: 1rem;
@@ -157,6 +151,7 @@ const BusinessLimitList = styled(ButtonList)`
 function RandomDropDown({ updateCurrentList }) {
   const [activeOption, setActiveOption] = useState('');
   const [businessLimit, setBusinessLimit] = useState(0);
+  const [optionsButtonFocus, setOptionsButtonFocus] = useState(false);
 
   let selectLimit = (limit) => setBusinessLimit(limit);
   let selectedActiveOption = <RandomSelectedOption option={activeOption} limit={businessLimit} selectLimit={selectLimit} />;
@@ -166,16 +161,26 @@ function RandomDropDown({ updateCurrentList }) {
     updateCurrentList(option);
   }
 
+  let activeStyle = {
+    transform: 'translateY(0)',
+    opacity: 1,
+    visibility: 'visible',
+  }
+
+  let activeOptionsStyle = {};
+
+  if (optionsButtonFocus) activeOptionsStyle = activeStyle;
+
   return (
     <Container>
       <OptionsLimitContainer>
         <OptionsContainer>
           <ButtonContainer>
-            <OptionsButton type='button'>
+            <OptionsButton type='button' onFocus={() => setOptionsButtonFocus(true)} onBlur={() => setOptionsButtonFocus(false)}>
               <span>{activeOption ? activeOption : 'Select Randomizing Option'}</span>
               <img src='./images/arrow-down.svg' />
             </OptionsButton>
-            <ButtonList>
+            <ButtonList style={activeOptionsStyle}>
               <ButtonListItem onClick={() => handleListActiveOption('Term and Location')}>Term and Location</ButtonListItem>
               <ButtonListItem onClick={() => handleListActiveOption('Your Favorites')}>Your Favorites</ButtonListItem>
               <ButtonListItem onClick={() => handleListActiveOption('Custom List')}>Custom List</ButtonListItem>
