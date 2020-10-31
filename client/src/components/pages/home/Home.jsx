@@ -327,7 +327,7 @@ function Home(props) {
           <Instructions>
             <h1>Search</h1>
             <p>
-              Search for your favorite restaurants and add them to your list.
+              Search for your favorite businesses and add them to your lists.
           </p>
           </Instructions>
           <ButtonContainer className='button-chev'>
@@ -379,7 +379,7 @@ function Home(props) {
           </ImageContainer>
           <Instructions>
             <h1>List</h1>
-            <p>View your lists. Be logged in to save your favorites list.</p>
+            <p>View your lists. Custom lists will not be saved. Register an account to save businesses to your favorites.</p>
           </Instructions>
           <ButtonContainer className='button-chev'>
             <svg
@@ -431,7 +431,7 @@ function Home(props) {
           <Instructions>
             <h1>Random</h1>
             <p>
-              Not sure where to eat? Have a restaurant randomly chosen for you. Randomized from a search term and location or your lists.
+              Not sure where to go? Have a business randomly chosen for you. Randomized from a search term and location or your lists.
           </p>
           </Instructions>
           <ButtonContainer className='button-chev'>
