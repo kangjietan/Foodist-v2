@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { searchBusinessesYelp } from '../../../actions/searchActions';
+import { searchBusinessesYelp, updateParamsHasNoResults } from '../../../actions/searchActions';
 
 import SearchBar from './SearchBar';
 
@@ -28,21 +28,24 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      term: '',
-      location: '',
       offset: 0,
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { term, location, offset, searchResults, searchBusinessesYelp } = this.props;
-    const { term: prevTerm, location: prevLocation, offset: prevOffset } = prevProps;
+    const {
+      term,
+      location,
+      offset,
+      searchResults,
+      searchBusinessesYelp,
+      paramsHasNoResults,
+      updateParamsHasNoResults
+    } = this.props;
+    const { offset: prevOffset } = prevProps;
 
-    if (prevTerm !== term || prevLocation !== location) {
-      this.setState({ term, location });
-    }
-
-    if (searchResults[offset] === undefined) {
+    if (searchResults[offset] === undefined && !paramsHasNoResults) {
+      console.log('Search component', searchResults, offset);
       let params = {
         term,
         location,
@@ -50,8 +53,17 @@ class Search extends Component {
       }
 
       searchBusinessesYelp(params)
-        .then(() => {
-          this.setState({ offset });
+        .then((response) => {
+          if (response === 'No results') {
+            updateParamsHasNoResults(true);
+          } else {
+            this.setState({ offset });
+            updateParamsHasNoResults(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          updateParamsHasNoResults(false);
         });
     }
 
@@ -81,6 +93,7 @@ Search.propTypes = {
   customList: PropTypes.object.isRequired,
   favoritesList: PropTypes.object.isRequired,
   searchBusinessesYelp: PropTypes.func.isRequired,
+  paramsHasNoResults: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -90,8 +103,9 @@ const mapStateToProps = (state) => ({
   searchResults: state.search.searchResults,
   customList: state.user.customList,
   favoritesList: state.user.favoritesList,
+  paramsHasNoResults: state.search.paramsHasNoResults,
 });
 
-const mapDispatchToProps = { searchBusinessesYelp };
+const mapDispatchToProps = { searchBusinessesYelp, updateParamsHasNoResults };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
