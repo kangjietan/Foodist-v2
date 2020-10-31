@@ -68,6 +68,12 @@ const OptionsButton = styled.button`
     transform: rotate(180deg);
   }
 
+  &:focus + ${ButtonList} {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
   @media screen and (max-width: 750px) {
     width: 250px;
     font-size: 1rem;
@@ -98,11 +104,11 @@ const ButtonList = styled.ul`
   visibility: hidden;
   z-index: 2;
 
-  ${OptionsButton}:focus + & {
+  /* ${OptionsButton}:focus + & {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
-  }
+  } */
 
   @media screen and (max-width: 600px) {
     width: 175px !important;
