@@ -24,6 +24,7 @@ const RandomBusinessAndMapContainer = styled.div`
   display: flex;
   width: 100%;
   height: 75vh;
+  margin-top: 1rem;
 
   @media screen and (max-width: 900px) {
     flex-direction: column;
@@ -37,7 +38,8 @@ const RandomBusinessContainer = styled.div`
   padding: 1rem 1rem;
 
   @media screen and (max-width: 900px) {
-    margin-right: 0;    
+    margin-right: 0;
+    margin-bottom: 1rem;
   }
 `;
 
