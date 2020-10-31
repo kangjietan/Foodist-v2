@@ -10,13 +10,20 @@ export const searchBusinessesYelp = (params) => (dispatch) => {
         let data = {};
         response.data.businesses.forEach((entry) => (data[entry.id] = entry));
 
-        dispatch({
-          type: actions.SEARCH_BUSINESSES_YELP,
-          payload: data,
-          offset: params.offset,
-        });
+        if (response.data.businesses.length) {
+          dispatch({
+            type: actions.SEARCH_BUSINESSES_YELP,
+            payload: data,
+            offset: params.offset,
+          });
 
-        resolve("Stored");
+          resolve("Stored");
+        } else {
+          dispatch({
+            type: actions.UPDATE_SEARCH_RESULTS,
+            payload: {},
+          });
+        }
       })
       .catch((error) => {
         reject(error);
