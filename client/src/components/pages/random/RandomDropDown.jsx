@@ -134,7 +134,7 @@ const BusinessLimitButton = styled(OptionsButton)`
   }
 
   @media screen and (max-width: 650px) {
-    width: 125px;
+    width: 150px;
   }
 `;
 
