@@ -14,10 +14,11 @@ export const getBusinessesWithinLimit = (params, limit) => (dispatch) => {
   let results = [];
 
   for (let i = 0; i < limit / 50; i++) {
-    params.offset = i;
+    let copy = Object.assign({}, params, { offset: i });
+    if (params.term === "") delete copy["term"];
     promises[i] = new Promise((resolve, reject) => {
       axios
-        .get("/yelp/search", { params })
+        .get("/yelp/search", { params: copy })
         .then((response) => {
           results.push(...response.data.businesses);
           resolve("Retrieved");
@@ -30,13 +31,15 @@ export const getBusinessesWithinLimit = (params, limit) => (dispatch) => {
   }
 
   return new Promise((resolve, reject) => {
-    return Promise.all(promises).then(() => {
-      dispatch({
-        type: actions.GET_BUSINESSES_WITHIN_LIMIT,
-        payload: results,
-      });
-      resolve(results);
-    });
+    return Promise.all(promises)
+      .then(() => {
+        dispatch({
+          type: actions.GET_BUSINESSES_WITHIN_LIMIT,
+          payload: results,
+        });
+        resolve(results);
+      })
+      .catch((error) => reject(error));
   });
 };
 
