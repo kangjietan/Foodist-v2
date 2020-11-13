@@ -24,3 +24,15 @@ npm run build & npm run start
 ```
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
+
+## Technologies Used
+* JavaScript
+* HTML5/CSS3
+* React
+* Redux
+* Express
+* Node.js
+* React Router DOM
+* Styled-Components
+* MongoDB
+* Passport.js
