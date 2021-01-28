@@ -44,6 +44,7 @@ const NavigationLink = styled.div`
   }
 
   ${NavigationLink} svg {
+    width: 2rem;
     min-width: 2rem;
     margin: 0 1.5rem;
   }
