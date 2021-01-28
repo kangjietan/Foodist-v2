@@ -14,7 +14,7 @@ export const getBusinessesWithinLimit = (params, limit) => (dispatch) => {
   let results = [];
 
   for (let i = 0; i < limit / 50; i++) {
-    let copy = Object.assign({}, params, { offset: i });
+    let copy = Object.assign({}, params, { offset: i * 50 });
     if (params.term === "") delete copy["term"];
     promises[i] = new Promise((resolve, reject) => {
       axios
