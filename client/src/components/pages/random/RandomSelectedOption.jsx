@@ -261,6 +261,8 @@ function RandomSelectedOption(props) {
           updateRandomBusiness(response);
         })
         .catch((error) => console.log(error));
+    } else {
+      updateRandomBusiness(business);
     }
   };
 
