@@ -37,7 +37,7 @@ module.exports = {
       }
 
       if (data.errors.length > 0) {
-        res.json(data);
+        res.status(400).json(data);
       } else {
         User.findOne({ username }).then((user) => {
           if (user) {
@@ -85,7 +85,7 @@ module.exports = {
           errors.push({
             msg: "Login failed. Username or password is incorrect.",
           });
-          return res.json({ errors });
+          return res.status(400).json({ errors });
         }
 
         req.login(user, (err) => {
