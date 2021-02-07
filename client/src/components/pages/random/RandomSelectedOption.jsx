@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { getBusinessesWithinLimit, updateRandomBusiness } from '../../../actions/randomActions';
+import { getBusinessInfoAndUpdate } from '../../../actions/userActions';
 
 import { getRandomInt, getUserLocation } from '../../utils';
 
@@ -158,6 +159,7 @@ function RandomSelectedOption(props) {
     favoritesList,
     updateRandomBusiness,
     getBusinessesWithinLimit,
+    getBusinessInfoAndUpdate,
   } = props;
 
   const [locationFocus, setLocationFocus] = useState(false);
@@ -251,7 +253,15 @@ function RandomSelectedOption(props) {
   const handleFavoritesListRandomization = () => {
     let list = Object.keys(favoritesList);
     let randomIdx = getRandomInt(0, list.length);
-    updateRandomBusiness(favoritesList[list[randomIdx]]);
+    let business = favoritesList[list[randomIdx]];
+
+    if (Object.keys(business).length === 1) {
+      getBusinessInfoAndUpdate(business)
+        .then((response) => {
+          updateRandomBusiness(response);
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   const generateRandomBusiness = (list) => {
@@ -355,6 +365,6 @@ const mapStateToProps = (state) => ({
   favoritesList: state.user.favoritesList,
 });
 
-const mapDispatchToProps = { getBusinessesWithinLimit, updateRandomBusiness };
+const mapDispatchToProps = { getBusinessesWithinLimit, updateRandomBusiness, getBusinessInfoAndUpdate };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RandomSelectedOption);
