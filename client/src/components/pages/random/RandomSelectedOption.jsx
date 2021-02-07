@@ -358,6 +358,7 @@ RandomSelectedOption.propTypes = {
   favoritesList: PropTypes.object.isRequired,
   updateRandomBusiness: PropTypes.func.isRequired,
   getBusinessesWithinLimit: PropTypes.func.isRequired,
+  getBusinessInfoAndUpdate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
