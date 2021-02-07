@@ -146,7 +146,7 @@ function RandomDropDown({ updateCurrentList }) {
   const optionsWrapperRef = useRef(null);
   const limitWrapperRef = useRef(null);
 
-  const [activeOption, setActiveOption] = useState('');
+  const [activeOption, setActiveOption] = useState('Term and Location');
   const [businessLimit, setBusinessLimit] = useState(0);
   const [optionsButtonFocus, setOptionsButtonFocus] = useState(false);
   const [limitButtonFocus, setLimitButtonFocus] = useState(false);
@@ -236,7 +236,9 @@ function RandomDropDown({ updateCurrentList }) {
   );
 }
 
-RandomDropDown.propTypes = {};
+RandomDropDown.propTypes = {
+  updateCurrentList: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = { updateCurrentList };
 

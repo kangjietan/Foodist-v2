@@ -329,18 +329,17 @@ class Login extends Component {
 
     axios.post('/user/register', qs.stringify({ username, password, password2 }))
       .then((response) => {
-        if (response.data.errors) {
-          this.setState({ signUpErrors: response.data.errors });
-        } else {
-          if (response.data.success) {
-            this.setState({ rightPanelActive: false }, () => {
-              this.setState({ signInErrors: [{ msg: 'You have succesfully registered!' }] });
-            });
-          }
+        if (response.data.success) {
+          this.setState({ rightPanelActive: false }, () => {
+            this.setState({ signInErrors: [{ msg: 'You have succesfully registered!' }] });
+          });
         }
       })
       .catch((error) => {
-        console.log(error);
+        const { response } = error;
+        if (response.data.errors) {
+          this.setState({ signUpErrors: response.data.errors });
+        }
       });
   }
 
@@ -363,7 +362,10 @@ class Login extends Component {
         }
       })
       .catch((error) => {
-        console.error(error);
+        const { response } = error;
+        if (response.data.errors) {
+          this.setState({ signInErrors: response.data.errors });
+        }
       });
   }
 
