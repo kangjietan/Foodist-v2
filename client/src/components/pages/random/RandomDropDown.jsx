@@ -236,7 +236,9 @@ function RandomDropDown({ updateCurrentList }) {
   );
 }
 
-RandomDropDown.propTypes = {};
+RandomDropDown.propTypes = {
+  updateCurrentList: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = { updateCurrentList };
 
