@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { updateRandomBusiness } from '../../../actions/randomActions';
+import { getBusinessInfoAndUpdate } from '../../../actions/userActions';
 
 import RandomDropDown from './RandomDropDown';
 
@@ -105,7 +106,14 @@ class Random extends Component {
   }
 
   handleListRandomization() {
-    const { randomBusinessesList, currentRandomList, customList, favoritesList, updateRandomBusiness } = this.props;
+    const {
+      customList,
+      currentRandomList,
+      favoritesList,
+      getBusinessInfoAndUpdate,
+      randomBusinessesList,
+      updateRandomBusiness,
+    } = this.props;
 
     if (currentRandomList === 'Term and Location') {
       let randomIdx = getRandomInt(0, randomBusinessesList.length);
@@ -113,7 +121,19 @@ class Random extends Component {
     } else if (currentRandomList === 'Your Favorites') {
       let list = Object.keys(favoritesList);
       let randomIdx = getRandomInt(0, list.length);
-      updateRandomBusiness(favoritesList[list[randomIdx]]);
+      let business = favoritesList[list[randomIdx]];
+
+      if (Object.keys(business).length === 1) {
+        getBusinessInfoAndUpdate(business)
+          .then((response) => {
+            updateRandomBusiness(response);
+          })
+          .catch((error) => console.log(error));
+      } else {
+        updateRandomBusiness(business);
+      }
+
+
     } else if (currentRandomList === 'Custom List') {
       let list = Object.keys(customList);
       let randomIdx = getRandomInt(0, list.length);
@@ -159,7 +179,8 @@ class Random extends Component {
 }
 
 Random.propTypes = {
-
+  updateRandomBusiness: PropTypes.func.isRequired,
+  getBusinessInfoAndUpdate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -170,6 +191,6 @@ const mapStateToProps = (state) => ({
   favoritesList: state.user.favoritesList,
 });
 
-const mapDispatchToProps = { updateRandomBusiness };
+const mapDispatchToProps = { updateRandomBusiness, getBusinessInfoAndUpdate };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Random);
