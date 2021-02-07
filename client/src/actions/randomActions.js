@@ -24,7 +24,6 @@ export const getBusinessesWithinLimit = (params, limit) => (dispatch) => {
           resolve("Retrieved");
         })
         .catch((error) => {
-          console.log(error);
           reject(error);
         });
     });

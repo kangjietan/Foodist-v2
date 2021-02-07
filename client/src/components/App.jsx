@@ -66,12 +66,10 @@ class App extends Component {
               clearFavoritesList();
             })
             .catch((error) => {
-              console.log(error);
             });
         }
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -92,7 +90,6 @@ class App extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   }
 

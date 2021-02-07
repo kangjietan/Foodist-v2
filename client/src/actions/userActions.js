@@ -49,7 +49,6 @@ export const getBusinessInfoAndUpdate = (business) => (dispatch) => {
         resolve(response.data);
       })
       .catch((error) => {
-        console.log(error);
         reject(error);
       });
   });
@@ -65,7 +64,6 @@ export const getUserFavoritesList = () => (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log(error);
     });
 };
 

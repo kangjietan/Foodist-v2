@@ -229,7 +229,6 @@ class SearchBar extends Component {
         if (noResults) this.setState({ noResults: false });
       })
       .catch((error) => {
-        console.error(error);
         updateParamsHasNoResults(true);
         this.setState({ noResults: true });
       });

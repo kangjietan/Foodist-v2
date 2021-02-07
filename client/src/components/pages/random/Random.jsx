@@ -128,7 +128,9 @@ class Random extends Component {
           .then((response) => {
             updateRandomBusiness(response);
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            
+          });
       } else {
         updateRandomBusiness(business);
       }
