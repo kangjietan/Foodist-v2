@@ -96,7 +96,10 @@ class FavoritesList extends Component {
   }
 }
 
-FavoritesList.propTypes = {};
+FavoritesList.propTypes = {
+  getBusinessInfoAndUpdate: PropTypes.func.isRequired,
+  updateFavoritesListTotalPages: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   favoritesListCurrentPage: state.favoritesList.favoritesListCurrentPage,
