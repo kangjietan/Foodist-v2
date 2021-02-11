@@ -42,10 +42,8 @@ class Search extends Component {
       paramsHasNoResults,
       updateParamsHasNoResults
     } = this.props;
-    const { offset: prevOffset } = prevProps;
 
     if (searchResults[offset] === undefined && !paramsHasNoResults) {
-      console.log('Search component', searchResults, offset);
       let params = {
         term,
         location,
@@ -65,10 +63,6 @@ class Search extends Component {
           console.log(error);
           updateParamsHasNoResults(false);
         });
-    }
-
-    if (prevOffset !== offset) {
-      this.setState({ offset });
     }
   }
 
