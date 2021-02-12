@@ -3,9 +3,11 @@ import * as actions from "../actions/types";
 import axios from "axios";
 
 export const searchBusinessesYelp = (params) => (dispatch) => {
+  let newParams = Object.assign({}, params);
+  newParams.offset = params.offset * 50;
   return new Promise((resolve, reject) => {
     axios
-      .get("/yelp/search", { params })
+      .get("/yelp/search", { params: newParams })
       .then((response) => {
         let data = {};
         response.data.businesses.forEach((entry) => (data[entry.id] = entry));

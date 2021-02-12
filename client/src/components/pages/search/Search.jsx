@@ -42,7 +42,6 @@ class Search extends Component {
       paramsHasNoResults,
       updateParamsHasNoResults
     } = this.props;
-    const { offset: prevOffset } = prevProps;
 
     if (searchResults[offset] === undefined && !paramsHasNoResults) {
       let params = {
@@ -63,10 +62,6 @@ class Search extends Component {
         .catch((error) => {
           updateParamsHasNoResults(false);
         });
-    }
-
-    if (prevOffset !== offset) {
-      this.setState({ offset });
     }
   }
 
