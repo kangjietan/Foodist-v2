@@ -256,7 +256,13 @@ function ResultBusiness(props) {
   return (
     <Container>
       <ImageContainer>
-        <Image src={business.image_url} />
+        <a href={business.url} target='_blank'>
+          {business.image_url ?
+            <Image src={business.image_url} />
+            :
+            <Image src='./images/Yelp_Logo.svg' style={{ objectFit: "scale-down" }} />
+          }
+        </a>
       </ImageContainer>
       <InformationContainer>
         <MainInformationContainer>
