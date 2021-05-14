@@ -98,7 +98,7 @@ function List(props) {
 
   let businesses = Object.keys(list).map((id) => list[id]);
 
-  let query;
+  let query = "United States";
 
   if (Object.keys(businessOnMap).length !== 0) {
     query = businessOnMap.alias + businessOnMap.location.display_address;
@@ -127,7 +127,7 @@ function List(props) {
           <iframe
             frameBorder='0'
             style={{ border: '0', width: '100%', height: '100%' }}
-            src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`}>
+            src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`} allowFullScreen>
           </iframe>
         </MapsContainer>
       </Container>
