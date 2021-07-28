@@ -3,7 +3,7 @@ import * as actions from "../actions/types";
 let initialState = {
   randomBusiness: {},
   randomBusinessesList: [],
-  currentRandomList: "",
+  currentRandomList: "Term and Location",
 };
 
 export default function (state = initialState, action) {
