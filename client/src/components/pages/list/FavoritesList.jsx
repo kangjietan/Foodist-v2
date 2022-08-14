@@ -54,11 +54,9 @@ class FavoritesList extends Component {
     let updatedWithInfo = currentPageBusinesses.map((business, idx) => {
       // if only id exists, send request for info
       if (Object.keys(business).length === 1) {
-        console.log(`Making request ${idx}`);
         return getBusinessInfoAndUpdate(business)
           .then((response) => { updatedWithInfo[idx] = response })
           .catch((error) => {
-            console.log("Failed to get details", error);
             updatedWithInfo[idx] = business;
           });
       } else {

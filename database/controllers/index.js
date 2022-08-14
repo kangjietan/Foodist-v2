@@ -63,7 +63,6 @@ module.exports = {
                     res.json({ success: [{ msg: "You have registered" }] })
                   )
                   .catch((err) => {
-                    console.log(err);
                     res.sendStatus(503);
                   });
               })
@@ -77,7 +76,6 @@ module.exports = {
       let success = [];
       passport.authenticate("local", (err, user, info) => {
         if (err) {
-          console.log(err);
           return next(err);
         }
 
@@ -90,7 +88,6 @@ module.exports = {
 
         req.login(user, (err) => {
           if (err) {
-            console.log(err);
             return next(err);
           }
 
@@ -116,19 +113,18 @@ module.exports = {
         .then((user) => {
           res.sendStatus(200);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+
+        });
     },
     getUserFavoritesList: (req, res) => {
       User.findOne({ username: req.user.username })
         .then((user) => {
           let list = {};
-          console.log(user);
-          console.log(user.favoriteslist);
           user.favoriteslist.forEach((id) => (list[id] = { id }));
           res.json(list);
         })
         .catch((err) => {
-          console.log(err);
           res.sendStatus(503);
         });
     },

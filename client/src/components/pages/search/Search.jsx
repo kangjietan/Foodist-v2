@@ -60,7 +60,6 @@ class Search extends Component {
           }
         })
         .catch((error) => {
-          console.log(error);
           updateParamsHasNoResults(false);
         });
     }

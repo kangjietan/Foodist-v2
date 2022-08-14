@@ -13,7 +13,6 @@ const Container = styled.div`
   width: 100%;
   max-width: 1200px;
   font-size: 1.25rem;
-  text-align: center;
 `;
 
 const FormContainer = styled.div`
@@ -230,7 +229,6 @@ class SearchBar extends Component {
         if (noResults) this.setState({ noResults: false });
       })
       .catch((error) => {
-        console.error(error);
         updateParamsHasNoResults(true);
         this.setState({ noResults: true });
       });

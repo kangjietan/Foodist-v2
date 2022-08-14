@@ -206,7 +206,6 @@ function RandomSelectedOption(props) {
             });
         })
         .catch((error) => {
-          console.log(error);
         });
     } else {
       getBusinessesWithinLimit(params, businessLimit)
@@ -240,7 +239,6 @@ function RandomSelectedOption(props) {
           });
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -260,7 +258,9 @@ function RandomSelectedOption(props) {
         .then((response) => {
           updateRandomBusiness(response);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          
+        });
     } else {
       updateRandomBusiness(business);
     }

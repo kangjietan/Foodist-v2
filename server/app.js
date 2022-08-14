@@ -1,7 +1,5 @@
 const express = require("express");
 
-const morgan = require("morgan");
-
 const passport = require("passport");
 
 const session = require("express-session");
@@ -27,8 +25,6 @@ app.use(
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(morgan("tiny"));
 
 app.use(express.urlencoded({ extended: false }));
 

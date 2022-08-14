@@ -14,7 +14,6 @@ router.get("/search", (req, res) => {
       res.json(response.data);
     })
     .catch((error) => {
-      console.error(error);
       res.status(500).json(error);
     });
 });
@@ -28,7 +27,6 @@ router.get("/business/:id", (req, res) => {
       res.json(response.data);
     })
     .catch((error) => {
-      console.error(error);
       res.status(500).json(error);
     });
 });
