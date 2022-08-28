@@ -4,7 +4,8 @@
   "description": "",
   "main": "server/app.js",
   "scripts": {
-    "start": "nodemon server/app.js",
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js",
     "build": "webpack"
   },
   "repository": {
