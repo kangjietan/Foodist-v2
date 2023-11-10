@@ -30,7 +30,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^1.6.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^3.0.0",
